@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo cp j.py /Library/Python/2.7/site-packages/pygments/lexers/
+pygmentize -f html -O full -o output/test.html test.ijs
