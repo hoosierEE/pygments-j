@@ -21,7 +21,7 @@ class JLexer(RegexLexer):
             (r'\s+', Text),
             (r'NB\..*?\n', Comment.Single),
             (r'.\s+Note.*?\n', Comment.Single),
-            (r'^Note.*?)', Comment.Multiline),
+            (r'^Note.*?\n\)', Comment.Multiline),
         ]
     }
 
