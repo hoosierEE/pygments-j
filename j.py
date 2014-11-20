@@ -14,7 +14,6 @@ class JLexer(RegexLexer):
     aliases = ['j']
     filenames = ['*.ijs']
     mimetypes = ['application/x-j', 'text/plain']
-    flags = re.MULTILINE
 
     tokens = {
         'root': [
@@ -22,6 +21,7 @@ class JLexer(RegexLexer):
             (r'NB\..*?\n', Comment.Single),
             (r'Note.*', Comment.Multiline, 'comment'),
             (r'\(', Keyword, 'paren'),
+            # (r'(?s).', Text), # uncomment when this lexer is done
         ],
         'comment': [
             (r'[^)]', Comment.Multiline),

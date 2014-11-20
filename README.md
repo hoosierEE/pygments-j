@@ -55,3 +55,9 @@ Now our local Pygments is capable of lexing J! Try it out:
 ```sh
 pygmentize -f html -O full -o test.html test.ijs
 ```
+
+Useful Links
+------------
+
+* [Python regex](https://docs.python.org/dev/library/re.html#regular-expression-syntax)
+* [Pygments lexer development](http://pygments.org/docs/lexerdevelopment/)
