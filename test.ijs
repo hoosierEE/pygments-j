@@ -1,16 +1,25 @@
 #!/usr/bin/jconsole
 
-NB. A Script for testing Pygments highlighting for J language
-NB. Here is another comment.
+NB. A comment followed by some valid J
 
-this is an invalid line
+1 2 3
+
+NB. Here is another comment
+
+a =. this should be an invalid line
+echo a
+
+wordz =. 'hi'
+echo wordz
 
 echo 1 2 3
+echo +/ % # i.7
+echo 'hello world'
 
-(+/ % #) i.7
-[ i.10
+i.20
+
+NB. Note 1 some stuff
+NB. blah blah
+NB. )
+
 exit''
-
-Note some stuff
-blah blah
-)
