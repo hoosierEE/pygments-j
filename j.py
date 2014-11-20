@@ -3,8 +3,7 @@
 """
 
 import re
-from pygments.lexer import RegexLexer
-# from pygments.lexer import RegexLexer, bygroups, using, include
+from pygments.lexer import RegexLexer, bygroups, default, using, include
 from pygments.token import *
 #from pygments.token import Comment, Operator, Name, String, Number, Keyword
 
@@ -14,14 +13,24 @@ class JLexer(RegexLexer):
     name = 'J'
     aliases = ['j']
     filenames = ['*.ijs']
-    mimetypes = ['text/plain']
+    mimetypes = ['application/x-j', 'text/plain']
+    flags = re.MULTILINE
 
     tokens = {
         'root': [
-            (r'\s+', Text),
+            (r'#!.*$', Comment.Preproc),
             (r'NB\..*?\n', Comment.Single),
-            (r'.\s+Note.*?\n', Comment.Single),
-            (r'^Note.*?\n\)', Comment.Multiline),
-        ]
+            (r'Note.*', Comment.Multiline, 'comment'),
+            (r'\(', Keyword, 'paren'),
+        ],
+        'comment': [
+            (r'[^)]', Comment.Multiline),
+            (r'Note.*?', Comment.Multiline, '#push'),
+            (r'^\)', Comment.Multiline, '#pop'),
+        ],
+        'paren': [
+            (r'\)', Keyword, '#pop'),
+            include('root'),
+        ],
     }
 
