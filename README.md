@@ -33,7 +33,7 @@ Next, we want to write a new lexer for Pygments.
 
 Here is some example output:
 
-
+```html
 <div class="highlight"><pre><span class="err">#!/usr/bin/jconsole</span>
 
 <span class="c1">NB. A Script for testing Pygments highlighting for J language</span>
@@ -47,3 +47,4 @@ Here is some example output:
 <span class="err">blah</span> <span class="err">blah</span>
 <span class="err">)</span>
 </pre></div>
+```
