@@ -18,7 +18,7 @@ There is a great answer [here](http://stackoverflow.com/q/14755721/2037637) with
 Verify you have a working Pygments installation by running `pyhi.py` like so:
 
 ```sh
-python < pyhi.py
+python examples/pyhi.py
 ```
 
 If successful, it should print some HTML-looking stuff:
