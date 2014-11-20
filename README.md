@@ -34,14 +34,7 @@ Next, we want to write a new lexer for Pygments.
 Here is some example output:
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
-<html>
-<head>
-  <title></title>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <style type="text/css">
+<style type="text/css">
 td.linenos { background-color: #f0f0f0; padding-right: 10px; }
 span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
 pre { line-height: 125%; }
@@ -108,11 +101,7 @@ body .vc { color: #19177C } /* Name.Variable.Class */
 body .vg { color: #19177C } /* Name.Variable.Global */
 body .vi { color: #19177C } /* Name.Variable.Instance */
 body .il { color: #666666 } /* Literal.Number.Integer.Long */
-
-  </style>
-</head>
-<body>
-<h2></h2>
+</style>
 
 <div class="highlight"><pre><span class="err">#!/usr/bin/jconsole</span>
 
@@ -127,5 +116,3 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <span class="err">blah</span> <span class="err">blah</span>
 <span class="err">)</span>
 </pre></div>
-</body>
-</html>
