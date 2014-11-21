@@ -28,7 +28,6 @@ class JLexer(RegexLexer):
             (r'\s+', Text),
             # Strings
             (r"'", String, 'singlequote'),
-
             (r'[a-z]\w+', Name),
             (r'[AcCeEiIjLopr]\.', Keyword),
             (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword.Reserved),
