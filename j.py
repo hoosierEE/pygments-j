@@ -7,8 +7,8 @@ Lexer for the J programming language.
 """
 
 import re
-from pygments.lexer import RegexLexer, bygroups, default, using, include
-from pygments.token import Comment, Operator, Name, String, Number, Keyword
+from pygments.lexer import RegexLexer, words, include
+from pygments.token import Comment, Operator, Name, String, Number, Keyword, Text
 
 __all__ = ['JLexer']
 
@@ -21,14 +21,21 @@ class JLexer(RegexLexer):
     name = 'J'
     aliases = ['j']
     filenames = ['*.ijs']
-    mimetypes = ['application/x-j', 'text/plain']
 
     tokens = {
         'root': [
+            (r'\s+', Text),
+            (r'[_0-9][_0-9.a-zA-Z]*', Number),
+            (r'[a-z]\w+', Name),
+            (r'[AcCeEiIjLopr]\.', Keyword),
+            (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword),
             (r'#!.*$', Comment.Preproc),
+            (r'=[.:]', Keyword.Declaration),
+            (r'[~!@#$%^&*+-=;:"{}\[\]<>\?]', Operator),
             (r'NB\..*?\n', Comment.Single),
             (r'Note.*', Comment.Multiline, 'comment'),
-            (r'\(', Keyword, 'paren'),
+            (r'\(', Keyword, 'parentheses'),
+            (r"'", String, 'singlequote'),
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
         'comment': [
@@ -36,9 +43,14 @@ class JLexer(RegexLexer):
             (r'Note.*?', Comment.Multiline, '#push'),
             (r'^\)', Comment.Multiline, '#pop'),
         ],
-        'paren': [
+        'parentheses': [
             (r'\)', Keyword, '#pop'),
             include('root'),
+        ],
+        'singlequote': [
+            (r"[^']", String),
+            (r"''", String),
+            (r"'", String, '#pop'),
         ],
     }
 
