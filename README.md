@@ -11,8 +11,11 @@ Get Started with Pygments
 There is a great answer [here](http://stackoverflow.com/q/14755721/2037637) with some wondrous resources, specifically the list of other Pygments modules. But we're not even to that point yet. First, install and run Pygments.
 
 * Arch Linux
+
   `pacman -S python2-pygments`
+
 * OSX
+
   `pip install pygments`
 
 Verify you have a working Pygments installation by running `pyhi.py` like so:
