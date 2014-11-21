@@ -1,9 +1,13 @@
 PYGMENTS-J
 ==========
 
-This is my attempt to write a Pygments lexer for J language.
+A [J](http://jsoftware.com) lexer for [pygments](http://pygments.org)
+
+> Work in progress
 
 Inspired by the lack of syntax highlighting for J on GitHub, as well as the opportunity to contribute to an open-source project and brush up on my Python a bit, this project hopes to make the world a better place.
+
+
 
 Get Started with Pygments
 -------------------------
@@ -33,18 +37,28 @@ If successful, it should print some HTML-looking stuff:
 
 Next, we want to write a new lexer for Pygments.
 
-Testing out a new Lexer
------------------------
 
-This was the trickiest bit of info to find.
 
-First, write a lexer. Mine is `j.py`. Next, `sudo cp` this lexer to Pygments' lexers directory:
+Workflow
+--------
+
+The [instructions](http://pygments.org/docs/lexerdevelopment/) did not work for me, so this part was tricky to suss out.
+
+
+### STEP 1: Write a Lexer
+
+First, write a lexer. Mine is `j.py`.
+
+
+### STEP 2: Put it in `pygments/lexers/`
 
 ```sh
 # This example is for OSX
 sudo cp j.py /Library/Python/2.7/site-packages/pygments/lexers/
 ```
 
+
+### STEP 3: Regenerate mapping file
 Then, tell Pygments about it by re-running the `_mapping.py` file (this step only has to be done *once*):
 
 ```sh
@@ -52,15 +66,25 @@ cd /Library/Python/2.7/site-packages/pygments/lexers/
 python _mapping.py
 ```
 
-...which will cause `_mapping.py` to re-generate itself, adding the new lexer (`j.py`) to its table of available lexers.
+`_mapping.py` will re-generate itself, adding the new lexer (`j.py`) to its table of available lexers.
 
-Now our local Pygments is capable of lexing J! Try it out:
+Now our local Pygments is capable of lexing J! We can try it out:
 
 ```sh
 pygmentize -f html -O full -o test.html test.ijs
 ```
 
-If your lexer is all done you can stop now. Mine isn't, so I use the helper script `updateLexer` after I make changes to `j.py` in this directory.
+
+### STEP 4: Edit and test, edit and test...
+If our lexer is all done we can stop now. Mine isn't, so after updating `j.py` in this directory, I run my helper script:
+
+```sh
+./updateLexer
+```
+
+And then open `output/test.html` in my browser and refresh to see the changes.
+
+
 
 Useful Links
 ------------
