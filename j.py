@@ -1,5 +1,9 @@
 """
-    Pygments Lexer for J language
+pygments.lexers.j
+~~~~~~~~~~~~~~~~~
+
+Lexer for the J programming language.
+
 """
 
 import re
@@ -10,6 +14,11 @@ from pygments.token import *
 __all__ = ['JLexer']
 
 class JLexer(RegexLexer):
+    """
+    For `J <http://jsoftware.com/>`_ source code.
+
+    """
+
     name = 'J'
     aliases = ['j']
     filenames = ['*.ijs']

@@ -1,3 +1,8 @@
 #!/bin/bash
-sudo cp j.py /Library/Python/2.7/site-packages/pygments/lexers/
+pygmentsDir=site-packages/pygments/lexers
+if [[ $(uname) = "Darwin" ]]; then
+    sudo cp j.py /Library/Python/2.7/"$pygmentsDir"/
+else
+    sudo cp j.py /usr/lib/python2.7/"$pygmentsDir"/
+fi
 pygmentize -f html -O full -o output/test.html test.ijs

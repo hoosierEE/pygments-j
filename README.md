@@ -11,7 +11,7 @@ Get Started with Pygments
 There is a great answer [here](http://stackoverflow.com/q/14755721/2037637) with some wondrous resources, specifically the list of other Pygments modules. But we're not even to that point yet. First, install and run Pygments.
 
 * Arch Linux
-  `pacman -S python-pygments`
+  `pacman -S python2-pygments`
 * OSX
   `pip install pygments`
 
@@ -38,10 +38,11 @@ This was the trickiest bit of info to find.
 First, write a lexer. Mine is `j.py`. Next, `sudo cp` this lexer to Pygments' lexers directory:
 
 ```sh
+# This example is for OSX
 sudo cp j.py /Library/Python/2.7/site-packages/pygments/lexers/
 ```
 
-Then, tell Pygments about it by re-running the `_mapping.py` file:
+Then, tell Pygments about it by re-running the `_mapping.py` file (this step only has to be done *once*):
 
 ```sh
 cd /Library/Python/2.7/site-packages/pygments/lexers/
@@ -55,6 +56,8 @@ Now our local Pygments is capable of lexing J! Try it out:
 ```sh
 pygmentize -f html -O full -o test.html test.ijs
 ```
+
+If your lexer is all done you can stop now. Mine isn't, so I use the helper script `updateLexer` after I make changes to `j.py` in this directory.
 
 Useful Links
 ------------
