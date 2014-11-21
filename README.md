@@ -82,6 +82,11 @@ If our lexer is all done we can stop now. Mine isn't, so after updating `j.py` i
 ./updateLexer
 ```
 
+> ProTip: you don't ever have to leave Vim:
+> ```viml
+> :silent execute "!./updateLexer" | redraw!
+> ```
+
 And then open `output/test.html` in my browser and refresh to see the changes.
 
 

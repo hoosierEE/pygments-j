@@ -24,7 +24,11 @@ class JLexer(RegexLexer):
 
     tokens = {
         'root': [
+            # Whitespace
             (r'\s+', Text),
+            # Strings
+            (r"'", String, 'singlequote'),
+
             (r'[a-z]\w+', Name),
             (r'[AcCeEiIjLopr]\.', Keyword),
             (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword.Reserved),
@@ -36,7 +40,6 @@ class JLexer(RegexLexer):
             (r'NB\..*?\n', Comment.Single),
             (r'Note.*', Comment.Multiline, 'comment'),
             (r'\(', Punctuation, 'parentheses'),
-            (r"'", String, 'singlequote'),
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
         'comment': [
