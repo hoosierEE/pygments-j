@@ -8,6 +8,8 @@ NB. Here is another comment
 
 a =. this should be an invalid line
 echo a
+b =. this should be an invalid line
+echo b
 
 if. a = 2 then. a = 1 end.
 
@@ -20,8 +22,9 @@ echo 'hello world'
 
 i.20
 
-Note 1 some stuff
-blah blah
+0 :0
+The following lines will become a noun, but discarded,
+which is practically the same as a comment.
 )
 
 exit''

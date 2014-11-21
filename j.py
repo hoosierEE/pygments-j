@@ -25,11 +25,12 @@ class JLexer(RegexLexer):
     tokens = {
         'root': [
             (r'\s+', Text),
-            (r'[_0-9][_0-9.a-zA-Z]*', Number),
             (r'[a-z]\w+', Name),
             (r'[AcCeEiIjLopr]\.', Keyword),
             (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword.Reserved),
             (r'#!.*$', Comment.Preproc),
+            (r'0 :0.*', Comment.Multiline, 'comment'),
+            (r'[_0-9][_0-9.a-zA-Z]*', Number),
             (r'=[.:]', Keyword.Declaration),
             (r'[~!@#$%^&*+-=;:"{}\[\]<>\?]', Operator),
             (r'NB\..*?\n', Comment.Single),
@@ -40,6 +41,7 @@ class JLexer(RegexLexer):
         ],
         'comment': [
             (r'[^)]', Comment.Multiline),
+            (r'0 :0.*?', Comment.Multiline, '#push'),
             (r'Note.*?', Comment.Multiline, '#push'),
             (r'^\)', Comment.Multiline, '#pop'),
         ],
