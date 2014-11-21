@@ -8,8 +8,7 @@ Lexer for the J programming language.
 
 import re
 from pygments.lexer import RegexLexer, bygroups, default, using, include
-from pygments.token import *
-#from pygments.token import Comment, Operator, Name, String, Number, Keyword
+from pygments.token import Comment, Operator, Name, String, Number, Keyword
 
 __all__ = ['JLexer']
 
@@ -30,7 +29,7 @@ class JLexer(RegexLexer):
             (r'NB\..*?\n', Comment.Single),
             (r'Note.*', Comment.Multiline, 'comment'),
             (r'\(', Keyword, 'paren'),
-            # (r'(?s).', Text), # uncomment when this lexer is done
+            # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
         'comment': [
             (r'[^)]', Comment.Multiline),
