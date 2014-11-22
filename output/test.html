@@ -80,33 +80,41 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 
 <div class="highlight"><pre><span class="cp">#!/usr/bin/jconsole</span>
 
-<span class="c1">NB. A comment followed by some valid J</span>
-
-<span class="m">1</span> <span class="m">2</span> <span class="m">3</span>
-
-<span class="c1">NB. Here is another comment</span>
-
-<span class="err">a</span> <span class="kd">=.</span> <span class="n">this</span> <span class="n">should</span> <span class="n">be</span> <span class="n">an</span> <span class="n">invalid</span> <span class="n">line</span>
-<span class="n">echo</span> <span class="err">a</span>
-<span class="err">b</span> <span class="kd">=.</span> <span class="n">this</span> <span class="n">should</span> <span class="n">be</span> <span class="n">an</span> <span class="n">invalid</span> <span class="n">line</span>
-<span class="n">echo</span> <span class="err">b</span>
-
-<span class="n">if</span><span class="o">.</span> <span class="err">a</span> <span class="o">=</span> <span class="m">2</span> <span class="n">then</span><span class="o">.</span> <span class="err">a</span> <span class="o">=</span> <span class="m">1</span> <span class="n">end</span><span class="o">.</span>
-
-<span class="n">wordz</span> <span class="kd">=.</span> <span class="s">&#39;hi, I&#39;&#39;m a string with an embedded single quote&#39;</span>
-<span class="n">echo</span> <span class="n">wordz</span>
-
-<span class="n">echo</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span>
-<span class="n">echo</span> <span class="o">+/</span> <span class="o">%</span> <span class="o">#</span> <span class="k">i.</span><span class="m">7</span>
-<span class="n">echo</span> <span class="s">&#39;hello world&#39;</span>
-
-<span class="k">i.</span><span class="m">20</span>
-
 <span class="cm">0 :0</span>
-<span class="cm">The following lines will become a noun, but discarded,</span>
-<span class="cm">which is practically the same as a comment.</span>
+<span class="cm">Extra Simple Mortgage Calculator</span>
+<span class="cm">================================</span>
+<span class="cm">Input: House Cost in dollars</span>
+<span class="cm">Output: Monthly payment to fully amortize the loan, with the following assumptions:</span>
+<span class="cm">1. Down payment: $10k</span>
+<span class="cm">2. Annual interest rate: 5%</span>
+<span class="cm">3. Loan term: 15 years</span>
 <span class="cm">)</span>
 
+<span class="n">downPayment</span> <span class="kd">=.</span> <span class="m">10000</span>
+<span class="n">monthlyRate</span> <span class="kd">=.</span> <span class="m">0.05</span> <span class="o">%</span> <span class="m">12</span>
+<span class="n">loanMonths</span>  <span class="kd">=.</span> <span class="m">15</span> <span class="o">*</span> <span class="m">12</span>
+<span class="n">houseAmount</span> <span class="kd">=.</span> <span class="o">&quot;.&gt;}.}.</span><span class="err">ARGV</span> <span class="c1">NB. get the input arguments</span>
+<span class="n">loanAmount</span>  <span class="kd">=.</span> <span class="n">houseAmount</span> <span class="o">-</span> <span class="n">downPayment</span>
+
+<span class="cm">0 :0</span>
+<span class="cm">Monthly Payment Formula</span>
+<span class="cm">=======================</span>
+<span class="cm">P = L((c(1 + c</span><span class="err">)</span><span class="cm">^n</span><span class="err">)</span><span class="cm"> / (1 + c</span><span class="err">)</span><span class="cm">^n - 1</span><span class="err">)</span><span class="cm"></span>
+<span class="cm">where</span>
+<span class="cm">P = monthly payment</span>
+<span class="cm">L = loan amount</span>
+<span class="cm">c = monthly interest (i.e. APR divided by 12</span><span class="err">)</span><span class="cm"></span>
+<span class="cm">n = number of payments (same as number of months</span><span class="err">)</span><span class="cm"></span>
+<span class="cm">)</span>
+
+<span class="c1">NB. the naive calculation:</span>
+<span class="n">monthlyPayment</span> <span class="kd">=.</span> <span class="n">loanAmount</span> <span class="o">*</span> <span class="p">((</span><span class="n">monthlyRate</span> <span class="o">*</span> <span class="p">(</span><span class="m">1</span> <span class="o">+</span> <span class="n">monthlyRate</span><span class="p">)</span><span class="o">^</span><span class="n">loanMonths</span><span class="p">)</span> <span class="o">%</span> <span class="p">((</span><span class="m">1</span> <span class="o">+</span> <span class="n">monthlyRate</span><span class="p">)</span><span class="o">^</span><span class="n">loanMonths</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+
+<span class="c1">NB. mildly refacored:</span>
+<span class="c1">NB. termInterest =. (1 + monthlyRate)^loanMonths</span>
+<span class="c1">NB. monthlyPayment =. loanAmount * ((monthlyRate * termInterest) % (termInterest - 1))</span>
+
+<span class="n">echo</span> <span class="n">monthlyPayment</span>
 <span class="n">exit</span><span class="s">&#39;&#39;</span>
 </pre></div>
 </body>

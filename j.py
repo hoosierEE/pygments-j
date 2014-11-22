@@ -37,14 +37,12 @@ class JLexer(RegexLexer):
             (r'=[.:]', Keyword.Declaration),
             (r'[~!@#$%^&*+-=;:"{}\[\]<>\?]', Operator),
             (r'NB\..*?\n', Comment.Single),
-            (r'Note.*', Comment.Multiline, 'comment'),
             (r'\(', Punctuation, 'parentheses'),
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
         'comment': [
             (r'[^)]', Comment.Multiline),
             (r'0 :0.*?', Comment.Multiline, '#push'),
-            (r'Note.*?', Comment.Multiline, '#push'),
             (r'^\)', Comment.Multiline, '#pop'),
         ],
         'parentheses': [
@@ -57,4 +55,5 @@ class JLexer(RegexLexer):
             (r"'", String, '#pop'),
         ],
     }
+
 
