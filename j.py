@@ -28,8 +28,9 @@ class JLexer(RegexLexer):
             (r'\s+', Text),
             # Strings
             (r"'", String, 'singlequote'),
-            (r'[a-z]\w+', Name),
             (r'[AcCeEiIjLopr]\.', Keyword),
+            (r'[AcCeEiIjLopr]\:', Keyword),
+            (r'[a-zA-Z]\w+', Name),
             (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword.Reserved),
             (r'#!.*$', Comment.Preproc),
             (r'0 :0.*', Comment.Multiline, 'comment'),
@@ -41,8 +42,7 @@ class JLexer(RegexLexer):
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
         'comment': [
-            (r'[^)]', Comment.Multiline),
-            (r'0 :0.*?', Comment.Multiline, '#push'),
+            (r'^[^)]', Comment.Multiline),
             (r'^\)', Comment.Multiline, '#pop'),
         ],
         'parentheses': [
