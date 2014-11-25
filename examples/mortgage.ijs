@@ -39,6 +39,19 @@ end.
 echo 2 Ack 3
 
 i.7
+num0 =. 10j4
+num0 =. 1.0j4
+num1 =. 9j_3
+num2 =. 38.9j_12.3
+num4 =. _
+num4 =. _10x
+num4 =. 10x
+NB. wrong numbers
+num4 =. .3
+num4 =. 10.3x
+num3 =. ___
+num3 =. ________
+
 
 NB. the naive calculation:
 monthlyPayment =. loanAmount * ((monthlyRate * (1 + monthlyRate)^loanMonths) % ((1 + monthlyRate)^loanMonths) - 1)

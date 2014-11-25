@@ -90,13 +90,13 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <span class="s">3. Loan term: 15 years</span>
 <span class="s">)</span>
 
-<span class="nv">downPayment</span> <span class="kd">=.</span> <span class="m">10000</span>
-<span class="nv">monthlyRate</span> <span class="kd">=.</span> <span class="m">0.05</span> <span class="k">%</span> <span class="m">12</span>
-<span class="nv">loanMonths</span>  <span class="kd">=.</span> <span class="m">15</span> <span class="k">*</span> <span class="m">12</span>
-<span class="nv">houseAmount</span> <span class="kd">=.</span> <span class="k">&quot;.&gt;}.}.</span><span class="nb">ARGV</span> <span class="c1">NB. get the input arguments</span>
-<span class="nv">loanAmount</span>  <span class="kd">=.</span> <span class="nv">houseAmount</span> <span class="k">-</span> <span class="nv">downPayment</span>
+<span class="nv">downPayment</span> <span class="kd">=.</span> <span class="nd">10000</span>
+<span class="nv">monthlyRate</span> <span class="kd">=.</span> <span class="nd">0.05</span> <span class="nd">%</span> <span class="nd">12</span>
+<span class="nv">loanMonths</span>  <span class="kd">=.</span> <span class="nd">15</span> <span class="nd">*</span> <span class="nd">12</span>
+<span class="nv">houseAmount</span> <span class="kd">=.</span> <span class="err">&quot;.&gt;}.}.ARGV NB. get the input arguments</span>
+<span class="err">loanAmount  =. houseAmount - downPayment</span>
 
-<span class="nv">explanation</span> <span class="kd">=.</span> <span class="s">0 : 0</span>
+<span class="err">explanation =.</span> <span class="s">0 : 0</span>
 <span class="s">Monthly Payment Formula</span>
 <span class="s">=======================</span>
 <span class="s">P = L((c(1 + c)^n) / (1 + c)^n - 1)</span>
@@ -110,18 +110,31 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <span class="c1">NB. Ackerman&#39;s function; because why not?</span>
 <span class="nv">Ack</span> <span class="kd">=:</span> <span class="n">4 : 0</span>
 <span class="c1">NB. Ack =: verb define</span>
-<span class="nl">if.</span>     <span class="nv">x</span> <span class="k">=</span> <span class="m">0</span> <span class="nl">do.</span> <span class="nv">y</span> <span class="k">+</span> <span class="m">1</span> <span class="c1">NB. a comment at the end</span>
-<span class="nl">elseif.</span> <span class="nv">y</span> <span class="k">=</span> <span class="m">0</span> <span class="nl">do.</span> <span class="p">(</span><span class="nv">x</span> <span class="k">-</span> <span class="m">1</span><span class="p">)</span> <span class="nv">Ack</span> <span class="m">1</span>
+<span class="nl">if.</span>     <span class="nv">x</span> <span class="nd">=</span> <span class="nd">0 </span><span class="nl">do.</span> <span class="nv">y</span> <span class="nd">+</span> <span class="nd">1 </span><span class="c1">NB. a comment at the end</span>
+<span class="nl">elseif.</span> <span class="nv">y</span> <span class="nd">=</span> <span class="nd">0 </span><span class="nl">do.</span> <span class="nd">(</span><span class="nv">x</span> <span class="nd">-</span> <span class="nd">1)</span> <span class="nv">Ack</span> <span class="nd">1</span>
   <span class="c1">NB. a comment in the middle!</span>
-<span class="nl">elseif.</span> <span class="m">1</span>     <span class="nl">do.</span> <span class="p">(</span><span class="nv">x</span> <span class="k">-</span> <span class="m">1</span><span class="p">)</span> <span class="nv">Ack</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">Ack</span> <span class="nv">y</span> <span class="k">-</span> <span class="m">1</span><span class="p">)</span>
+<span class="nl">elseif.</span> <span class="nd">1 </span>    <span class="nl">do.</span> <span class="nd">(</span><span class="nv">x</span> <span class="nd">-</span> <span class="nd">1)</span> <span class="nv">Ack</span> <span class="nd">(</span><span class="nv">x</span> <span class="nv">Ack</span> <span class="nv">y</span> <span class="nd">-</span> <span class="nd">1)</span>
 <span class="nl">end.</span>
-<span class="n">)</span>
-<span class="nv">echo</span> <span class="m">2</span> <span class="nv">Ack</span> <span class="m">3</span>
+<span class="nd">)</span>
+<span class="nv">echo</span> <span class="nd">2 </span><span class="nv">Ack</span> <span class="nd">3</span>
 
-<span class="k">i.</span><span class="m">7</span>
+<span class="k">i.</span><span class="nd">7</span>
+<span class="nv">num0</span> <span class="kd">=.</span> <span class="nd">10j4</span>
+<span class="nv">num0</span> <span class="kd">=.</span> <span class="nd">1.0j4</span>
+<span class="nv">num1</span> <span class="kd">=.</span> <span class="nd">9j_3</span>
+<span class="nv">num2</span> <span class="kd">=.</span> <span class="nd">38.9j_12.3</span>
+<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">_</span>
+<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">_10x</span>
+<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">10x</span>
+<span class="c1">NB. wrong numbers</span>
+<span class="nv">num4</span> <span class="kd">=.</span> <span class="err">.3</span>
+<span class="nv">num4</span> <span class="kd">=.</span> <span class="err">10.3x</span>
+<span class="nv">num3</span> <span class="kd">=.</span> <span class="err">___</span>
+<span class="nv">num3</span> <span class="kd">=.</span> <span class="err">________</span>
+
 
 <span class="c1">NB. the naive calculation:</span>
-<span class="nv">monthlyPayment</span> <span class="kd">=.</span> <span class="nv">loanAmount</span> <span class="k">*</span> <span class="p">((</span><span class="nv">monthlyRate</span> <span class="k">*</span> <span class="p">(</span><span class="m">1</span> <span class="k">+</span> <span class="nv">monthlyRate</span><span class="p">)</span><span class="k">^</span><span class="nv">loanMonths</span><span class="p">)</span> <span class="k">%</span> <span class="p">((</span><span class="m">1</span> <span class="k">+</span> <span class="nv">monthlyRate</span><span class="p">)</span><span class="k">^</span><span class="nv">loanMonths</span><span class="p">)</span> <span class="k">-</span> <span class="m">1</span><span class="p">)</span>
+<span class="nv">monthlyPayment</span> <span class="kd">=.</span> <span class="nv">loanAmount</span> <span class="nd">*</span> <span class="nd">((</span><span class="nv">monthlyRate</span> <span class="nd">*</span> <span class="nd">(1</span> <span class="nd">+</span> <span class="nv">monthlyRate</span><span class="nd">)^</span><span class="nv">loanMonths</span><span class="nd">)</span> <span class="nd">%</span> <span class="nd">((1</span> <span class="nd">+</span> <span class="nv">monthlyRate</span><span class="nd">)^</span><span class="nv">loanMonths</span><span class="nd">)</span> <span class="nd">-</span> <span class="nd">1)</span>
 
 <span class="c1">NB. mildly refacored:</span>
 <span class="c1">NB. termInterest =. (1 + monthlyRate)^loanMonths</span>

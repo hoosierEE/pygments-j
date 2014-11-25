@@ -8,7 +8,7 @@ Lexer for the J programming language.
 
 import re
 from pygments.lexer import RegexLexer, words, include
-from pygments.token import Comment, Keyword, Name, Number, Operator, Punctuation, String, Text
+from pygments.token import Comment, Error, Keyword, Name, Number, Operator, Punctuation, String, Text
 
 __all__ = ['JLexer']
 
@@ -55,14 +55,20 @@ class JLexer(RegexLexer):
                 'while.', 'whilst.', )), Name.Label),
             (variableName, Name.Variable),
 
+            # Copula
+            (r'=[.:]', Keyword.Declaration),
+
             # Numbers
-            (r'[_0-9][_0-9.a-zA-Z]*', Number),
+            (r'_{3,}', Error),
+            (r'_{1,2}?', Name.Decorator),
+            (r'_|[0-9]*\..x', Error),
+            (r'[_0-9]*x', Name.Decorator),
+            (r'[_0-9]+[erj]*[_0-9.]', Name.Decorator),
+            (r'[^0-9]*\.[0-9]*', Error),
+            (r'_|[0-9]*.[_0-9]*', Name.Decorator),
 
             # Punctuation
             (r'\(', Punctuation, 'parentheses'),
-
-            # Copula
-            (r'=[.:]', Keyword.Declaration),
 
             # Operators
             (r'[\\\|`~!@#$%^&*+-=;:"{}\[\]<>\?]', Keyword),

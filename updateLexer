@@ -6,4 +6,4 @@ if [[ $(uname) = "Darwin" ]]; then
 else
     sudo cp "$*" /usr/lib/python2.7/"$pygmentsDir"/j.py
 fi
-pygmentize -f html -O full -o output/test.html mortgage.ijs
+pygmentize -f html -O full -o output/test.html examples/mortgage.ijs
