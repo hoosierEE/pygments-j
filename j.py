@@ -28,16 +28,21 @@ class JLexer(RegexLexer):
             (r'\s+', Text),
             # Strings
             (r"'", String, 'singlequote'),
+# Keywords
             (r'[AcCeEiIjLopr]\.', Keyword),
             (r'[AcCeEiIjLopr]\:', Keyword),
+# Names
             (r'[a-zA-Z]\w+', Name),
             (words(('if.', 'then.', 'else.', 'end.', 'while.', 'do.', 'echo')), Keyword.Reserved),
             (r'#!.*$', Comment.Preproc),
             (r'0 :0.*', Comment.Multiline, 'comment'),
+# Numbers
             (r'[_0-9][_0-9.a-zA-Z]*', Number),
             (r'=[.:]', Keyword.Declaration),
+# Operators
             (r'[~!@#$%^&*+-=;:"{}\[\]<>\?]', Operator),
             (r'NB\..*?\n', Comment.Single),
+# Punctuation
             (r'\(', Punctuation, 'parentheses'),
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
