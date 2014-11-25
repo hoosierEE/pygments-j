@@ -1,8 +1,9 @@
 #!/bin/bash
+# specify a lexer to test, e.g. ./updateLexer j.py
 pygmentsDir=site-packages/pygments/lexers
 if [[ $(uname) = "Darwin" ]]; then
-    sudo cp j.py /Library/Python/2.7/"$pygmentsDir"/
+    sudo cp "$*" /Library/Python/2.7/"$pygmentsDir"/j.py
 else
-    sudo cp j.py /usr/lib/python2.7/"$pygmentsDir"/
+    sudo cp "$*" /usr/lib/python2.7/"$pygmentsDir"/j.py
 fi
 pygmentize -f html -O full -o output/test.html mortgage.ijs
