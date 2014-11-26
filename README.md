@@ -94,5 +94,5 @@ And then open `output/test.html` in my browser and refresh to see the changes.
 Useful Links
 ------------
 
-* [Python regex](https://docs.python.org/dev/library/re.html#regular-expression-syntax)
+* [Python regex](https://docs.python.org/2.7/library/re.html#)
 * [Pygments lexer development](http://pygments.org/docs/lexerdevelopment/)
