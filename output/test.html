@@ -78,72 +78,106 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <body>
 <h2></h2>
 
-<div class="highlight"><pre><span class="cp">#!/usr/bin/jc</span>
+<div class="highlight"><pre><span class="c1">NB.*freadLFblk a Read block of LF-terminated lines from file</span>
+<span class="c1">NB. m is: blocksize (e.g. ~1e6)</span>
+<span class="c1">NB. y is: filename;start position</span>
+<span class="c1">NB. returns: block;new start position</span>
+<span class="c1">NB. eg: 1e6 freadLFblk myfilename</span>
+<span class="nv">freadLFblk</span><span class="kd">=:</span> <span class="nl">1 :0</span>
+  <span class="s">&#39;fn strt&#39;</span><span class="kd">=.</span> <span class="nd">y</span>
+  <span class="nv">fn</span><span class="kd">=.</span> <span class="m">&gt;</span> <span class="nv">fboxname</span> <span class="nv">fn</span>
+  <span class="nv">sz</span><span class="kd">=.</span> <span class="m">1!:4</span> <span class="m">&lt;</span><span class="nv">fn</span>
+  <span class="c1">NB. if. sz = _1 do. return. end.</span>
+  <span class="nl">if.</span> <span class="m">(</span><span class="nv">sz</span> <span class="m">=</span> <span class="m">0)</span> <span class="m">+.</span> <span class="nv">strt</span> <span class="m">&gt;:</span> <span class="nv">sz</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span><span class="m">;</span><span class="nv">strt</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="nd">m</span> <span class="m">&lt;</span> <span class="nv">sz</span><span class="m">-</span><span class="nv">strt</span> <span class="nl">do.</span>
+    <span class="nv">dat</span><span class="kd">=.</span> <span class="m">1!:11</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nd">m</span>
+    <span class="nv">len</span><span class="kd">=.</span> <span class="m">1 +</span> <span class="nv">dat</span> <span class="k">i:</span> <span class="nv">LF</span>
+    <span class="nl">if.</span> <span class="nv">len</span> <span class="m">&gt;</span> <span class="m">#</span><span class="nv">dat</span> <span class="nl">do.</span>
+      <span class="s">&#39;file not in LF-delimited lines&#39;</span> <span class="m">13!:8[3</span>
+    <span class="nl">end.</span>
+    <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">strt</span> <span class="m">+</span> <span class="nv">len</span>
+    <span class="nv">dat</span><span class="kd">=.</span> <span class="nv">len</span> <span class="m">{.</span> <span class="nv">dat</span>
+  <span class="nl">else.</span>
+    <span class="nv">dat</span><span class="kd">=.</span> <span class="m">1!:11</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">sz</span><span class="m">-</span><span class="nv">strt</span>
+    <span class="nv">dat</span><span class="kd">=.</span> <span class="nv">dat</span><span class="m">,</span> <span class="nv">LF</span> <span class="m">-.</span> <span class="m">{:</span> <span class="nv">dat</span>
+    <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">sz</span>
+  <span class="nl">end.</span>
+  <span class="nv">dat</span><span class="m">;</span><span class="nv">strt</span>
+<span class="m">)</span>
 
-<span class="s">0 :0</span>
-<span class="s">Extra Simple Mortgage Calculator</span>
-<span class="s">================================</span>
-<span class="s">Input: House Cost in dollars</span>
-<span class="s">Output: Monthly payment to fully amortize the loan, with the following assumptions:</span>
-<span class="s">1. Down payment: $10k</span>
-<span class="s">2. Annual interest rate: 5%</span>
-<span class="s">3. Loan term: 15 years</span>
-<span class="s">)</span>
+<span class="nv">verbs</span><span class="kd">=:</span> <span class="m">}.</span> <span class="m">{.</span> <span class="m">^</span> <span class="m">^.</span> <span class="m">[</span> <span class="m">]</span> <span class="m">[:</span> <span class="m">|</span> <span class="m">|:</span>
+<span class="nv">adverbs</span><span class="kd">=:</span> <span class="m">}</span> <span class="m">/.</span> <span class="m">+/</span> <span class="m">\.</span> <span class="k">b.</span> <span class="nv">t</span><span class="m">:</span> <span class="m">~</span>
+<span class="nv">conjunctions</span><span class="kd">=:</span> <span class="m">^:</span> <span class="m">&amp;</span> <span class="m">&amp;.</span> <span class="m">&amp;:</span> <span class="m">&amp;.:</span> <span class="m">@</span> <span class="m">@.</span> <span class="m">@:</span> <span class="k">d.</span> <span class="nv">S</span><span class="m">:</span> <span class="m">+/</span><span class="nv">S</span><span class="m">:</span> <span class="m">;._2</span> <span class="m">;.</span>
+<span class="nv">conjunctions</span><span class="kd">=:</span> <span class="m">:.</span> <span class="m">::</span> <span class="m">.:</span> <span class="m">.</span> <span class="m">:</span>
+<span class="s">&#39;this is a string that&#39;&#39;s got doubled quotes&#39;</span>
+<span class="s">&#39;this is a string NB. that contains a comment code&#39;</span>
+<span class="c1">NB. and this &#39;is a string in a comment&#39;</span>
+<span class="nv">runningsum</span><span class="kd">=:</span> <span class="m">+/\</span> <span class="m">!</span> <span class="m">$:</span> <span class="m">_:</span>
+<span class="nv">nouns</span><span class="kd">=:</span> <span class="nv">a</span><span class="m">:</span> <span class="m">;</span> <span class="k">a.</span> <span class="m">;</span> <span class="m">_.</span> <span class="m">;</span> <span class="nv">a</span>
+<span class="nv">freadblks</span><span class="kd">=:</span> <span class="nl">1 : 0</span>
+  <span class="s">&#39;&#39;</span> <span class="nd">u</span> <span class="nv">freadblks</span> <span class="nd">y</span>
+<span class="m">:</span>
+  <span class="s">&#39;fn blksz&#39;</span><span class="kd">=.</span> <span class="m">2 {.</span> <span class="m">(</span><span class="nv">boxopen</span> <span class="nd">y</span><span class="m">),&lt;</span> <span class="m">8e6</span>
+  <span class="s">&#39;fngo fnmo&#39;</span><span class="kd">=.</span> <span class="m">(</span><span class="nv">boxopen</span> <span class="nd">x</span><span class="m">)</span> <span class="m">,</span> <span class="m">&amp;.&gt;</span>  <span class="s">&#39;_gsr-genotypes.txt&#39;</span><span class="m">;</span><span class="s">&#39;_marker-map.txt&#39;</span>
+  <span class="nv">sz</span><span class="kd">=.</span> <span class="nv">fsize</span> <span class="nv">fn</span>
+  <span class="nv">strt</span><span class="kd">=.</span> <span class="m">0 0.9</span>
+  <span class="nl">assert.</span> <span class="nv">sz</span> <span class="m">&gt;</span> <span class="nv">strt</span>
+  <span class="nv">blk</span><span class="kd">=.</span> <span class="nv">blksz</span> <span class="m">&lt;.</span> <span class="nv">sz</span> <span class="m">-</span> <span class="nv">strt</span>        <span class="c1">NB. handle single/last block</span>
+  <span class="nv">blockdat</span><span class="kd">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">blk</span>    <span class="c1">NB. read first block</span>
+  <span class="nv">res</span><span class="kd">=.</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
+  <span class="nl">while.</span> <span class="nv">sz</span> <span class="m">&gt;</span> <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">strt</span> <span class="m">+</span> <span class="nv">blksz</span> <span class="nl">do.</span>
+    <span class="nv">blk</span><span class="kd">=.</span> <span class="nv">blksz</span> <span class="m">&lt;.</span> <span class="nv">sz</span> <span class="m">-</span> <span class="nv">strt</span>      <span class="c1">NB. handle last block</span>
+    <span class="nv">blockdat</span><span class="kd">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">blk</span>  <span class="c1">NB. read remaining blocks</span>
+    <span class="nv">res</span><span class="kd">=.</span> <span class="nv">res</span><span class="m">,</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
+  <span class="nl">end.</span>
+  <span class="nv">res</span>
+<span class="m">)</span>
 
-<span class="nv">downPayment</span> <span class="kd">=.</span> <span class="nd">10000</span>
-<span class="nv">monthlyRate</span> <span class="kd">=.</span> <span class="nd">0.05</span> <span class="nd">%</span> <span class="nd">12</span>
-<span class="nv">loanMonths</span>  <span class="kd">=.</span> <span class="nd">15</span> <span class="nd">*</span> <span class="nd">12</span>
-<span class="nv">houseAmount</span> <span class="kd">=.</span> <span class="err">&quot;.&gt;}.}.ARGV NB. get the input arguments</span>
-<span class="err">loanAmount  =. houseAmount - downPayment</span>
+ <span class="nv">t</span><span class="kd">=:</span> <span class="c1">0    Note &#39;an alternative single line comment&#39;</span>
+<span class="m">(</span><span class="nv">myname</span> <span class="m">-</span> <span class="m">56.3)%4.3</span>
+<span class="nd">u</span> <span class="nd">v</span> <span class="nd">x</span> <span class="nd">y</span> <span class="nd">n</span> <span class="nd">m</span>  <span class="c1">NB. only special meaning inside explicit defn</span>
+<span class="nv">myverb</span><span class="kd">=:</span> <span class="nl">verb define</span>
+  <span class="nv">dostuff</span><span class="kd">=.</span> <span class="m">*:</span><span class="nd">y</span>
+  <span class="nv">for_xyz</span><span class="m">.</span> <span class="k">i.</span> <span class="m">12</span> <span class="nl">do.</span>
+    <span class="nv">echo</span> <span class="nv">xyz</span>
+  <span class="nl">end.</span>
+  <span class="nd">v</span> <span class="nd">x</span> <span class="nd">y</span> <span class="nd">n</span> <span class="nd">m</span>  <span class="c1">NB. only special meaning inside explicit defn</span>
+  <span class="m">&lt;;._2</span> <span class="nd">x</span>
+<span class="m">)</span>
+ 
+ <span class="nv">mynoun</span><span class="kd">=:</span> <span class="nl">noun define</span><span class="s"></span>
+<span class="s"> All this is a noun</span>
+<span class="s"> it is basically like a multi-line, (LF-delimited)</span>
+<span class="s">  string</span>
+<span class="nl">)</span>
+ 
+ <span class="m">7 *</span> <span class="m">4 5</span> <span class="c1">6</span>
+<span class="c1">Note &#39;  tests&#39;  </span>
+<span class="nv">require</span> <span class="s">&#39;~/proj/lichdf/lic_hdf.ijs&#39;</span>
+<span class="nv">coinsert</span> <span class="s">&#39;lichdf&#39;</span>
+<span class="nv">tstmkrfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/testlichdf.markers.lichdf&#39;</span>
+<span class="nv">tstgenfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/testlichdf.genotypes.lichdf&#39;</span>
+<span class="nv">tstGSRmapfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/nofortran0_imp_marker-map.txt&#39;</span>
+ <span class="m">(</span><span class="nv">asjlj</span> <span class="m">)</span>
+<span class="nv">parseGSRmap</span> <span class="nv">freadLFblks</span> <span class="nv">tstGSRmapfn</span><span class="m">;9000</span>
+<span class="m">)</span>
 
-<span class="err">explanation =.</span> <span class="s">0 : 0</span>
-<span class="s">Monthly Payment Formula</span>
-<span class="s">=======================</span>
-<span class="s">P = L((c(1 + c)^n) / (1 + c)^n - 1)</span>
-<span class="s">where</span>
-<span class="s">P = monthly payment</span>
-<span class="s">L = loan amount</span>
-<span class="s">c = monthly interest (i.e. APR divided by 12)</span>
-<span class="s">n = number of payments (same as number of months)</span>
-<span class="s">)</span>
+<span class="s">&#39;If the above Note closed OK then this is a string&#39;</span>
 
-<span class="c1">NB. Ackerman&#39;s function; because why not?</span>
-<span class="nv">Ack</span> <span class="kd">=:</span> <span class="n">4 : 0</span>
-<span class="c1">NB. Ack =: verb define</span>
-<span class="nl">if.</span>     <span class="nv">x</span> <span class="nd">=</span> <span class="nd">0 </span><span class="nl">do.</span> <span class="nv">y</span> <span class="nd">+</span> <span class="nd">1 </span><span class="c1">NB. a comment at the end</span>
-<span class="nl">elseif.</span> <span class="nv">y</span> <span class="nd">=</span> <span class="nd">0 </span><span class="nl">do.</span> <span class="nd">(</span><span class="nv">x</span> <span class="nd">-</span> <span class="nd">1)</span> <span class="nv">Ack</span> <span class="nd">1</span>
-  <span class="c1">NB. a comment in the middle!</span>
-<span class="nl">elseif.</span> <span class="nd">1 </span>    <span class="nl">do.</span> <span class="nd">(</span><span class="nv">x</span> <span class="nd">-</span> <span class="nd">1)</span> <span class="nv">Ack</span> <span class="nd">(</span><span class="nv">x</span> <span class="nv">Ack</span> <span class="nv">y</span> <span class="nd">-</span> <span class="nd">1)</span>
-<span class="nl">end.</span>
-<span class="nd">)</span>
-<span class="nv">echo</span> <span class="nd">2 </span><span class="nv">Ack</span> <span class="nd">3</span>
+  <span class="cm">Note &#39;test multiline&#39;</span>
+<span class="cm">The definition for start of multiline comment should allow</span>
+<span class="cm">whitespace between start of line and Note</span>
+<span class="cm">)</span>
+ 
+<span class="cm">Note 90</span>
+<span class="cm">getMarkernames freadLFblks tstmkrfn</span>
+<span class="cm">parseMarkers freadLFblks tstmkrfn</span>
+<span class="cm">1347 getSNPs freadblks tstgenfn;80820</span>
+<span class="cm">)</span>   
 
-<span class="k">i.</span><span class="nd">7</span>
-<span class="nv">num0</span> <span class="kd">=.</span> <span class="nd">10j4</span>
-<span class="nv">num0</span> <span class="kd">=.</span> <span class="nd">1.0j4</span>
-<span class="nv">num1</span> <span class="kd">=.</span> <span class="nd">9j_3</span>
-<span class="nv">num2</span> <span class="kd">=.</span> <span class="nd">38.9j_12.3</span>
-<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">_</span>
-<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">_10x</span>
-<span class="nv">num4</span> <span class="kd">=.</span> <span class="nd">10x</span>
-<span class="c1">NB. wrong numbers</span>
-<span class="nv">num4</span> <span class="kd">=.</span> <span class="err">.3</span>
-<span class="nv">num4</span> <span class="kd">=.</span> <span class="err">10.3x</span>
-<span class="nv">num3</span> <span class="kd">=.</span> <span class="err">___</span>
-<span class="nv">num3</span> <span class="kd">=.</span> <span class="err">________</span>
-
-
-<span class="c1">NB. the naive calculation:</span>
-<span class="nv">monthlyPayment</span> <span class="kd">=.</span> <span class="nv">loanAmount</span> <span class="nd">*</span> <span class="nd">((</span><span class="nv">monthlyRate</span> <span class="nd">*</span> <span class="nd">(1</span> <span class="nd">+</span> <span class="nv">monthlyRate</span><span class="nd">)^</span><span class="nv">loanMonths</span><span class="nd">)</span> <span class="nd">%</span> <span class="nd">((1</span> <span class="nd">+</span> <span class="nv">monthlyRate</span><span class="nd">)^</span><span class="nv">loanMonths</span><span class="nd">)</span> <span class="nd">-</span> <span class="nd">1)</span>
-
-<span class="c1">NB. mildly refacored:</span>
-<span class="c1">NB. termInterest =. (1 + monthlyRate)^loanMonths</span>
-<span class="c1">NB. monthlyPayment =. loanAmount * ((monthlyRate * termInterest) % (termInterest - 1))</span>
-
-<span class="nv">str</span> <span class="kd">=.</span> <span class="s">&#39;hey, I&#39;&#39;m a string! With numbers inside: 1 2 3 4 5&#39;</span>
-
-<span class="nv">echo</span> <span class="nv">monthlyPayment</span>
-<span class="nv">exit</span><span class="s">&#39;&#39;</span>
+<span class="s">&#39;Once the definition for closing explicit definitions correctly&#39;</span>
+<span class="s">&#39;handles whitespace on same line as closing parenthesis, this block&#39;</span>
+<span class="s">&#39;should show as strings not comments&#39;</span>
 </pre></div>
 </body>
 </html>

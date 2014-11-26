@@ -22,7 +22,7 @@ echo 'hello world'
 
 i.20
 
-0 :0
+explicitNoun =: 0 :0
 The following lines will become a noun, but discarded,
 which is practically the same as a comment.
 )

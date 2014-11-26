@@ -22,7 +22,21 @@ class JLexer(RegexLexer):
     aliases = ['j']
     filenames = ['*.ijs']
 
+    # Putting these up top for ease of modification if the core language changes.
     variableName = r'[a-zA-Z][a-zA-Z0-9_]*'
+    builtins = words(('ARGV',))
+    stdlib = words(('CR', 'CRLF', 'EAV', 'FF', 'LF', 'TAB',
+        'noun', 'adverb', 'conjunction', 'verb', 'monad', 'dyad',
+        'assert', 'boxopen', 'boxxopen', 'clear', 'datatype', 'erase',
+        'nameclass', 'nc', 'sign', 'smoutput', 'script', 'scriptd',
+        'expand', 'drop', 'fetch', 'pick', 'cutopen', 'do', 'empty',
+        'list', 'names', 'namelist', 'nl', 'define', 'each', 'every',
+        'inverse', 'leaf', 'rows', 'bind', 'def', 'on',))
+    flowControl = words(( 'assert.', 'break.', 'continue.',
+        'return.', 'if.', 'do.', 'else.', 'elseif.', 'end.',
+        'for.', 'select.', 'case.', 'fcase.', 'throw.', 'try.',
+        'catch.', 'catchd.', 'catcht.', 'while.', 'whilst.', ))
+    illFormedNumber = r'_{3,}'
 
     tokens = {
         'root': [
@@ -34,52 +48,42 @@ class JLexer(RegexLexer):
 
             # Strings
             (r"'", String, 'singlequote'),
+
+            # Comments
             (r'NB\..*?\n', Comment.Single),
-            (r'Note.*?\n', Comment.Multiline, 'comment'),
+            (r'\w\s*Note.*?\n', Comment.Single),
+            (r'\s*Note.*?', Comment.Multiline, 'comment'),
 
             # Definitions
-            (r'0\s+:\s*0|noun\s+define', String, 'noundef'),
-            (r'\b(([1-4]|13)\s+:\s*0)|((adverb|conjunction|dyad|monad|verb)\s+define)\b', Name, 'explicitDefinition'),
+            (r'0\s+:\s*0|noun\s+define\s*$', Name.Label, 'nounDefinition'),
+            (r'\b(([1-4]|13)\s+:\s*0)|((adverb|conjunction|dyad|monad|verb)\s+define)\b', Name.Label, 'explicitDefinition'),
 
             # Keywords
-            (r'[AcCeEiIjLopr]\.', Keyword),
+            (r'[abdefijoprstux]\.', Keyword),
             (r'[AcCeEiIjLopr]\:', Keyword),
 
             # Names
-            (words(('ARGV', 'BINPATH', 'CR', 'CRLF', 'DEL', 'EAV',
-                'EMPTY', 'FF', 'LF', 'LF2', 'TAB',)), Name.Builtin),
-            (words(( 'assert.', 'break.', 'continue.', 'return.',
-                'if.', 'do.', 'else.', 'elseif.', 'end.',
-                'for.', 'select.', 'case.', 'fcase.', 'throw.',
-                'try.', 'catch.', 'catchd.', 'catcht.',
-                'while.', 'whilst.', )), Name.Label),
+            (builtins, Name.Builtin),
+            (flowControl, Name.Label),
             (variableName, Name.Variable),
 
             # Copula
             (r'=[.:]', Keyword.Declaration),
 
             # Numbers
-            (r'_{3,}', Error),
-            (r'_{1,2}?', Name.Decorator),
-            (r'_|[0-9]*\..x', Error),
-            (r'[_0-9]*x', Name.Decorator),
-            (r'[_0-9]+[erj]*[_0-9.]', Name.Decorator),
-            (r'[^0-9]*\.[0-9]*', Error),
-            (r'_|[0-9]*.[_0-9]*', Name.Decorator),
+            (illFormedNumber, Error),
+            (r'_{1,2}?', Number),
+            (r'[_0-9]*x', Number),
+            (r'[_0-9]+[erj]*[_0-9.]', Number),
+            (r'_|[0-9]*.[_0-9]*', Number),
 
             # Punctuation
             (r'\(', Punctuation, 'parentheses'),
 
             # Operators
-            (r'[\\\|`~!@#$%^&*+-=;:"{}\[\]<>\?]', Keyword),
+            (r'[`~!@#$%^&*+-=;:"{}\[\]<>\?]', Error),
 
             # (r'(?s).', Text), # uncomment when this lexer is complete
-        ],
-
-        'noundef': [
-            (r'[^)]', String),
-            (r'^\)', String, '#pop'),
-            (r'[)]', String),
         ],
 
         'comment': [
@@ -88,17 +92,23 @@ class JLexer(RegexLexer):
             (r'[)]', Comment.Multiline),
         ],
 
+        'explicitDefinition': [
+            (r'\b[nmuvxy]\b', Name.Decorator),
+            include('root'),
+            (r'[^)]', Name),
+            (r'^\)', Name.Label, '#pop'),
+            (r'[)]', Name),
+        ],
+
+        'nounDefinition': [
+            (r'[^)]', String),
+            (r'^\)', Name.Label, '#pop'),
+            (r'[)]', String),
+        ],
+
         'parentheses': [
             (r'\)', Punctuation, '#pop'),
             include('root'),
-        ],
-
-        'explicitDefinition': [
-            include('root'),
-            (r'\b[nmuvxy]\b', Name.Decorator),
-            (r'[^)]', Name),
-            (r'^\)', Name, '#pop'),
-            (r'[)]', Name),
         ],
 
         'singlequote': [
