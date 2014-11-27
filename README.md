@@ -8,10 +8,8 @@ A [J](http://jsoftware.com) lexer for [pygments](http://pygments.org)
 Inspired by the lack of syntax highlighting for J on GitHub, as well as the opportunity to contribute to an open-source project and brush up on my Python a bit, this project hopes to make the world a better place.
 
 
-
 Get Started with Pygments
 -------------------------
-
 There is a great answer [here](http://stackoverflow.com/q/14755721/2037637) with some wondrous resources, specifically the list of other Pygments modules. But we're not even to that point yet. First, install and run Pygments.
 
 * Arch Linux
@@ -38,15 +36,12 @@ If successful, it should print some HTML-looking stuff:
 Next, we want to write a new lexer for Pygments.
 
 
-
 Workflow
 --------
-
 The [instructions](http://pygments.org/docs/lexerdevelopment/) did not work for me, so this part was tricky to suss out.
 
 
 ### STEP 1: Write a Lexer
-
 First, write a lexer. Mine is `j.py`.
 
 
@@ -93,6 +88,5 @@ And then open `output/test.html` in my browser and refresh to see the changes.
 
 Useful Links
 ------------
-
 * [Python regex](https://docs.python.org/2.7/library/re.html#)
 * [Pygments lexer development](http://pygments.org/docs/lexerdevelopment/)
