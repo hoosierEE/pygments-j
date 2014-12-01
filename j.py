@@ -7,7 +7,7 @@ Lexer for the J programming language.
 """
 
 import re
-from pygments.lexer import RegexLexer, words, include
+from pygments.lexer import bygroups, RegexLexer, words, include
 from pygments.token import Comment, Error, Keyword, Name, Number, Operator, Punctuation, String, Text
 
 __all__ = ['JLexer']
@@ -22,66 +22,83 @@ class JLexer(RegexLexer):
     aliases = ['j']
     filenames = ['*.ijs']
 
-    # Putting these up top for ease of modification if the core language changes.
-    variableName = r'[a-zA-Z][a-zA-Z0-9_]*'
-    builtins = words(('ARGV',))
-    stdlib = words(('CR', 'CRLF', 'EAV', 'FF', 'LF', 'TAB',
-        'noun', 'adverb', 'conjunction', 'verb', 'monad', 'dyad',
-        'assert', 'boxopen', 'boxxopen', 'clear', 'datatype', 'erase',
-        'nameclass', 'nc', 'sign', 'smoutput', 'script', 'scriptd',
-        'expand', 'drop', 'fetch', 'pick', 'cutopen', 'do', 'empty',
-        'list', 'names', 'namelist', 'nl', 'define', 'each', 'every',
-        'inverse', 'leaf', 'rows', 'bind', 'def', 'on',))
-    flowControl = words(( 'assert.', 'break.', 'continue.',
-        'return.', 'if.', 'do.', 'else.', 'elseif.', 'end.',
-        'for.', 'select.', 'case.', 'fcase.', 'throw.', 'try.',
-        'catch.', 'catchd.', 'catcht.', 'while.', 'whilst.', ))
-    illFormedNumber = r'_{3,}'
+    validName = r'\b[a-zA-Z]\w*'
 
     tokens = {
         'root': [
-            # Whitespace
-            (r'\s+', Text),
-
             # Shebang script
             (r'#!.*$', Comment.Preproc),
+
+            # Comments
+            (r'NB\..*', Comment.Single),
+            (r'\n+\s*Note', Comment.Multiline, 'comment'),
+            (r'\s*Note.*', Comment.Single),
+
+            # Whitespace
+            (r'\s+', Text),
 
             # Strings
             (r"'", String, 'singlequote'),
 
-            # Comments
-            (r'NB\..*?\n', Comment.Single),
-            (r'\w\s*Note.*?\n', Comment.Single),
-            (r'\s*Note.*?', Comment.Multiline, 'comment'),
-
             # Definitions
-            (r'0\s+:\s*0|noun\s+define\s*$', Name.Label, 'nounDefinition'),
-            (r'\b(([1-4]|13)\s+:\s*0)|((adverb|conjunction|dyad|monad|verb)\s+define)\b', Name.Label, 'explicitDefinition'),
+            (r'0\s+:\s*0|noun\s+define\s*$', Name.Entity, 'nounDefinition'),
+            (r'\b(([1-4]|13)\s+:\s*0)|((adverb|conjunction|dyad|monad|verb)\s+define)\b', Name.Function, 'explicitDefinition'),
 
-            # Keywords
-            (r'[abdefijoprstux]\.', Keyword),
-            (r'[AcCeEiIjLopr]\:', Keyword),
+            # Flow Control
+            (words(( 'for_', 'goto_', 'label_'), suffix=validName+'\.'), Name.Label),
+            (words(
+                'assert', 'break', 'case', 'catch', 'catchd',
+                'catcht', 'continue', 'do', 'else', 'elseif',
+                'end', 'fcase', 'for', 'if', 'return',
+                'select', 'throw', 'try', 'while', 'whilst',
+                ), suffix='\.'), Name.Label),
 
-            # Names
-            (builtins, Name.Builtin),
-            (flowControl, Name.Label),
-            (variableName, Name.Variable),
+            # Variable Names
+            (validName, Name.Variable),
+
+            # Standard Library
+            (words(
+                'ARGV', 'CR', 'CRLF', 'DEL', 'Debug',
+                'EAV', 'EMPTY', 'FF', 'JVERSION', 'LF',
+                'LF2', 'Note', 'TAB', 'alpha17', 'alpha27',
+                'apply', 'bind', 'bind', 'boxopen', 'boxopen',
+                'boxxopen', 'boxxopen', 'bx', 'clear', 'clear',
+                'cutLF', 'cutopen', 'cutopen', 'datatype', 'datatype',
+                'def', 'def', 'dfh', 'drop', 'drop',
+                'each', 'each', 'echo', 'empty', 'empty',
+                'erase', 'erase', 'every', 'every', 'evtloop',
+                'exit', 'expand', 'expand', 'fetch', 'fetch',
+                'file2url', 'fixdotdot', 'fliprgb', 'getargs', 'getenv',
+                'hfd', 'inv', 'inverse', 'inverse', 'iospath',
+                'isatty', 'isutf8', 'items', 'leaf', 'leaf',
+                'list', 'list', 'nameclass', 'nameclass', 'namelist',
+                'namelist', 'names', 'names', 'nc', 'nc',
+                'nl', 'nl', 'on', 'on', 'pick',
+                'pick', 'rows', 'rows', 'script', 'script',
+                'scriptd', 'scriptd', 'sign', 'sign', 'sminfo',
+                'smoutput', 'smoutput', 'sort', 'split', 'stderr',
+                'stdin', 'stdout', 'table', 'take', 'timespacex',
+                'timex', 'tmoutput', 'toCRLF', 'toHOST', 'toJ',
+                'tolower', 'toupper', 'type', 'ucp', 'ucpcount',
+                'usleep', 'utf8', 'uucp',
+                ), Name.Builtin),
 
             # Copula
-            (r'=[.:]', Keyword.Declaration),
+            (r'=[.:]', Operator),
 
-            # Numbers
-            (illFormedNumber, Error),
-            (r'_{1,2}?', Number),
-            (r'[_0-9]*x', Number),
-            (r'[_0-9]+[erj]*[_0-9.]', Number),
-            (r'_|[0-9]*.[_0-9]*', Number),
+            # Builtins
+            (r'[-=+*$%@!~`^&";:.,<>{}\[\]\\|/]', Operator),
 
-            # Punctuation
+            # Short Keywords
+            (r'[abCdDeEfHiIjLMoprtT]\.',  Keyword.Reserved),
+            (r'[aDiLpqsStux]\:', Keyword.Reserved),
+            (r'(_[0-9])\:', Keyword.Constant),
+
+            # Parens
             (r'\(', Punctuation, 'parentheses'),
 
-            # Operators
-            (r'[`~!@#$%^&*+-=;:"{}\[\]<>\?]', Error),
+            # Numbers
+            include('numbers'),
 
             # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
@@ -98,6 +115,14 @@ class JLexer(RegexLexer):
             (r'[^)]', Name),
             (r'^\)', Name.Label, '#pop'),
             (r'[)]', Name),
+        ],
+
+        'numbers': [
+            (r'_{3,}', Error),
+            (r'\b_{1,2}\b', Number),
+            (r'_?\d+(\s*[ejr]\s*)?_?\d+', Number),
+            (r'_?\d+\.(?=\d+)', Number.Float),
+            (r'_?\d+x?', Number.Integer.Long),
         ],
 
         'nounDefinition': [

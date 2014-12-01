@@ -83,92 +83,92 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <span class="c1">NB. y is: filename;start position</span>
 <span class="c1">NB. returns: block;new start position</span>
 <span class="c1">NB. eg: 1e6 freadLFblk myfilename</span>
-<span class="nv">freadLFblk</span><span class="kd">=:</span> <span class="nl">1 :0</span>
-  <span class="s">&#39;fn strt&#39;</span><span class="kd">=.</span> <span class="nd">y</span>
-  <span class="nv">fn</span><span class="kd">=.</span> <span class="m">&gt;</span> <span class="nv">fboxname</span> <span class="nv">fn</span>
-  <span class="nv">sz</span><span class="kd">=.</span> <span class="m">1!:4</span> <span class="m">&lt;</span><span class="nv">fn</span>
+<span class="nv">freadLFblk</span><span class="o">=:</span> <span class="nf">1 :0</span>
+  <span class="s">&#39;fn strt&#39;</span><span class="o">=.</span> <span class="nd">y</span>
+  <span class="nv">fn</span><span class="o">=.</span> <span class="o">&gt;</span> <span class="nv">fboxname</span> <span class="nv">fn</span>
+  <span class="nv">sz</span><span class="o">=.</span> <span class="il">1</span><span class="o">!:</span><span class="il">4</span> <span class="o">&lt;</span><span class="nv">fn</span>
   <span class="c1">NB. if. sz = _1 do. return. end.</span>
-  <span class="nl">if.</span> <span class="m">(</span><span class="nv">sz</span> <span class="m">=</span> <span class="m">0)</span> <span class="m">+.</span> <span class="nv">strt</span> <span class="m">&gt;:</span> <span class="nv">sz</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span><span class="m">;</span><span class="nv">strt</span> <span class="nl">return.</span> <span class="nl">end.</span>
-  <span class="nl">if.</span> <span class="nd">m</span> <span class="m">&lt;</span> <span class="nv">sz</span><span class="m">-</span><span class="nv">strt</span> <span class="nl">do.</span>
-    <span class="nv">dat</span><span class="kd">=.</span> <span class="m">1!:11</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nd">m</span>
-    <span class="nv">len</span><span class="kd">=.</span> <span class="m">1 +</span> <span class="nv">dat</span> <span class="k">i:</span> <span class="nv">LF</span>
-    <span class="nl">if.</span> <span class="nv">len</span> <span class="m">&gt;</span> <span class="m">#</span><span class="nv">dat</span> <span class="nl">do.</span>
-      <span class="s">&#39;file not in LF-delimited lines&#39;</span> <span class="m">13!:8[3</span>
+  <span class="nl">if.</span> <span class="p">(</span><span class="nv">sz</span> <span class="o">=</span> <span class="il">0</span><span class="p">)</span> <span class="o">+.</span> <span class="nv">strt</span> <span class="o">&gt;:</span> <span class="nv">sz</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span><span class="o">;</span><span class="nv">strt</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="nd">m</span> <span class="o">&lt;</span> <span class="nv">sz</span><span class="o">-</span><span class="nv">strt</span> <span class="nl">do.</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="il">1</span><span class="o">!:</span><span class="m">11</span> <span class="nv">fn</span><span class="o">;</span><span class="nv">strt</span><span class="o">,</span><span class="nd">m</span>
+    <span class="nv">len</span><span class="o">=.</span> <span class="il">1</span> <span class="o">+</span> <span class="nv">dat</span> <span class="nv">i</span><span class="o">:</span> <span class="nv">LF</span>
+    <span class="nl">if.</span> <span class="nv">len</span> <span class="o">&gt;</span> <span class="n">#</span><span class="nv">dat</span> <span class="nl">do.</span>
+      <span class="s">&#39;file not in LF-delimited lines&#39;</span> <span class="m">13</span><span class="o">!:</span><span class="il">8</span><span class="o">[</span><span class="il">3</span>
     <span class="nl">end.</span>
-    <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">strt</span> <span class="m">+</span> <span class="nv">len</span>
-    <span class="nv">dat</span><span class="kd">=.</span> <span class="nv">len</span> <span class="m">{.</span> <span class="nv">dat</span>
+    <span class="nv">strt</span><span class="o">=.</span> <span class="nv">strt</span> <span class="o">+</span> <span class="nv">len</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="nv">len</span> <span class="o">{.</span> <span class="nv">dat</span>
   <span class="nl">else.</span>
-    <span class="nv">dat</span><span class="kd">=.</span> <span class="m">1!:11</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">sz</span><span class="m">-</span><span class="nv">strt</span>
-    <span class="nv">dat</span><span class="kd">=.</span> <span class="nv">dat</span><span class="m">,</span> <span class="nv">LF</span> <span class="m">-.</span> <span class="m">{:</span> <span class="nv">dat</span>
-    <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">sz</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="il">1</span><span class="o">!:</span><span class="m">11</span> <span class="nv">fn</span><span class="o">;</span><span class="nv">strt</span><span class="o">,</span><span class="nv">sz</span><span class="o">-</span><span class="nv">strt</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="nv">dat</span><span class="o">,</span> <span class="nv">LF</span> <span class="o">-.</span> <span class="o">{:</span> <span class="nv">dat</span>
+    <span class="nv">strt</span><span class="o">=.</span> <span class="nv">sz</span>
   <span class="nl">end.</span>
-  <span class="nv">dat</span><span class="m">;</span><span class="nv">strt</span>
-<span class="m">)</span>
+  <span class="nv">dat</span><span class="o">;</span><span class="nv">strt</span>
+<span class="nl">)</span>
 
-<span class="nv">verbs</span><span class="kd">=:</span> <span class="m">}.</span> <span class="m">{.</span> <span class="m">^</span> <span class="m">^.</span> <span class="m">[</span> <span class="m">]</span> <span class="m">[:</span> <span class="m">|</span> <span class="m">|:</span>
-<span class="nv">adverbs</span><span class="kd">=:</span> <span class="m">}</span> <span class="m">/.</span> <span class="m">+/</span> <span class="m">\.</span> <span class="k">b.</span> <span class="nv">t</span><span class="m">:</span> <span class="m">~</span>
-<span class="nv">conjunctions</span><span class="kd">=:</span> <span class="m">^:</span> <span class="m">&amp;</span> <span class="m">&amp;.</span> <span class="m">&amp;:</span> <span class="m">&amp;.:</span> <span class="m">@</span> <span class="m">@.</span> <span class="m">@:</span> <span class="k">d.</span> <span class="nv">S</span><span class="m">:</span> <span class="m">+/</span><span class="nv">S</span><span class="m">:</span> <span class="m">;._2</span> <span class="m">;.</span>
-<span class="nv">conjunctions</span><span class="kd">=:</span> <span class="m">:.</span> <span class="m">::</span> <span class="m">.:</span> <span class="m">.</span> <span class="m">:</span>
+<span class="nv">verbs</span><span class="o">=:</span> <span class="o">}.</span> <span class="o">{.</span> <span class="o">^</span> <span class="o">^.</span> <span class="o">[</span> <span class="o">]</span> <span class="o">[:</span> <span class="o">|</span> <span class="o">|:</span>
+<span class="nv">adverbs</span><span class="o">=:</span> <span class="o">}</span> <span class="o">/.</span> <span class="o">+/</span> <span class="o">\.</span> <span class="nv">b</span><span class="o">.</span> <span class="nv">t</span><span class="o">:</span> <span class="o">~</span>
+<span class="nv">conjunctions</span><span class="o">=:</span> <span class="o">^:</span> <span class="o">&amp;</span> <span class="o">&amp;.</span> <span class="o">&amp;:</span> <span class="o">&amp;.:</span> <span class="o">@</span> <span class="o">@.</span> <span class="o">@:</span> <span class="nv">d</span><span class="o">.</span> <span class="nv">S</span><span class="o">:</span> <span class="o">+/</span><span class="nv">S</span><span class="o">:</span> <span class="o">;.</span><span class="il">_2</span> <span class="o">;.</span>
+<span class="nv">conjunctions</span><span class="o">=:</span> <span class="o">:.</span> <span class="o">::</span> <span class="o">.:</span> <span class="o">.</span> <span class="o">:</span>
 <span class="s">&#39;this is a string that&#39;&#39;s got doubled quotes&#39;</span>
 <span class="s">&#39;this is a string NB. that contains a comment code&#39;</span>
 <span class="c1">NB. and this &#39;is a string in a comment&#39;</span>
-<span class="nv">runningsum</span><span class="kd">=:</span> <span class="m">+/\</span> <span class="m">!</span> <span class="m">$:</span> <span class="m">_:</span>
-<span class="nv">nouns</span><span class="kd">=:</span> <span class="nv">a</span><span class="m">:</span> <span class="m">;</span> <span class="k">a.</span> <span class="m">;</span> <span class="m">_.</span> <span class="m">;</span> <span class="nv">a</span>
-<span class="nv">freadblks</span><span class="kd">=:</span> <span class="nl">1 : 0</span>
+<span class="nv">runningsum</span><span class="o">=:</span> <span class="o">+/\</span> <span class="o">!</span> <span class="o">$:</span> <span class="m">_</span><span class="o">:</span>
+<span class="nv">nouns</span><span class="o">=:</span> <span class="nv">a</span><span class="o">:</span> <span class="o">;</span> <span class="nv">a</span><span class="o">.</span> <span class="o">;</span> <span class="m">_</span><span class="o">.</span> <span class="o">;</span> <span class="nv">a</span>
+<span class="nv">freadblks</span><span class="o">=:</span> <span class="nf">1 : 0</span>
   <span class="s">&#39;&#39;</span> <span class="nd">u</span> <span class="nv">freadblks</span> <span class="nd">y</span>
-<span class="m">:</span>
-  <span class="s">&#39;fn blksz&#39;</span><span class="kd">=.</span> <span class="m">2 {.</span> <span class="m">(</span><span class="nv">boxopen</span> <span class="nd">y</span><span class="m">),&lt;</span> <span class="m">8e6</span>
-  <span class="s">&#39;fngo fnmo&#39;</span><span class="kd">=.</span> <span class="m">(</span><span class="nv">boxopen</span> <span class="nd">x</span><span class="m">)</span> <span class="m">,</span> <span class="m">&amp;.&gt;</span>  <span class="s">&#39;_gsr-genotypes.txt&#39;</span><span class="m">;</span><span class="s">&#39;_marker-map.txt&#39;</span>
-  <span class="nv">sz</span><span class="kd">=.</span> <span class="nv">fsize</span> <span class="nv">fn</span>
-  <span class="nv">strt</span><span class="kd">=.</span> <span class="m">0 0.9</span>
-  <span class="nl">assert.</span> <span class="nv">sz</span> <span class="m">&gt;</span> <span class="nv">strt</span>
-  <span class="nv">blk</span><span class="kd">=.</span> <span class="nv">blksz</span> <span class="m">&lt;.</span> <span class="nv">sz</span> <span class="m">-</span> <span class="nv">strt</span>        <span class="c1">NB. handle single/last block</span>
-  <span class="nv">blockdat</span><span class="kd">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">blk</span>    <span class="c1">NB. read first block</span>
-  <span class="nv">res</span><span class="kd">=.</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
-  <span class="nl">while.</span> <span class="nv">sz</span> <span class="m">&gt;</span> <span class="nv">strt</span><span class="kd">=.</span> <span class="nv">strt</span> <span class="m">+</span> <span class="nv">blksz</span> <span class="nl">do.</span>
-    <span class="nv">blk</span><span class="kd">=.</span> <span class="nv">blksz</span> <span class="m">&lt;.</span> <span class="nv">sz</span> <span class="m">-</span> <span class="nv">strt</span>      <span class="c1">NB. handle last block</span>
-    <span class="nv">blockdat</span><span class="kd">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="m">;</span><span class="nv">strt</span><span class="m">,</span><span class="nv">blk</span>  <span class="c1">NB. read remaining blocks</span>
-    <span class="nv">res</span><span class="kd">=.</span> <span class="nv">res</span><span class="m">,</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
+<span class="o">:</span>
+  <span class="s">&#39;fn blksz&#39;</span><span class="o">=.</span> <span class="il">2</span> <span class="o">{.</span> <span class="p">(</span><span class="nv">boxopen</span> <span class="nv">y</span><span class="p">)</span><span class="o">,&lt;</span> <span class="m">8e6</span>
+  <span class="s">&#39;fngo fnmo&#39;</span><span class="o">=.</span> <span class="p">(</span><span class="nv">boxopen</span> <span class="nv">x</span><span class="p">)</span> <span class="o">,</span> <span class="o">&amp;.&gt;</span>  <span class="s">&#39;_gsr-genotypes.txt&#39;</span><span class="o">;</span><span class="s">&#39;_marker-map.txt&#39;</span>
+  <span class="nv">sz</span><span class="o">=.</span> <span class="nv">fsize</span> <span class="nv">fn</span>
+  <span class="nv">strt</span><span class="o">=.</span> <span class="il">0</span> <span class="mf">0.</span><span class="il">9</span>
+  <span class="nl">assert.</span> <span class="nv">sz</span> <span class="o">&gt;</span> <span class="nv">strt</span>
+  <span class="nv">blk</span><span class="o">=.</span> <span class="nv">blksz</span> <span class="o">&lt;.</span> <span class="nv">sz</span> <span class="o">-</span> <span class="nv">strt</span>        <span class="c1">NB. handle single/last block</span>
+  <span class="nv">blockdat</span><span class="o">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="o">;</span><span class="nv">strt</span><span class="o">,</span><span class="nv">blk</span>    <span class="c1">NB. read first block</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
+  <span class="nl">while.</span> <span class="nv">sz</span> <span class="o">&gt;</span> <span class="nv">strt</span><span class="o">=.</span> <span class="nv">strt</span> <span class="o">+</span> <span class="nv">blksz</span> <span class="nl">do.</span>
+    <span class="nv">blk</span><span class="o">=.</span> <span class="nv">blksz</span> <span class="o">&lt;.</span> <span class="nv">sz</span> <span class="o">-</span> <span class="nv">strt</span>      <span class="c1">NB. handle last block</span>
+    <span class="nv">blockdat</span><span class="o">=.</span> <span class="nv">fread</span> <span class="nv">fn</span><span class="o">;</span><span class="nv">strt</span><span class="o">,</span><span class="nv">blk</span>  <span class="c1">NB. read remaining blocks</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">res</span><span class="o">,</span> <span class="nd">x</span> <span class="nd">u</span> <span class="nv">blockdat</span>
   <span class="nl">end.</span>
   <span class="nv">res</span>
-<span class="m">)</span>
+<span class="nl">)</span>
 
- <span class="nv">t</span><span class="kd">=:</span> <span class="c1">0    Note &#39;an alternative single line comment&#39;</span>
-<span class="m">(</span><span class="nv">myname</span> <span class="m">-</span> <span class="m">56.3)%4.3</span>
-<span class="nd">u</span> <span class="nd">v</span> <span class="nd">x</span> <span class="nd">y</span> <span class="nd">n</span> <span class="nd">m</span>  <span class="c1">NB. only special meaning inside explicit defn</span>
-<span class="nv">myverb</span><span class="kd">=:</span> <span class="nl">verb define</span>
-  <span class="nv">dostuff</span><span class="kd">=.</span> <span class="m">*:</span><span class="nd">y</span>
-  <span class="nv">for_xyz</span><span class="m">.</span> <span class="k">i.</span> <span class="m">12</span> <span class="nl">do.</span>
+ <span class="nv">t</span><span class="o">=:</span> <span class="il">0</span><span class="c1">    Note &#39;an alternative single line comment&#39;</span>
+<span class="p">(</span><span class="nv">myname</span> <span class="o">-</span> <span class="m">56</span><span class="o">.</span><span class="il">3</span><span class="p">)</span><span class="o">%</span><span class="mf">4.</span><span class="il">3</span>
+<span class="nv">u</span> <span class="nv">v</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">n</span> <span class="nv">m</span>  <span class="c1">NB. only special meaning inside explicit defn</span>
+<span class="nv">myverb</span><span class="o">=:</span> <span class="nf">verb define</span>
+  <span class="nv">dostuff</span><span class="o">=.</span> <span class="o">*:</span><span class="nd">y</span>
+  <span class="nv">for_xyz</span><span class="o">.</span> <span class="nv">i</span><span class="o">.</span> <span class="m">12</span> <span class="nl">do.</span>
     <span class="nv">echo</span> <span class="nv">xyz</span>
   <span class="nl">end.</span>
   <span class="nd">v</span> <span class="nd">x</span> <span class="nd">y</span> <span class="nd">n</span> <span class="nd">m</span>  <span class="c1">NB. only special meaning inside explicit defn</span>
-  <span class="m">&lt;;._2</span> <span class="nd">x</span>
-<span class="m">)</span>
+  <span class="o">&lt;;.</span><span class="il">_2</span> <span class="nd">x</span>
+<span class="nl">)</span>
  
- <span class="nv">mynoun</span><span class="kd">=:</span> <span class="nl">noun define</span><span class="s"></span>
+ <span class="nv">mynoun</span><span class="o">=:</span> <span class="ni">noun define</span><span class="s"></span>
 <span class="s"> All this is a noun</span>
 <span class="s"> it is basically like a multi-line, (LF-delimited)</span>
 <span class="s">  string</span>
 <span class="nl">)</span>
  
- <span class="m">7 *</span> <span class="m">4 5</span> <span class="c1">6</span>
-<span class="c1">Note &#39;  tests&#39;  </span>
-<span class="nv">require</span> <span class="s">&#39;~/proj/lichdf/lic_hdf.ijs&#39;</span>
-<span class="nv">coinsert</span> <span class="s">&#39;lichdf&#39;</span>
-<span class="nv">tstmkrfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/testlichdf.markers.lichdf&#39;</span>
-<span class="nv">tstgenfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/testlichdf.genotypes.lichdf&#39;</span>
-<span class="nv">tstGSRmapfn</span><span class="kd">=:</span> <span class="s">&#39;~/proj/testdata/nofortran0_imp_marker-map.txt&#39;</span>
- <span class="m">(</span><span class="nv">asjlj</span> <span class="m">)</span>
-<span class="nv">parseGSRmap</span> <span class="nv">freadLFblks</span> <span class="nv">tstGSRmapfn</span><span class="m">;9000</span>
-<span class="m">)</span>
+ <span class="il">7</span> <span class="o">*</span> <span class="il">4</span> <span class="il">5</span> <span class="il">6</span><span class="cm"></span>
+<span class="cm">Note &#39;  tests&#39;  </span>
+<span class="cm">require &#39;~/proj/lichdf/lic_hdf.ijs&#39;</span>
+<span class="cm">coinsert &#39;lichdf&#39;</span>
+<span class="cm">tstmkrfn=: &#39;~/proj/testdata/testlichdf.markers.lichdf&#39;</span>
+<span class="cm">tstgenfn=: &#39;~/proj/testdata/testlichdf.genotypes.lichdf&#39;</span>
+<span class="cm">tstGSRmapfn=: &#39;~/proj/testdata/nofortran0_imp_marker-map.txt&#39;</span>
+<span class="cm"> (asjlj )</span>
+<span class="cm">parseGSRmap freadLFblks tstGSRmapfn;9000</span>
+<span class="cm">)</span>
 
-<span class="s">&#39;If the above Note closed OK then this is a string&#39;</span>
+<span class="s">&#39;If the above Note closed OK then this is a string&#39;</span><span class="cm"></span>
 
-  <span class="cm">Note &#39;test multiline&#39;</span>
+<span class="cm">  Note &#39;test multiline&#39;</span>
 <span class="cm">The definition for start of multiline comment should allow</span>
 <span class="cm">whitespace between start of line and Note</span>
 <span class="cm">)</span>
- 
+<span class="cm"> </span>
 <span class="cm">Note 90</span>
 <span class="cm">getMarkernames freadLFblks tstmkrfn</span>
 <span class="cm">parseMarkers freadLFblks tstmkrfn</span>
