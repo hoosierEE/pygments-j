@@ -46,7 +46,7 @@ class JLexer(RegexLexer):
 
             # Flow Control
             (words(( 'for_', 'goto_', 'label_'), suffix=validName+'\.'), Name.Label),
-            (words(
+            (words((
                 'assert', 'break', 'case', 'catch', 'catchd',
                 'catcht', 'continue', 'do', 'else', 'elseif',
                 'end', 'fcase', 'for', 'if', 'return',
@@ -57,7 +57,7 @@ class JLexer(RegexLexer):
             (validName, Name.Variable),
 
             # Standard Library
-            (words(
+            (words((
                 'ARGV', 'CR', 'CRLF', 'DEL', 'Debug',
                 'EAV', 'EMPTY', 'FF', 'JVERSION', 'LF',
                 'LF2', 'Note', 'TAB', 'alpha17', 'alpha27',
@@ -81,13 +81,13 @@ class JLexer(RegexLexer):
                 'timex', 'tmoutput', 'toCRLF', 'toHOST', 'toJ',
                 'tolower', 'toupper', 'type', 'ucp', 'ucpcount',
                 'usleep', 'utf8', 'uucp',
-                ), Name.Builtin),
+                )), Name.Builtin),
 
             # Copula
             (r'=[.:]', Operator),
 
             # Builtins
-            (r'[-=+*$%@!~`^&";:.,<>{}\[\]\\|/]', Operator),
+            (r'[-=+*#$%@!~`^&";:.,<>{}\[\]\\|/]', Operator),
 
             # Short Keywords
             (r'[abCdDeEfHiIjLMoprtT]\.',  Keyword.Reserved),
@@ -122,7 +122,8 @@ class JLexer(RegexLexer):
             (r'\b_{1,2}\b', Number),
             (r'_?\d+(\s*[ejr]\s*)?_?\d+', Number),
             (r'_?\d+\.(?=\d+)', Number.Float),
-            (r'_?\d+x?', Number.Integer.Long),
+            (r'_?\d+x', Number.Integer.Long),
+            (r'_?\d+', Number.Integer),
         ],
 
         'nounDefinition': [
@@ -133,6 +134,8 @@ class JLexer(RegexLexer):
 
         'parentheses': [
             (r'\)', Punctuation, '#pop'),
+            include('nounDefinition'),
+            include('explicitDefinition'),
             include('root'),
         ],
 
