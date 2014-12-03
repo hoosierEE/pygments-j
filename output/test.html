@@ -78,87 +78,1113 @@ body .il { color: #666666 } /* Literal.Number.Integer.Long */
 <body>
 <h2></h2>
 
-<div class="highlight"><pre><span class="cp">#!/usr/bin/jc</span>
+<div class="highlight"><pre><span class="nv">cocurrent</span> <span class="s">&#39;jpacman&#39;</span>
+<span class="nv">coinsert</span> <span class="s">&#39;j&#39;</span>
 
-<span class="c1">NB. Noun definition. Everything between the 0 :0 and the ) by itself is a string.</span>
-<span class="ni">0 :0</span><span class="s"></span>
-<span class="s">Extra Simple Mortgage Calculator</span>
-<span class="s">================================</span>
-<span class="s">Input: House Cost in dollars</span>
-<span class="s">Output: Monthly payment to fully amortize the loan, with the following assumptions:</span>
-<span class="s">1. Down payment: $10k</span>
-<span class="s">2. Annual interest rate: 5%</span>
-<span class="s">3. Loan term: 15 years</span>
+<span class="nv">BASELIB</span><span class="o">=:</span> <span class="s">&#39;base library&#39;</span>
+<span class="nv">DATAMASK</span><span class="o">=:</span> <span class="mi">0</span>
+<span class="nv">HWNDP</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+<span class="nv">ISGUI</span><span class="o">=:</span> <span class="mi">0</span>
+<span class="nv">ONLINE</span><span class="o">=:</span> <span class="mi">0</span>
+<span class="nv">PKGDATA</span><span class="o">=:</span> <span class="mi">0</span> <span class="mi">7</span><span class="o">$</span><span class="nv">a</span><span class="o">:</span>
+<span class="nv">SECTION</span><span class="o">=:</span> <span class="o">,&lt;</span><span class="s">&#39;All&#39;</span>
+<span class="nv">SYSNAME</span><span class="o">=:</span> <span class="s">&#39;Package Manager&#39;</span>
+<span class="nv">TIMEOUT</span><span class="o">=:</span> <span class="mi">60</span>
+<span class="nv">WWWREV</span><span class="o">=:</span> <span class="nv">REV</span><span class="o">=:</span> <span class="mi">_1</span>
+
+<span class="nv">IgnoreIOS</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">api/jni</span>
+<span class="s">data/dbman</span>
+<span class="s">data/ddmysql</span>
+<span class="s">data/odbc</span>
+<span class="s">demos/isigraph</span>
+<span class="s">demos/wd</span>
+<span class="s">demos/wdplot</span>
+<span class="s">games/minesweeper</span>
+<span class="s">games/nurikabe</span>
+<span class="s">games/pousse</span>
+<span class="s">games/solitaire</span>
+<span class="s">general/pcall</span>
+<span class="s">general/sfl</span>
+<span class="s">graphics/d3</span>
+<span class="s">graphics/fvj3</span>
+<span class="s">graphics/gl2</span>
+<span class="s">graphics/gnuplot</span>
+<span class="s">graphics/graph</span>
+<span class="s">graphics/graphviz</span>
+<span class="s">graphics/jturtle</span>
+<span class="s">graphics/print</span>
+<span class="s">graphics/tgsj</span>
+<span class="s">graphics/treemap</span>
+<span class="s">graphics/viewmat</span>
+<span class="s">gui/monthview</span>
+<span class="s">gui/util</span>
+<span class="s">ide/qt</span>
+<span class="s">math/tabula</span>
+<span class="s">media/animate</span>
+<span class="s">media/gdiplus</span>
+<span class="s">media/image3</span>
+<span class="s">media/ming</span>
+<span class="s">media/paint</span>
+<span class="s">media/wav</span>
 <span class="nl">)</span>
 
-<span class="c1">NB. some assigments. =. is local/private, =: is global/public.</span>
-<span class="nv">downPayment</span> <span class="o">=.</span> <span class="m">10000</span>
-<span class="nv">monthlyRate</span> <span class="o">=.</span> <span class="mf">0.</span><span class="m">05</span> <span class="o">%</span> <span class="m">12</span>
-<span class="nv">loanMonths</span>  <span class="o">=.</span> <span class="m">15</span> <span class="o">*</span> <span class="m">12</span>
-<span class="nv">houseAmount</span> <span class="o">=.</span> <span class="o">&quot;.&gt;}.}.</span><span class="nv">ARGV</span> <span class="c1">NB. get the input arguments</span>
-<span class="nv">loanAmount</span>  <span class="o">=.</span> <span class="nv">houseAmount</span> <span class="o">-</span> <span class="nv">downPayment</span><span class="cm"></span>
-
-<span class="cm">Note &#39;a note&#39;</span>
-<span class="cm">a multiline note should count as a comment</span>
-<span class="cm">until it reaches a closing ) on a line by itself.</span>
-<span class="cm">)</span>
-
-<span class="cm">  Note &#39;notes&#39;</span>
-<span class="cm">can start with whitespace</span>
-<span class="cm">)</span>
-
-
-<span class="c1">NB. a noun definition may be named</span>
-<span class="nv">explanation</span> <span class="o">=.</span> <span class="ni">0 : 0</span><span class="s"></span>
-<span class="s">Monthly Payment Formula</span>
-<span class="s">=======================</span>
-<span class="s">P = L((c(1 + c)^n) / (1 + c)^n - 1)</span>
-<span class="s">where</span>
-<span class="s">P = monthly payment</span>
-<span class="s">L = loan amount</span>
-<span class="s">c = monthly interest (i.e. APR divided by 12)</span>
-<span class="s">n = number of payments (same as number of months)</span>
-<span class="nl">)</span>
-
-<span class="c1">NB. Ackerman&#39;s function; because why not?</span>
-<span class="nv">Ack</span> <span class="o">=:</span> <span class="nf">4 : 0</span>
-<span class="c1">NB. Ack =: verb define</span>
-<span class="nl">if.</span>     <span class="nd">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="nl">do.</span> <span class="nd">y</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">NB. a comment at the end</span>
-<span class="nl">elseif.</span> <span class="nd">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="nl">do.</span> <span class="p">(</span><span class="s">x - 1</span><span class="p">)</span> <span class="nv">Ack</span> <span class="mi">1</span>
-<span class="c1">NB. a comment in the middle!</span>
-<span class="nl">elseif.</span> <span class="mi">1</span>     <span class="nl">do.</span> <span class="p">(</span><span class="s">x - 1</span><span class="p">)</span> <span class="nv">Ack</span> <span class="p">(</span><span class="s">x Ack y - 1</span><span class="p">)</span>
+<span class="nv">Ignore</span><span class="o">=:</span> <span class="nf">3 : 0</span><span class="s">&#39;&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFIOS</span> <span class="nl">do.</span>
+  <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nv">IgnoreIOS</span>
+<span class="nl">else.</span>
+  <span class="o">&lt;</span><span class="s">&#39;ide/ios&#39;</span>
 <span class="nl">end.</span>
 <span class="nl">)</span>
-<span class="nv">echo</span> <span class="mi">2</span> <span class="nv">Ack</span> <span class="mi">3</span> <span class="c1">NB. 9</span>
+<span class="nf">3 : 0</span><span class="s">&#39;&#39;</span>
+<span class="nv">nc</span><span class="o">=.</span> <span class="s">&#39;--no-cache&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFUNIX</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="nv">UNAME</span><span class="o">-:</span><span class="s">&#39;Darwin&#39;</span> <span class="nl">do.</span>
+    <span class="nv">HTTPCMD</span><span class="o">=:</span> <span class="s">&#39;curl -o %O --stderr %L -f -s -S %U&#39;</span>
+  <span class="nl">elseif.</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="s">&#39;Android&#39;</span><span class="o">-:</span><span class="nv">UNAME</span> <span class="nl">do.</span> <span class="nv">nc</span><span class="o">=.</span> <span class="s">&#39;&#39;</span>
+    <span class="nl">else.</span> <span class="nl">try.</span> <span class="nv">nc</span><span class="o">=.</span> <span class="nv">nc</span> <span class="o">#~</span> <span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">nc</span> <span class="nv">E</span><span class="o">.</span> <span class="nv">shell</span> <span class="s">&#39;wget --help&#39;</span> <span class="nl">catch.</span> <span class="nv">nc</span><span class="o">=.</span> <span class="s">&#39;&#39;</span> <span class="nl">end.</span> <span class="nl">end.</span>
+    <span class="nv">HTTPCMD</span><span class="o">=:</span> <span class="s">&#39;wget &#39;</span><span class="o">,</span><span class="nv">nc</span><span class="o">,</span><span class="s">&#39; -O %O -o %L -t %t %U&#39;</span>
+  <span class="nl">end.</span>
+<span class="nl">else.</span>
+  <span class="nl">if.</span> <span class="nv">fexist</span> <span class="nv">exe</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~tools/ftp/wget.exe&#39;</span> <span class="nl">do.</span> <span class="nv">exe</span><span class="o">=.</span> <span class="s">&#39;&quot;&#39;</span><span class="o">,</span><span class="nv">exe</span><span class="o">,</span><span class="s">&#39;&quot;&#39;</span> <span class="nl">else.</span> <span class="nv">exe</span><span class="o">=.</span> <span class="s">&#39;wget.exe&#39;</span> <span class="nl">end.</span>
+  <span class="nl">try.</span> <span class="nv">nc</span><span class="o">=.</span> <span class="nv">nc</span> <span class="o">#~</span> <span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">nc</span> <span class="nv">E</span><span class="o">.</span> <span class="nv">shell</span> <span class="nv">exe</span><span class="o">,</span><span class="s">&#39; --help&#39;</span> <span class="nl">catch.</span> <span class="nv">nc</span><span class="o">=.</span> <span class="s">&#39;&#39;</span> <span class="nl">end.</span>
+  <span class="nv">HTTPCMD</span><span class="o">=:</span> <span class="nv">exe</span><span class="o">,</span><span class="s">&#39; &#39;</span><span class="o">,</span><span class="nv">nc</span><span class="o">,</span><span class="s">&#39; -O %O -o %L -t %t -T %T %U&#39;</span>
+  <span class="nl">if.</span> <span class="nv">fexist</span> <span class="nv">UNZIP</span><span class="o">=:</span> <span class="nv">jpath</span> <span class="s">&#39;~tools/zip/unzip.exe&#39;</span> <span class="nl">do.</span> <span class="nv">UNZIP</span><span class="o">=:</span> <span class="s">&#39;&quot;&#39;</span><span class="o">,</span><span class="nv">UNZIP</span><span class="o">,</span><span class="s">&#39;&quot; -o -C &#39;</span> <span class="nl">else.</span> <span class="nv">UNZIP</span><span class="o">=:</span> <span class="s">&#39;unzip.exe -o -C &#39;</span> <span class="nl">end.</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">setfiles</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ADDCFG</span><span class="o">=:</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/config/&#39;</span>
+<span class="nv">makedir</span> <span class="nv">ADDCFG</span>
+<span class="nv">ADDCFGIJS</span><span class="o">=:</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;config.ijs&#39;</span>
+<span class="nv">JRELEASE</span><span class="o">=:</span> <span class="p">(</span><span class="o">{.~</span><span class="nv">i</span><span class="o">.&amp;</span><span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="mi">9</span><span class="o">!:</span><span class="mi">14</span><span class="s">&#39;&#39;</span>
+<span class="nv">JRELEASE</span><span class="o">=:</span> <span class="s">&#39;j802&#39;</span>
+<span class="nv">LIBTREE</span><span class="o">=:</span> <span class="nv">readtree</span><span class="s">&#39;&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFIOS</span> <span class="nl">do.</span>
+  <span class="nv">WWW</span><span class="o">=:</span> <span class="s">&#39;/jal/&#39;</span><span class="o">,</span><span class="nv">JRELEASE</span><span class="o">,</span><span class="s">&#39;/&#39;</span>
+<span class="nl">else.</span>
+  <span class="nv">WWW</span><span class="o">=:</span> <span class="s">&#39;http://www.jsoftware.com/jal/&#39;</span><span class="o">,</span><span class="nv">JRELEASE</span><span class="o">,</span><span class="s">&#39;/&#39;</span>
+<span class="nl">end.</span>
+<span class="nv">LIBVER</span><span class="o">=:</span> <span class="nv">jpath</span> <span class="s">&#39;~system/config/version.txt&#39;</span>
+<span class="nl">)</span>
+<span class="nv">destroy</span><span class="o">=:</span> <span class="nv">codestroy</span>
+<span class="nv">CFGFILES</span><span class="o">=:</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="p">(</span><span class="ni">0 : 0</span><span class="s">)</span>
+<span class="s">addons.txt</span>
+<span class="s">library.txt</span>
+<span class="s">release.txt</span>
+<span class="s">revision.txt</span>
+<span class="s">zips.txt</span>
+<span class="nl">)</span>
+<span class="nv">LIBDESC</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">This is the base library of scripts and labs included in the J system.</span>
 
-<span class="c1">NB. Some valid expressions.</span>
-<span class="nv">i</span><span class="o">.</span><span class="mi">7</span>
-<span class="nv">num0</span> <span class="o">=.</span> <span class="m">10j4</span> <span class="c1">NB. imaginary</span>
-<span class="nv">num0</span> <span class="o">=.</span> <span class="mf">1.</span><span class="m">0j4</span>
-<span class="nv">num0</span> <span class="o">=.</span> <span class="m">9j_3</span>
-<span class="nv">num0</span> <span class="o">=.</span> <span class="m">38</span><span class="o">.</span><span class="m">9j_12</span><span class="o">.</span><span class="mi">3</span>
-<span class="nv">num1</span> <span class="o">=.</span> <span class="m">10e3</span> <span class="c1">NB. scientific notation</span>
-<span class="nv">num4</span> <span class="o">=.</span> <span class="m">_</span> <span class="c1">NB. infinity</span>
-<span class="nv">num4</span> <span class="o">=.</span> <span class="m">__</span> <span class="c1">NB. negative infinity</span>
-<span class="nv">num4</span> <span class="o">=.</span> <span class="m">_10</span><span class="err">x</span>
-<span class="nv">num4</span> <span class="o">=.</span> <span class="m">10</span><span class="err">x</span>
-<span class="c1">NB. ill-formed numbers and syntax errors</span>
-<span class="nv">num5</span> <span class="o">=.</span> <span class="m">10</span><span class="o">.</span><span class="il">3x</span>
-<span class="nv">num5</span> <span class="o">=.</span> <span class="err">___</span>
-<span class="nv">num5</span> <span class="o">=.</span> <span class="err">________</span>
+<span class="s">Reinstalling or upgrading this library will overwrite files in the system subdirectory. Restart J afterwards.</span>
 
+<span class="s">Files outside the system subdirectory, such as profile.ijs, are not changed.</span>
+<span class="nl">)</span>
+<span class="nv">cutjal</span><span class="o">=:</span> <span class="p">(</span><span class="o">[:</span> <span class="p">(</span><span class="o">*</span> <span class="mi">4</span> <span class="o">&gt;</span> <span class="o">+/\</span><span class="p">)</span> <span class="s">&#39; &#39;</span> <span class="o">=</span> <span class="o">]</span><span class="p">)</span> <span class="o">&lt;;.</span><span class="mi">_1</span> <span class="o">]</span>
+<span class="nv">cutjsp</span><span class="o">=:</span> <span class="p">(</span><span class="o">[:</span> <span class="p">(</span><span class="o">*</span> <span class="mi">5</span> <span class="o">&gt;</span> <span class="o">+/\</span><span class="p">)</span> <span class="s">&#39; &#39;</span> <span class="o">=</span> <span class="o">]</span><span class="p">)</span> <span class="o">&lt;;.</span><span class="mi">_1</span> <span class="o">]</span>
+<span class="nv">dquote</span><span class="o">=:</span> <span class="s">&#39;&quot;&#39;</span><span class="o">&amp;,</span> <span class="o">@</span> <span class="p">(</span><span class="o">,&amp;</span><span class="s">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="nv">fname</span><span class="o">=:</span> <span class="o">#~</span> <span class="p">(</span><span class="o">[:</span> <span class="o">*./\.</span> <span class="o">~:&amp;</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="nv">hostcmd</span><span class="o">=:</span> <span class="o">[:</span> <span class="mi">2</span><span class="o">!:</span><span class="mi">0</span> <span class="s">&#39;(&#39;</span> <span class="o">,</span> <span class="o">]</span> <span class="o">,</span> <span class="s">&#39; || true)&#39;</span><span class="o">&quot;</span><span class="m">_</span>
+<span class="nv">ischar</span><span class="o">=:</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">3</span><span class="o">!:</span><span class="mi">0</span>
+<span class="nv">rnd</span><span class="o">=:</span> <span class="o">[</span> <span class="o">*</span> <span class="o">[:</span> <span class="o">&lt;.</span> <span class="mf">0.</span><span class="mi">5</span> <span class="o">+</span> <span class="o">%~</span>
+<span class="nv">sep2under</span><span class="o">=:</span> <span class="s">&#39;/&#39;</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nv">I</span><span class="o">.@</span><span class="p">(</span><span class="s">&#39;_&#39;</span> <span class="o">=</span> <span class="o">]</span><span class="p">)</span><span class="o">}</span><span class="p">)</span>
+<span class="nv">termLF</span><span class="o">=:</span> <span class="o">,</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="o">#</span><span class="p">)</span> <span class="o">#</span> <span class="nv">LF</span> <span class="o">-.</span> <span class="o">{:</span>
+<span class="nv">todel</span><span class="o">=:</span> <span class="o">;</span> <span class="o">@:</span> <span class="p">(</span><span class="nv">DEL</span><span class="o">&amp;,</span> <span class="o">@</span> <span class="p">(</span><span class="o">,&amp;</span><span class="p">(</span><span class="nv">DEL</span><span class="o">,</span><span class="s">&#39; &#39;</span><span class="p">))</span> <span class="nv">each</span><span class="p">)</span>
+<span class="nv">tolist</span><span class="o">=:</span> <span class="o">}.</span> <span class="o">@</span> <span class="o">;</span> <span class="o">@:</span> <span class="p">(</span><span class="nv">LF</span><span class="o">&amp;,@,@&quot;:</span><span class="nv">each</span><span class="p">)</span>
+<span class="nv">isjpkgout</span><span class="o">=:</span> <span class="p">((</span><span class="mi">4</span> <span class="o">=</span> <span class="o">{:</span><span class="p">)</span> <span class="o">*.</span> <span class="mi">2</span> <span class="o">=</span> <span class="o">#</span><span class="p">)</span><span class="o">@$</span> <span class="o">*.</span> <span class="mi">1</span> <span class="o">=</span> <span class="nv">L</span><span class="o">.</span>
+<span class="nv">getintro</span><span class="o">=:</span> <span class="p">(</span><span class="s">&#39;...&#39;</span> <span class="o">,~</span> <span class="o">-&amp;</span><span class="mi">3</span><span class="o">@[</span> <span class="o">{.</span> <span class="o">]</span><span class="p">)</span><span class="o">^:</span><span class="p">(</span><span class="o">&lt;#</span><span class="p">)</span>
+<span class="nv">info</span><span class="o">=:</span> <span class="nv">smoutput</span>
+<span class="nv">getnames</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">select.</span> <span class="nv">L</span><span class="o">.</span><span class="nd">y</span>
+<span class="nl">case.</span> <span class="mi">0</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="o">+/</span> <span class="nv">BASELIB</span> <span class="nv">E</span><span class="o">.</span> <span class="nd">y</span> <span class="nl">do.</span>
+    <span class="nd">y</span><span class="o">=.</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">BASELIB</span><span class="p">)</span><span class="o">,</span> <span class="nv">cutnames</span> <span class="nd">y</span> <span class="nv">rplc</span> <span class="nv">BASELIB</span><span class="o">;</span><span class="s">&#39;&#39;</span>
+  <span class="nl">else.</span>
+    <span class="nd">y</span><span class="o">=.</span> <span class="nv">cutnames</span> <span class="nd">y</span>
+  <span class="nl">end.</span>
+<span class="nl">case.</span> <span class="mi">1</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="mi">2</span> <span class="o">=</span> <span class="o">#$</span><span class="nd">y</span> <span class="nl">do.</span>
+    <span class="nd">y</span><span class="o">=.</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nd">y</span>
+  <span class="nl">else.</span>
+    <span class="nd">y</span><span class="o">=.</span> <span class="o">,</span><span class="nd">y</span>
+  <span class="nl">end.</span>
+<span class="nl">case.</span> <span class="nl">do.</span>
+  <span class="s">&#39;&#39;</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">curtailcaption</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">idx</span><span class="o">=.</span> <span class="o">&lt;</span><span class="mi">_1</span><span class="o">;~</span><span class="nv">I</span><span class="o">.</span> <span class="mi">45</span><span class="o">&lt;#&amp;&gt;{:&quot;</span><span class="mi">1</span> <span class="nd">y</span>
+<span class="nd">y</span><span class="o">=.</span> <span class="p">(</span><span class="mi">45</span><span class="o">&amp;</span><span class="nv">getintro</span> <span class="o">&amp;.&gt;</span> <span class="nv">idx</span><span class="o">{</span><span class="nd">y</span><span class="p">)</span> <span class="nv">idx</span><span class="o">}</span><span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">deltree</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">try.</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="mi">0</span><span class="o">&lt;</span> <span class="nv">ferase</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">dirtree</span> <span class="nd">y</span>
+  <span class="o">*./</span> <span class="nv">res</span><span class="o">,</span><span class="mi">0</span><span class="o">&lt;</span><span class="nv">ferase</span> <span class="o">|.</span><span class="nv">dirpath</span> <span class="nd">y</span>
+<span class="nl">catch.</span> <span class="mi">0</span> <span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">fixjal</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">5</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nd">m</span><span class="o">=.</span> <span class="mi">_2</span> <span class="o">|.</span> <span class="p">(</span><span class="nv">LF</span><span class="o">,</span><span class="s">&#39;)&#39;</span><span class="o">,</span><span class="nv">LF</span><span class="p">)</span> <span class="nv">E</span><span class="o">.</span> <span class="nd">y</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="mi">_2</span> <span class="o">}.</span> <span class="nv">each</span> <span class="nd">m</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nd">x</span><span class="o">=.</span> <span class="nv">r</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="nv">LF</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="p">(</span><span class="nd">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">}.</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="nd">x</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="mi">3</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">cutjal</span> <span class="o">&amp;&gt;</span> <span class="s">&#39; &#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="nd">x</span><span class="o">=.</span> <span class="nv">d</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="nv">LF</span>
+<span class="nv">c</span><span class="o">=.</span> <span class="nd">x</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">d</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="p">(</span><span class="nd">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">}.</span><span class="nv">each</span> <span class="nv">d</span>
+<span class="nv">r</span><span class="o">,.</span><span class="nv">c</span><span class="o">,.</span><span class="nv">d</span>
+<span class="nl">)</span>
+<span class="nv">fixjal2</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">2</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">cutjal</span> <span class="o">&amp;&gt;</span> <span class="s">&#39; &#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fixjsp</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">5</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nd">m</span><span class="o">=.</span> <span class="mi">_2</span> <span class="o">|.</span> <span class="p">(</span><span class="nv">LF</span><span class="o">,</span><span class="s">&#39;)&#39;</span><span class="o">,</span><span class="nv">LF</span><span class="p">)</span> <span class="nv">E</span><span class="o">.</span> <span class="nd">y</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="mi">_2</span> <span class="o">}.</span> <span class="nv">each</span> <span class="nd">m</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nd">x</span><span class="o">=.</span> <span class="nv">r</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="nv">LF</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="p">(</span><span class="nd">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">}.</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="nd">x</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="s">&#39; &#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">r</span>
+<span class="p">(</span><span class="nv">cutjsp</span> <span class="o">&amp;&gt;</span> <span class="nv">r</span><span class="p">)</span><span class="o">,.</span><span class="nv">d</span>
+<span class="nl">)</span>
+<span class="nv">fixlib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">LIBTREE</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nd">y</span>
+<span class="nl">if.</span> <span class="o">-.</span> <span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">msk</span> <span class="nl">do.</span> <span class="p">(</span><span class="o">$</span><span class="mi">0</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;&#39;</span><span class="o">;</span><span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="s">&#39;ver fln siz&#39;</span><span class="o">=.</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">5</span> <span class="o">{</span> <span class="p">(</span><span class="nv">msk</span> <span class="nv">i</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span> <span class="o">{</span> <span class="nd">y</span>
+<span class="nv">ver</span><span class="o">=.</span> <span class="nv">fixver</span> <span class="nv">ver</span>
+<span class="nv">ver</span><span class="o">;</span><span class="nv">fln</span><span class="o">;</span><span class="nv">siz</span>
+<span class="nl">)</span>
+<span class="nv">fixlibs</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span>
+  <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">6</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">fls</span><span class="o">=.</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="nv">fls</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="s">&#39; &#39;</span>
+<span class="nv">siz</span><span class="o">=.</span> <span class="o">&lt;&amp;&gt;</span> <span class="mi">0</span> <span class="o">&quot;.</span> <span class="p">(</span><span class="nv">ndx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">}.&amp;&gt;</span> <span class="nv">fls</span>
+<span class="nv">fls</span><span class="o">=.</span> <span class="nv">ndx</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">fls</span>
+<span class="nv">zps</span><span class="o">=.</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="o">&amp;&gt;</span> <span class="nv">fls</span> <span class="o">,</span><span class="nv">each</span> <span class="s">&#39;_&#39;</span>
+<span class="nv">pfm</span><span class="o">=.</span> <span class="mi">3</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">uname</span><span class="o">=.</span> <span class="nv">tolower</span> <span class="nv">UNAME</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="p">(</span><span class="nv">uname</span> <span class="o">-:</span> <span class="p">(</span><span class="o">{.~</span> <span class="nv">i</span><span class="o">.&amp;</span><span class="s">&#39;.&#39;</span><span class="p">))</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nl">if.</span> <span class="mi">1</span> <span class="o">~:</span> <span class="o">+/</span><span class="nv">msk</span> <span class="nl">do.</span> <span class="nv">msk</span><span class="o">=.</span> <span class="mi">1</span><span class="o">,~</span> <span class="o">}:</span><span class="mi">0</span><span class="o">*.</span><span class="nv">msk</span> <span class="nl">end.</span>
+<span class="nv">msk</span> <span class="o">#</span> <span class="nv">zps</span><span class="o">,.</span><span class="nv">fls</span><span class="o">,.</span><span class="nv">siz</span>
+<span class="nl">)</span>
+<span class="nv">fixrev</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="o">{.</span> <span class="mi">_1</span> <span class="o">&quot;.</span> <span class="o">::</span> <span class="kc">_1:</span> <span class="nd">y</span> <span class="o">-.</span> <span class="nv">CRLF</span>
+<span class="nl">)</span>
+<span class="nv">fixupd</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="mi">_1</span> <span class="o">&quot;.</span> <span class="o">::</span> <span class="kc">_1:</span> <span class="nd">y</span> <span class="o">-.</span> <span class="nv">CRLF</span>
+<span class="nl">)</span>
+<span class="nv">fixver</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="nv">ischar</span> <span class="nd">y</span> <span class="nl">do.</span>
+  <span class="nd">y</span><span class="o">=.</span> <span class="nd">y</span> <span class="o">-.</span> <span class="nv">CRLF</span>
+  <span class="nd">y</span><span class="o">=.</span> <span class="mi">0</span> <span class="o">&quot;.</span> <span class="s">&#39; &#39;</span> <span class="p">(</span><span class="nv">I</span><span class="o">.</span> <span class="nd">y</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span> <span class="o">}</span> <span class="nd">y</span>
+<span class="nl">end.</span>
+<span class="mi">3</span> <span class="o">{.</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fixvers</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">s</span><span class="o">=.</span> <span class="o">$</span><span class="nd">y</span>
+<span class="nd">y</span><span class="o">=.</span> <span class="o">,</span><span class="nd">y</span>
+<span class="mi">3</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="o">[</span> <span class="mi">0</span> <span class="o">&quot;.</span> <span class="nv">s</span> <span class="o">$</span> <span class="s">&#39; &#39;</span> <span class="p">(</span><span class="nv">I</span><span class="o">.</span> <span class="nd">y</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;./&#39;</span><span class="p">)</span> <span class="o">}</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fmtjal</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="p">(</span><span class="mi">4</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&quot;</span><span class="mi">1</span> <span class="s">&#39;  &#39;</span><span class="o">,</span><span class="nv">LF2</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="o">&lt;@;</span> <span class="o">&quot;</span><span class="mi">1</span> <span class="nv">r</span>
+<span class="o">;</span> <span class="nv">r</span> <span class="o">,</span><span class="nv">each</span> <span class="p">(</span><span class="o">{:&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&lt;</span><span class="s">&#39;)&#39;</span><span class="o">,</span><span class="nv">LF</span>
+<span class="nl">)</span>
+<span class="nv">fmtjal2</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="o">;</span> <span class="p">(</span><span class="mi">2</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&quot;</span><span class="mi">1</span> <span class="s">&#39; &#39;</span><span class="o">,</span><span class="nv">LF</span>
+<span class="nl">)</span>
+<span class="nv">fmtdep</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="o">}.</span> <span class="o">;</span> <span class="s">&#39;,&#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">a</span><span class="o">:</span> <span class="o">-.~</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fmtjsp</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="p">(</span><span class="mi">4</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&quot;</span><span class="mi">1</span> <span class="s">&#39;   &#39;</span><span class="o">,</span><span class="nv">LF</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="o">&lt;@;</span> <span class="o">&quot;</span><span class="mi">1</span> <span class="nv">r</span>
+<span class="o">;</span> <span class="nv">r</span> <span class="o">,</span><span class="nv">each</span> <span class="p">(</span><span class="o">{:&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&lt;</span><span class="s">&#39;)&#39;</span><span class="o">,</span><span class="nv">LF</span>
+<span class="nl">)</span>
+<span class="nv">fmtlib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="o">,</span> <span class="s">&#39;q&lt;.&gt;,q&lt;.&gt;r&lt;0&gt;3.0,r&lt;0&gt;3.0&#39;</span> <span class="mi">8</span><span class="o">!:</span><span class="mi">2</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fmtver</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nl">if.</span> <span class="nv">ischar</span> <span class="nd">y</span> <span class="nl">do.</span> <span class="nd">y</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="o">}.</span> <span class="o">;</span> <span class="s">&#39;.&#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&quot;:</span> <span class="nv">each</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fmtverlib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">fmtver</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">fixzips</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">5</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">fls</span><span class="o">=.</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nd">y</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="nv">fls</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="s">&#39; &#39;</span>
+<span class="nv">siz</span><span class="o">=.</span> <span class="mi">0</span> <span class="o">&quot;.</span> <span class="p">(</span><span class="nv">ndx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">}.&amp;&gt;</span> <span class="nv">fls</span>
+<span class="nv">fls</span><span class="o">=.</span> <span class="nv">ndx</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">fls</span>
+<span class="nv">zps</span><span class="o">=.</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="o">&amp;&gt;</span> <span class="nv">fls</span> <span class="o">,</span><span class="nv">each</span> <span class="s">&#39;_&#39;</span>
+<span class="nv">zps</span><span class="o">=.</span> <span class="nv">zps</span><span class="o">,.</span><span class="nv">fls</span><span class="o">,.&lt;&amp;&gt;</span><span class="nv">siz</span>
+<span class="nv">pfm</span><span class="o">=.</span> <span class="mi">3</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">and</span><span class="o">=.</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;android&#39;</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nv">lnx</span><span class="o">=.</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;linux&#39;</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nv">mac</span><span class="o">=.</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;darwin&#39;</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nv">win</span><span class="o">=.</span> <span class="nv">mac</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;win&#39;</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
 
-<span class="c1">NB. the naive calculation:</span>
-<span class="nv">monthlyPayment</span> <span class="o">=.</span> <span class="nv">loanAmount</span> <span class="o">*</span> <span class="p">(</span><span class="s">(monthlyRate * (1 + monthlyRate</span><span class="p">)</span><span class="o">^</span><span class="nv">loanMonths</span><span class="err">)</span> <span class="o">%</span> <span class="p">(</span><span class="s">(1 + monthlyRate</span><span class="p">)</span><span class="o">^</span><span class="nv">loanMonths</span><span class="err">)</span> <span class="o">-</span> <span class="mi">1</span><span class="err">)</span>
+<span class="nl">select.</span> <span class="nv">UNAME</span>
+<span class="nl">case.</span> <span class="s">&#39;Win&#39;</span> <span class="nl">do.</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="nv">win</span> <span class="o">#</span> <span class="nv">zps</span>
+<span class="nl">case.</span> <span class="s">&#39;Linux&#39;</span> <span class="nl">do.</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="nv">lnx</span> <span class="o">#</span> <span class="nv">zps</span>
+<span class="nl">case.</span> <span class="s">&#39;Android&#39;</span> <span class="nl">do.</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="nv">and</span> <span class="o">#</span> <span class="nv">zps</span>
+<span class="nl">case.</span> <span class="s">&#39;Darwin&#39;</span> <span class="nl">do.</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="nv">mac</span> <span class="o">#</span> <span class="nv">zps</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="nv">zps</span> <span class="o">/:</span> <span class="mi">3</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+  <span class="nv">zps</span><span class="o">=.</span> <span class="p">(</span><span class="o">~:</span> <span class="mi">3</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">zps</span><span class="p">)</span> <span class="o">#</span> <span class="nv">zps</span>
+<span class="nl">end.</span>
 
-<span class="c1">NB. mildly refacored:</span>
-<span class="c1">NB. termInterest =. (1 + monthlyRate)^loanMonths</span>
-<span class="c1">NB. monthlyPayment =. loanAmount * ((monthlyRate * termInterest) % (termInterest - 1))</span>
+<span class="nv">bit</span><span class="o">=.</span> <span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;64&#39;</span><span class="o">;</span><span class="s">&#39;32&#39;</span>
+<span class="nv">pfm</span><span class="o">=.</span> <span class="mi">3</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">exc</span><span class="o">=.</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">bit</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nv">zps</span><span class="o">=.</span> <span class="nv">zps</span> <span class="o">\:</span> <span class="nv">exc</span>
+<span class="nv">zps</span><span class="o">=.</span> <span class="p">(</span><span class="o">~:</span> <span class="mi">3</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">zps</span><span class="p">)</span> <span class="o">#</span> <span class="nv">zps</span>
+<span class="nv">fnm</span><span class="o">=.</span> <span class="mi">0</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">lnm</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">ver</span><span class="o">=.</span> <span class="mi">2</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">pfm</span><span class="o">=.</span> <span class="mi">3</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">fls</span><span class="o">=.</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">siz</span><span class="o">=.</span> <span class="mi">5</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">zps</span>
+<span class="nv">nms</span><span class="o">=.</span> <span class="nv">fnm</span> <span class="o">,</span><span class="nv">each</span> <span class="s">&#39;/&#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">lnm</span>
+<span class="nv">pfm</span><span class="o">=.</span> <span class="p">(</span><span class="nv">pfm</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="s">&#39;.&#39;</span><span class="p">)</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">pfm</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="o">\:</span> <span class="o">#</span> <span class="o">&amp;&gt;</span> <span class="nv">pfm</span>
+<span class="nv">sort</span> <span class="nv">ndx</span> <span class="o">{</span> <span class="nv">nms</span><span class="o">,.</span><span class="nv">pfm</span><span class="o">,.</span><span class="nv">ver</span><span class="o">,.</span><span class="nv">fls</span><span class="o">,.</span><span class="nv">siz</span>
+<span class="nl">)</span>
+<span class="nv">fwritenew</span><span class="o">=:</span> <span class="nf">4 : 0</span>
+<span class="nl">if.</span> <span class="nd">x</span> <span class="o">-:</span> <span class="nv">fread</span> <span class="nd">y</span> <span class="nl">do.</span>
+  <span class="mi">0</span>
+<span class="nl">else.</span>
+  <span class="nd">x</span> <span class="nv">fwrite</span> <span class="nd">y</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">platformparent</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="p">((</span><span class="o">&lt;</span> <span class="mi">_2</span> <span class="o">{.</span> <span class="nd">y</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;32&#39;</span><span class="o">;</span><span class="s">&#39;64&#39;</span><span class="p">)</span> <span class="o">#</span> <span class="mi">_2</span> <span class="o">}.</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">makedir</span><span class="o">=:</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">5</span> <span class="o">::</span> <span class="mi">0</span><span class="o">:</span> <span class="o">@</span> <span class="o">&lt;</span>
+<span class="nv">plural</span><span class="o">=:</span> <span class="nf">4 : 0</span>
+<span class="nd">y</span><span class="o">,</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="nd">x</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;s&#39;</span>
+<span class="nl">)</span>
+<span class="nv">sizefmt</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">select.</span> <span class="o">+/</span> <span class="nd">y</span> <span class="o">&gt;:</span> <span class="m">1e3</span> <span class="m">1e4</span> <span class="m">1e6</span> <span class="m">1e7</span> <span class="m">1e9</span>
+<span class="nl">case.</span> <span class="mi">0</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="nd">y</span><span class="p">)</span><span class="o">,</span> <span class="s">&#39; byte&#39;</span><span class="o">,</span><span class="p">(</span><span class="nd">y</span><span class="o">~:</span><span class="mi">1</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;s&#39;</span>
+<span class="nl">case.</span> <span class="mi">1</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="mf">0.</span><span class="mi">1</span> <span class="nv">rnd</span> <span class="nd">y</span><span class="o">%</span><span class="m">1e3</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; KB&#39;</span>
+<span class="nl">case.</span> <span class="mi">2</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="mi">1</span> <span class="nv">rnd</span> <span class="nd">y</span><span class="o">%</span><span class="m">1e3</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; KB&#39;</span>
+<span class="nl">case.</span> <span class="mi">3</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="mf">0.</span><span class="mi">1</span> <span class="nv">rnd</span> <span class="nd">y</span><span class="o">%</span><span class="m">1e6</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; MB&#39;</span>
+<span class="nl">case.</span> <span class="mi">4</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="mi">1</span> <span class="nv">rnd</span> <span class="nd">y</span><span class="o">%</span><span class="m">1e6</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; MB&#39;</span>
+<span class="nl">case.</span> <span class="nl">do.</span>
+  <span class="p">(</span><span class="o">&quot;:</span> <span class="mf">0.</span><span class="mi">1</span> <span class="nv">rnd</span> <span class="nd">y</span><span class="o">%</span><span class="m">1e9</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; GB&#39;</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">shellcmd</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="nv">IFUNIX</span> <span class="nl">do.</span>
+  <span class="nv">hostcmd</span> <span class="nd">y</span>
+<span class="nl">else.</span>
+  <span class="nv">spawn_jtask_</span> <span class="nd">y</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">subdir</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">a</span><span class="o">=.</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">0</span> <span class="nd">y</span><span class="o">,</span><span class="s">&#39;*&#39;</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">a</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">a</span><span class="o">=.</span> <span class="nv">a</span> <span class="o">#~</span> <span class="s">&#39;-d&#39;</span> <span class="o">-:&quot;</span><span class="mi">1</span> <span class="o">[</span> <span class="mi">1</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">a</span>
+<span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="p">(</span><span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">a</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="s">&#39;/&#39;</span>
+<span class="nl">)</span>
+<span class="nv">testaccess</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">f</span><span class="o">=.</span> <span class="o">&lt;</span><span class="nv">jpath</span><span class="s">&#39;~install/testaccess.txt&#39;</span>
+<span class="nl">try.</span>
+  <span class="s">&#39;&#39;</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">2</span> <span class="nv">f</span>
+  <span class="mi">1</span><span class="o">!:</span><span class="mi">55</span> <span class="nv">f</span>
+  <span class="mi">1</span>
+<span class="nl">catch.</span>
+  <span class="mi">0</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">toupper1</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="p">(</span><span class="nv">toupper</span> <span class="o">{.</span> <span class="nd">y</span><span class="p">)</span><span class="o">,</span><span class="nv">tolower</span> <span class="o">}.</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">unzip</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="s">&#39;file dir&#39;</span><span class="o">=.</span> <span class="nv">dquote</span> <span class="nv">each</span> <span class="nd">y</span>
+<span class="nv">e</span><span class="o">=.</span> <span class="s">&#39;Unexpected unzip error&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFUNIX</span> <span class="nl">do.</span>
+  <span class="nv">notarcmd</span><span class="o">=.</span> <span class="mi">0</span>
+  <span class="nl">if.</span> <span class="nv">IFIOS</span> <span class="o">+.</span> <span class="nv">UNAME</span><span class="o">-:</span><span class="s">&#39;Android&#39;</span> <span class="nl">do.</span>
+    <span class="nv">notarcmd</span><span class="o">=.</span> <span class="mi">_1</span><span class="o">-:</span> <span class="mi">2</span><span class="o">!:</span><span class="mi">0</span> <span class="o">::</span><span class="kc">_1:</span> <span class="s">&#39;which tar&#39;</span>
+    <span class="nl">if.</span> <span class="p">(</span><span class="nv">UNAME</span><span class="o">-:</span><span class="s">&#39;Android&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="s">&#39;/mnt/sdcard&#39;</span><span class="o">-:</span><span class="mi">2</span><span class="o">!:</span><span class="mi">5</span><span class="s">&#39;EXTERNAL_STORAGE&#39;</span> <span class="nl">do.</span> <span class="nv">notarcmd</span><span class="o">=.</span> <span class="mi">1</span> <span class="nl">end.</span>
+  <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="nv">notarcmd</span> <span class="nl">do.</span>
+    <span class="nv">require</span> <span class="s">&#39;tar&#39;</span>
+    <span class="s">&#39;file dir&#39;</span><span class="o">=.</span> <span class="nd">y</span>
+    <span class="nl">if.</span> <span class="p">(</span><span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-:</span> <span class="nv">tar</span> <span class="s">&#39;x&#39;</span><span class="o">;</span><span class="nv">file</span><span class="o">;</span><span class="nv">dir</span> <span class="nl">do.</span> <span class="nv">e</span><span class="o">=.</span> <span class="s">&#39;&#39;</span> <span class="nl">end.</span>
+  <span class="nl">else.</span>
+    <span class="nv">e</span><span class="o">=.</span> <span class="nv">shellcmd</span> <span class="s">&#39;tar &#39;</span><span class="o">,</span><span class="p">((</span><span class="nv">IFIOS</span><span class="o">+:</span><span class="nv">UNAME</span><span class="o">-:</span><span class="s">&#39;Android&#39;</span><span class="p">)</span><span class="o">#</span><span class="p">((</span><span class="s">&#39;Darwin&#39;</span><span class="o">-:</span><span class="nv">UNAME</span><span class="p">)</span><span class="o">{::</span><span class="s">&#39;--no-same-owner --no-same-permissions&#39;</span><span class="o">;</span><span class="s">&#39;-o -p&#39;</span><span class="p">))</span><span class="o">,</span><span class="s">&#39; -xzf &#39;</span><span class="o">,</span><span class="nv">file</span><span class="o">,</span><span class="s">&#39; -C &#39;</span><span class="o">,</span><span class="nv">dir</span>
+  <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="p">(</span><span class="mi">0</span><span class="o">~:</span><span class="nv">FHS</span><span class="p">)</span> <span class="o">*.</span> <span class="p">(</span><span class="s">&#39;root&#39;</span><span class="o">-:</span><span class="mi">2</span><span class="o">!:</span><span class="mi">5</span><span class="s">&#39;USER&#39;</span><span class="p">)</span> <span class="o">+.</span> <span class="p">(</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">!:</span><span class="mi">5</span><span class="s">&#39;HOME&#39;</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="mi">0</span><span class="o">;</span><span class="s">&#39;/var/root&#39;</span><span class="o">;</span><span class="s">&#39;/root&#39;</span><span class="o">;</span><span class="s">&#39;&#39;</span><span class="o">;,</span><span class="s">&#39;/&#39;</span> <span class="nl">do.</span>
+    <span class="nv">shellcmd</span> <span class="o">::</span><span class="mi">0</span><span class="o">:</span> <span class="s">&#39;find &#39;</span><span class="o">,</span><span class="nv">dir</span><span class="o">,</span><span class="s">&#39; -type d -exec chmod a+rx {} \+&#39;</span>
+    <span class="nv">shellcmd</span> <span class="o">::</span><span class="mi">0</span><span class="o">:</span> <span class="s">&#39;find &#39;</span><span class="o">,</span><span class="nv">dir</span><span class="o">,</span><span class="s">&#39; -type f -exec chmod a+r {} \+&#39;</span>
+  <span class="nl">end.</span>
+<span class="nl">else.</span>
+  <span class="nv">dir</span><span class="o">=.</span> <span class="p">(</span><span class="mi">_2</span><span class="o">&amp;}.</span> <span class="o">,</span> <span class="s">&#39;/&#39;</span> <span class="o">-.~</span> <span class="mi">_2</span><span class="o">&amp;{.</span><span class="p">)</span> <span class="nv">dir</span>
+  <span class="nv">e</span><span class="o">=.</span> <span class="nv">shellcmd</span> <span class="nv">UNZIP</span><span class="o">,</span><span class="s">&#39; &#39;</span><span class="o">,</span><span class="nv">file</span><span class="o">,</span><span class="s">&#39; -d &#39;</span><span class="o">,</span><span class="nv">dir</span>
+<span class="nl">end.</span>
+<span class="nv">e</span>
+<span class="nl">)</span>
+<span class="nv">zipext</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nd">y</span><span class="o">,</span> <span class="nv">IFUNIX</span> <span class="nv">pick</span> <span class="s">&#39;.zip&#39;</span><span class="o">;</span><span class="s">&#39;.tar.gz&#39;</span>
+<span class="nl">)</span>
+<span class="nv">CHECKADDONSDIR</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">The addons directory does not exist and cannot be created.</span>
 
-<span class="nv">str</span> <span class="o">=.</span> <span class="s">&#39;hey, I&#39;&#39;m a string! With numbers inside: 1 2 3 4 5&#39;</span>
+<span class="s">It is set to: XX.</span>
 
-<span class="nv">echo</span> <span class="nv">monthlyPayment</span>
-<span class="nv">exit</span><span class="s">&#39;&#39;</span>
+<span class="s">You can either create the directory manually, or set a new addons directory in your profile script.</span>
+<span class="nl">)</span>
+<span class="nv">CHECKASK</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">Read catalog from the server using Internet connection now?</span>
+
+<span class="s">Otherwise the local catalog is used offline.</span>
+<span class="nl">)</span>
+<span class="nv">CHECKONLINE</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">An active Internet connection is needed to install packages.</span>
+
+<span class="s">Continue only if you have an active Internet connection.</span>
+
+<span class="s">OK to continue?</span>
+<span class="nl">)</span>
+<span class="nv">CHECKREADSVR</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">An active Internet connection is needed to read the server repository catalog.</span>
+
+<span class="s">Continue only if you have an active Internet connection.</span>
+
+<span class="s">OK to continue?</span>
+<span class="nl">)</span>
+<span class="nv">CHECKSTARTUP</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">Setup repository using Internet connection now?</span>
+
+<span class="s">Select No if not connected, to complete setup later. After Setup is done, repository can be used offline with more options in Tools menu and Preferences dialog.</span>
+<span class="nl">)</span>
+<span class="nv">checkaccess</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="nv">testaccess</span><span class="s">&#39;&#39;</span> <span class="nl">do.</span> <span class="mi">1</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Unable to run Package Manager, as you do not have access to the installation folder.&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFWIN</span> <span class="nl">do.</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="nv">msg</span><span class="o">,</span><span class="nv">LF2</span><span class="o">,</span><span class="s">&#39;To run as Administrator, right-click the J icon, select Run as... and &#39;</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="nv">msg</span><span class="o">,</span><span class="s">&#39;then select Adminstrator.&#39;</span>
+<span class="nl">end.</span>
+<span class="nv">info</span> <span class="nv">msg</span>
+<span class="mi">0</span>
+<span class="nl">)</span>
+<span class="nv">checkaddonsdir</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~addons&#39;</span>
+<span class="nl">if.</span> <span class="o">#</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">0</span> <span class="nv">d</span> <span class="nl">do.</span> <span class="mi">1</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nl">if.</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">5</span> <span class="o">::</span> <span class="mi">0</span><span class="o">:</span> <span class="o">&lt;</span><span class="nv">d</span> <span class="nl">do.</span>
+  <span class="nv">log</span> <span class="s">&#39;Created addons directory: &#39;</span><span class="o">,</span><span class="nv">d</span>
+  <span class="mi">1</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">info</span> <span class="nv">CHECKADDONSDIR</span> <span class="nv">rplc</span> <span class="s">&#39;XX&#39;</span><span class="o">;</span><span class="nv">d</span>
+<span class="mi">0</span>
+<span class="nl">)</span>
+<span class="nv">getonline</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ONLINE</span><span class="o">=:</span> <span class="mi">2</span><span class="o">=</span><span class="mi">3</span> <span class="mi">2</span> <span class="nv">wdquery</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">getserver</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpgetr</span> <span class="p">(</span><span class="nv">WWW</span><span class="o">,</span><span class="s">&#39;revision.txt&#39;</span><span class="p">)</span><span class="o">;</span><span class="mi">2</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">write_lastupdate</span><span class="s">&#39;&#39;</span>
+<span class="nv">WWWREV</span><span class="o">=:</span> <span class="nv">fixrev</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="nv">WWWREV</span> <span class="o">=</span> <span class="nv">REV</span> <span class="nl">do.</span> <span class="mi">1</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">refreshweb</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">checkonline</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">select.</span> <span class="nv">ReadCatalog_j_</span>
+<span class="nl">case.</span> <span class="mi">0</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="nv">REV</span> <span class="o">&gt;:</span> <span class="mi">0</span> <span class="nl">do.</span>
+    <span class="nv">ONLINE</span><span class="o">=:</span> <span class="mi">0</span>
+    <span class="nv">log</span> <span class="s">&#39;Using local copy of catalog. See Preferences to change the setting.&#39;</span>
+    <span class="mi">1</span> <span class="nl">return.</span>
+  <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">getonline</span> <span class="s">&#39;Read Catalog from Server&#39;</span><span class="o">;</span><span class="nv">CHECKREADSVR</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nl">case.</span> <span class="mi">1</span> <span class="nl">do.</span>
+  <span class="nv">ONLINE</span><span class="o">=:</span> <span class="mi">1</span>
+<span class="nl">case.</span> <span class="mi">2</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="nv">REV</span> <span class="o">&gt;:</span> <span class="mi">0</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">getonline</span> <span class="s">&#39;Read Catalog from Server&#39;</span><span class="o">;</span><span class="nv">CHECKASK</span> <span class="nl">do.</span>
+      <span class="nv">log</span> <span class="s">&#39;Using local copy of catalog. See Preferences to change the setting.&#39;</span>
+      <span class="mi">1</span> <span class="nl">return.</span>
+    <span class="nl">end.</span>
+  <span class="nl">else.</span>
+    <span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">getonline</span> <span class="s">&#39;Setup Repository&#39;</span><span class="o">;</span><span class="nv">CHECKSTARTUP</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nl">end.</span>
+<span class="nl">end.</span>
+<span class="nv">log</span> <span class="s">&#39;Updating server catalog...&#39;</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">getserver</span><span class="s">&#39;&#39;</span> <span class="nl">do.</span>
+  <span class="nv">ONLINE</span><span class="o">=:</span> <span class="mi">0</span>
+  <span class="nv">log</span> <span class="s">&#39;Working offline using local copy of catalog.&#39;</span>
+<span class="nl">else.</span>
+  <span class="nv">log</span> <span class="s">&#39;Done.&#39;</span>
+<span class="nl">end.</span>
+<span class="mi">1</span>
+<span class="nl">)</span>
+<span class="nv">checkstatus</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="nv">e</span><span class="o">.</span> <span class="o">#</span><span class="nv">LIBS</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="nv">masklib</span> <span class="nv">PKGDATA</span>
+<span class="nv">ups</span><span class="o">=.</span> <span class="nv">pkgups</span><span class="s">&#39;&#39;</span>
+<span class="nv">libupm</span><span class="o">=.</span> <span class="mi">1</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">msk</span> <span class="o">*.</span> <span class="nv">ups</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="o">-.</span> <span class="nv">msk</span>
+<span class="nv">addnim</span><span class="o">=.</span> <span class="o">+/</span><span class="nv">msk</span> <span class="o">*.</span> <span class="nv">pkgnew</span><span class="s">&#39;&#39;</span>
+<span class="nv">addupm</span><span class="o">=.</span> <span class="o">+/</span><span class="nv">msk</span> <span class="o">*.</span> <span class="nv">pkgups</span><span class="s">&#39;&#39;</span>
+<span class="nv">tot</span><span class="o">=.</span> <span class="o">+/</span><span class="nv">addnim</span><span class="o">,</span><span class="nv">addupm</span><span class="o">,</span><span class="nv">libupm</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">tot</span> <span class="nl">do.</span>
+  <span class="s">&#39;All available packages are installed and up to date.&#39;</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nl">select.</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nv">addnim</span><span class="o">,</span><span class="nv">addupm</span>
+<span class="nl">case.</span> <span class="mi">0</span> <span class="mi">0</span> <span class="nl">do.</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Addons are up to date.&#39;</span>
+<span class="nl">case.</span> <span class="mi">0</span> <span class="mi">1</span> <span class="nl">do.</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;All addons are installed, &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">addupm</span><span class="p">)</span><span class="o">,</span> <span class="s">&#39; can be upgraded.&#39;</span>
+<span class="nl">case.</span> <span class="mi">1</span> <span class="mi">0</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="nv">addnim</span> <span class="o">=</span> <span class="o">&lt;:#</span><span class="nv">PKGDATA</span> <span class="nl">do.</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;No addons are installed.&#39;</span>
+  <span class="nl">else.</span>
+    <span class="nv">j</span><span class="o">=.</span> <span class="s">&#39; addon&#39;</span><span class="o">,</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="o">#~</span><span class="mi">1</span><span class="o">&lt;</span><span class="nv">addnim</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; are not yet installed.&#39;</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Installed addons are up to date, &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">addnim</span><span class="p">)</span><span class="o">,</span><span class="nv">j</span>
+  <span class="nl">end.</span>
+<span class="nl">case.</span> <span class="mi">1</span> <span class="mi">1</span> <span class="nl">do.</span>
+  <span class="nv">j</span><span class="o">=.</span> <span class="p">(</span><span class="o">&quot;:</span><span class="nv">addupm</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; addon&#39;</span><span class="o">,</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="o">#~</span><span class="mi">1</span><span class="o">&lt;</span><span class="nv">addupm</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; can be upgraded, &#39;</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="nv">j</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">addnim</span><span class="p">)</span><span class="o">,</span> <span class="s">&#39; addon&#39;</span><span class="o">,</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="o">#~</span><span class="mi">1</span><span class="o">&lt;</span><span class="nv">addnim</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; are not yet installed.&#39;</span>
+<span class="nl">end.</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">libupm</span> <span class="nl">do.</span>
+  <span class="nv">msg</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="s">&#39;The base library is up to date.&#39;</span>
+<span class="nl">else.</span>
+  <span class="nv">msg</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="s">&#39;There is a newer version of the base library.&#39;</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">write_lastupdate</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">txt</span><span class="o">=.</span> <span class="o">&quot;:</span> <span class="mi">6</span><span class="o">!:</span><span class="mi">0</span> <span class="s">&#39;&#39;</span>
+<span class="nv">txt</span> <span class="nv">fwrites</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;lastupdate.txt&#39;</span>
+<span class="nl">)</span>
+<span class="nv">checklastupdate</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">_1</span> <span class="o">-:</span> <span class="nv">LASTUPD</span> <span class="nl">do.</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="s">&#39;has never been updated.&#39;</span>
+<span class="nl">else.</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="s">&#39;was last updated: &#39;</span><span class="o">,</span><span class="nv">timestamp</span> <span class="nv">LASTUPD</span>
+<span class="nl">end.</span>
+<span class="s">&#39;Local JAL information &#39;</span><span class="o">,</span><span class="nv">res</span>
+<span class="nl">)</span>
+<span class="nv">getdepend</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nd">y</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">dep</span><span class="o">=.</span> <span class="nv">getdepend_console</span> <span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nd">y</span>
+<span class="nv">PKGDATA</span> <span class="o">#~</span> <span class="p">(</span><span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">dep</span>
+<span class="nl">)</span>
+<span class="nv">getdepend_console</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nd">y</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">old</span><span class="o">=.</span> <span class="s">&#39;&#39;</span>
+<span class="nv">ids</span><span class="o">=.</span> <span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+<span class="nv">dep</span><span class="o">=.</span> <span class="mi">6</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+<span class="nv">res</span><span class="o">=.</span> <span class="o">~.</span> <span class="o">&lt;;.</span><span class="mi">_1</span> <span class="o">;</span> <span class="s">&#39;,&#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="p">(</span><span class="nv">ids</span> <span class="nv">e</span><span class="o">.</span> <span class="nd">y</span><span class="p">)</span> <span class="o">#</span> <span class="nv">dep</span>
+<span class="nl">whilst.</span> <span class="o">-.</span> <span class="nv">res</span><span class="o">-:</span><span class="nv">old</span> <span class="nl">do.</span>
+  <span class="nv">old</span><span class="o">=.</span> <span class="nv">res</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="o">~.</span> <span class="nv">res</span><span class="o">,</span> <span class="o">&lt;;.</span><span class="mi">_1</span> <span class="o">;</span> <span class="s">&#39;,&#39;</span> <span class="o">,</span><span class="nv">each</span> <span class="p">(</span><span class="nv">ids</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">res</span><span class="p">)</span> <span class="o">#</span> <span class="nv">dep</span>
+<span class="nl">end.</span>
+<span class="o">~.</span> <span class="nd">y</span><span class="o">,</span> <span class="nv">res</span> <span class="o">-.</span> <span class="nv">a</span><span class="o">:,</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ADDINS</span>
+<span class="nl">)</span>
+<span class="nv">httpget</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="s">&#39;f t&#39;</span><span class="o">=.</span> <span class="mi">2</span> <span class="o">{.</span> <span class="p">(</span><span class="nv">boxxopen</span> <span class="nd">y</span><span class="p">)</span><span class="o">,</span><span class="nv">a</span><span class="o">:</span>
+<span class="nd">n</span><span class="o">=.</span> <span class="nv">f</span> <span class="o">#~</span> <span class="o">-.</span> <span class="o">+./\.</span> <span class="nv">f</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;=/&#39;</span>
+<span class="nv">p</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~temp/&#39;</span><span class="o">,</span><span class="nd">n</span>
+<span class="nv">q</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~temp/httpget.log&#39;</span>
+<span class="nv">t</span><span class="o">=.</span> <span class="o">&quot;:{.</span><span class="nv">t</span><span class="o">,</span><span class="mi">3</span>
+<span class="nv">ferase</span> <span class="nv">p</span><span class="o">;</span><span class="nv">q</span>
+<span class="nv">fail</span><span class="o">=.</span> <span class="mi">0</span>
+<span class="nv">cmd</span><span class="o">=.</span> <span class="nv">HTTPCMD</span> <span class="nv">rplc</span> <span class="s">&#39;%O&#39;</span><span class="o">;</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">p</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;%L&#39;</span><span class="o">;</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">q</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;%t&#39;</span><span class="o">;</span><span class="nv">t</span><span class="o">;</span><span class="s">&#39;%T&#39;</span><span class="o">;</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">TIMEOUT</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;%U&#39;</span><span class="o">;</span><span class="nv">f</span>
+<span class="nl">if.</span> <span class="nv">IFIOS</span> <span class="o">+.</span> <span class="nv">UNAME</span><span class="o">-:</span><span class="s">&#39;Android&#39;</span> <span class="nl">do.</span>
+  <span class="nv">require</span> <span class="s">&#39;socket&#39;</span>
+  <span class="mi">1</span><span class="o">!:</span><span class="mi">55</span> <span class="o">::</span><span class="mi">0</span><span class="o">:</span> <span class="o">&lt;</span><span class="nv">p</span>
+  <span class="nv">rc</span><span class="o">=.</span> <span class="mi">0</span> <span class="o">[</span> <span class="nv">e</span><span class="o">=.</span> <span class="nv">pp</span><span class="o">=.</span> <span class="s">&#39;&#39;</span>
+  <span class="nl">whilst.</span> <span class="mi">0</span> <span class="nl">do.</span>
+    <span class="s">&#39;rc sk&#39;</span><span class="o">=.</span> <span class="nv">sdsocket_jsocket_</span><span class="s">&#39;&#39;</span>
+    <span class="nl">if.</span> <span class="mi">0</span><span class="o">~:</span><span class="nv">rc</span> <span class="nl">do.</span> <span class="nl">break.</span> <span class="nl">end.</span>
+    <span class="nv">rc</span><span class="o">=.</span> <span class="nv">sdconnect_jsocket_</span> <span class="nv">sk</span><span class="o">;</span><span class="nv">PF_INET_jsocket_</span><span class="o">;</span><span class="s">&#39;23.21.67.48&#39;</span><span class="o">;</span><span class="mi">80</span>
+    <span class="nl">if.</span> <span class="mi">0</span><span class="o">~:</span><span class="nv">rc</span> <span class="nl">do.</span> <span class="nl">break.</span> <span class="nl">end.</span>
+    <span class="s">&#39;rc sent&#39;</span><span class="o">=.</span> <span class="p">(</span><span class="s">&#39;GET &#39;</span><span class="o">,</span><span class="nv">f</span><span class="o">,</span><span class="s">&#39; HTTP/1.0&#39;</span><span class="o">,</span><span class="nv">LF2</span><span class="p">)</span> <span class="nv">sdsend_jsocket_</span> <span class="nv">sk</span><span class="o">;</span><span class="mi">0</span>
+    <span class="nl">if.</span> <span class="mi">0</span><span class="o">~:</span><span class="nv">rc</span> <span class="nl">do.</span> <span class="nl">break.</span> <span class="nl">end.</span>
+    <span class="nl">while.</span> <span class="p">((</span><span class="mi">0</span><span class="o">=</span><span class="nv">rc</span><span class="p">)</span><span class="o">*.</span><span class="p">(</span><span class="o">*#</span><span class="nd">m</span><span class="p">))</span> <span class="o">[[</span> <span class="s">&#39;rc m&#39;</span><span class="o">=.</span> <span class="nv">sdrecv_jsocket_</span> <span class="nv">sk</span><span class="o">,</span><span class="mi">4096</span> <span class="nl">do.</span>
+      <span class="nv">pp</span><span class="o">=.</span> <span class="nv">pp</span><span class="o">,</span><span class="nd">m</span>
+    <span class="nl">end.</span>
+  <span class="nl">end.</span>
+  <span class="nv">sdclose_jsocket_</span> <span class="nv">sk</span>
+  <span class="nl">if.</span> <span class="mi">0</span><span class="o">~:</span><span class="nv">rc</span> <span class="nl">do.</span> <span class="nv">fail</span><span class="o">=.</span> <span class="mi">1</span>
+  <span class="nl">elseif.</span> <span class="mi">1</span> <span class="o">-.@</span><span class="nv">e</span><span class="o">.</span> <span class="s">&#39;200 OK&#39;</span> <span class="nv">E</span><span class="o">.</span> <span class="p">(</span><span class="mi">20</span><span class="o">{.</span><span class="nv">pp</span><span class="p">)</span> <span class="nl">do.</span> <span class="nv">fail</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">[</span> <span class="nv">e</span><span class="o">=.</span> <span class="p">(</span><span class="o">{.~</span> <span class="nv">i</span><span class="o">.&amp;</span><span class="nv">LF</span><span class="p">)</span> <span class="nv">pp</span>
+  <span class="nl">elseif.</span> <span class="o">#</span><span class="nv">p1</span><span class="o">=.</span> <span class="nv">I</span><span class="o">.</span> <span class="p">(</span><span class="nv">CRLF</span><span class="o">,</span><span class="nv">CRLF</span><span class="p">)</span> <span class="nv">E</span><span class="o">.</span> <span class="mi">500</span><span class="o">{.</span><span class="nv">pp</span> <span class="nl">do.</span> <span class="nv">p2</span><span class="o">=.</span> <span class="mi">4</span>
+  <span class="nl">elseif.</span> <span class="o">#</span><span class="nv">p1</span><span class="o">=.</span> <span class="nv">I</span><span class="o">.</span> <span class="nv">LF2</span> <span class="nv">E</span><span class="o">.</span> <span class="mi">500</span><span class="o">{.</span><span class="nv">pp</span> <span class="nl">do.</span> <span class="nv">p2</span><span class="o">=.</span> <span class="mi">2</span>
+  <span class="nl">elseif.</span> <span class="nl">do.</span> <span class="nv">fail</span><span class="o">=.</span> <span class="mi">1</span>
+  <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="mi">0</span><span class="o">=</span><span class="nv">fail</span> <span class="nl">do.</span>
+    <span class="p">((</span><span class="nv">p2</span><span class="o">+{.</span><span class="nv">p1</span><span class="p">)</span><span class="o">}.</span><span class="nv">pp</span><span class="p">)</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">2</span> <span class="o">&lt;</span><span class="nv">p</span>
+  <span class="nl">else.</span>
+    <span class="nl">if.</span> <span class="mi">0</span><span class="o">~:</span><span class="nv">rc</span> <span class="nl">do.</span> <span class="nv">e</span><span class="o">=.</span> <span class="nv">sderror_jsocket_</span> <span class="nv">rc</span> <span class="nl">end.</span>
+  <span class="nl">end.</span>
+<span class="nl">elseif.</span> <span class="nl">do.</span>
+  <span class="nl">try.</span>
+    <span class="nv">e</span><span class="o">=.</span> <span class="nv">shellcmd</span> <span class="nv">cmd</span>
+  <span class="nl">catch.</span> <span class="nv">fail</span><span class="o">=.</span> <span class="mi">1</span> <span class="nl">end.</span>
+<span class="nl">end.</span>
+<span class="nl">if.</span> <span class="nv">fail</span> <span class="o">+.</span> <span class="mi">0</span> <span class="o">&gt;:</span> <span class="nv">fsize</span> <span class="nv">p</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="mi">_1</span><span class="o">-:</span><span class="nv">msg</span><span class="o">=.</span> <span class="nv">freads</span> <span class="nv">q</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">msg</span><span class="o">=.</span> <span class="nv">e</span> <span class="nl">do.</span> <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Unexpected error&#39;</span> <span class="nl">end.</span> <span class="nl">end.</span>
+  <span class="nv">log</span> <span class="s">&#39;Connection failed: &#39;</span><span class="o">,</span><span class="nv">msg</span>
+  <span class="nv">info</span> <span class="s">&#39;Connection failed:&#39;</span><span class="o">,</span><span class="nv">LF2</span><span class="o">,</span><span class="nv">msg</span>
+  <span class="nv">r</span><span class="o">=.</span> <span class="mi">1</span><span class="o">;</span><span class="nv">msg</span>
+  <span class="nv">ferase</span> <span class="nv">p</span><span class="o">;</span><span class="nv">q</span>
+<span class="nl">else.</span>
+  <span class="nv">r</span><span class="o">=.</span> <span class="mi">0</span><span class="o">;</span><span class="nv">p</span>
+  <span class="nv">ferase</span> <span class="nv">q</span>
+<span class="nl">end.</span>
+<span class="nv">r</span>
+<span class="nl">)</span>
+<span class="nv">httpgetr</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">res</span><span class="o">=.</span> <span class="nv">httpget</span> <span class="nd">y</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="mi">0</span> <span class="nv">pick</span> <span class="nv">res</span> <span class="nl">do.</span>
+  <span class="nv">f</span><span class="o">=.</span> <span class="mi">1</span> <span class="nv">pick</span> <span class="nv">res</span>
+  <span class="nv">txt</span><span class="o">=.</span> <span class="nv">freads</span> <span class="nv">f</span>
+  <span class="nv">ferase</span> <span class="nv">f</span>
+  <span class="mi">0</span><span class="o">;</span><span class="nv">txt</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">install</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="nv">getdepend</span> <span class="nd">y</span>
+<span class="s">&#39;num siz&#39;</span><span class="o">=.</span> <span class="nv">pmview_applycounts</span> <span class="nv">dat</span>
+<span class="nv">many</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nv">num</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Installing &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">num</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; package&#39;</span><span class="o">,</span><span class="nv">many</span><span class="o">#</span><span class="s">&#39;s&#39;</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="nv">msg</span><span class="o">,</span><span class="s">&#39; of &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">many</span><span class="o">#</span><span class="s">&#39;total &#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;size &#39;</span><span class="o">,</span><span class="nv">sizefmt</span> <span class="nv">siz</span>
+<span class="nv">log</span> <span class="nv">msg</span>
+<span class="nv">installdo</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+<span class="nv">log</span> <span class="s">&#39;Done.&#39;</span>
+<span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+<span class="nv">pacman_init</span> <span class="mi">0</span>
+<span class="nl">)</span>
+<span class="nv">install_console</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;server&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+  <span class="nl">if.</span> <span class="nv">pkgs</span> <span class="o">-:</span> <span class="o">,&lt;</span><span class="s">&#39;all&#39;</span> <span class="nl">do.</span> <span class="nv">pkgs</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="p">(</span><span class="nv">e</span><span class="o">.</span> <span class="o">#</span> <span class="o">[</span><span class="p">)</span> <span class="o">~.</span> <span class="p">(</span><span class="o">&lt;</span><span class="s">&#39;base library&#39;</span><span class="p">)</span><span class="o">,</span> <span class="p">((</span><span class="nv">pkgnew</span> <span class="o">+.</span> <span class="nv">pkgups</span><span class="p">)</span> <span class="o">#</span> <span class="mi">1</span><span class="o">&amp;{&quot;</span><span class="mi">1</span><span class="o">@]</span><span class="p">)</span> <span class="nv">PKGDATA</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="o">-.</span> <span class="nv">Ignore</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getdepend_console</span> <span class="nv">pkgs</span>
+  <span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">num</span><span class="o">=.</span> <span class="o">#</span><span class="nv">pkgs</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">many</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nv">num</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Installing &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">num</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; package&#39;</span><span class="o">,</span><span class="nv">many</span><span class="o">#</span><span class="s">&#39;s&#39;</span>
+  <span class="nv">log</span> <span class="nv">msg</span>
+  <span class="nv">installdo</span> <span class="nv">pkgs</span>
+  <span class="nv">log</span> <span class="s">&#39;Done.&#39;</span>
+  <span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+  <span class="nv">pacman_init</span> <span class="s">&#39;&#39;</span>
+  <span class="nv">checkstatus</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">upgrade_console</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;read&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+  <span class="nl">if.</span> <span class="p">(</span><span class="mi">0</span><span class="o">=#</span><span class="nv">pkgs</span><span class="p">)</span> <span class="o">+.</span> <span class="nv">pkgs</span> <span class="o">-:</span> <span class="o">,&lt;</span><span class="s">&#39;all&#39;</span> <span class="nl">do.</span> <span class="nv">pkgs</span><span class="o">=.</span> <span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="p">(</span><span class="nv">e</span><span class="o">.</span> <span class="o">#</span> <span class="o">[</span><span class="p">)</span> <span class="p">(</span><span class="nv">pkgups</span> <span class="o">#</span> <span class="mi">1</span><span class="o">&amp;{&quot;</span><span class="mi">1</span><span class="o">@]</span><span class="p">)</span><span class="nv">PKGDATA</span>
+  <span class="nv">install_console</span> <span class="nv">pkgs</span>
+<span class="nl">)</span>
+<span class="nv">installdo</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="o">-.</span> <span class="nd">y</span> <span class="nv">e</span><span class="o">.</span> <span class="o">&lt;</span><span class="nv">BASELIB</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">msk</span> <span class="nl">do.</span>
+  <span class="nv">install_library</span><span class="s">&#39;&#39;</span>
+<span class="nl">end.</span>
+<span class="nv">install_addon</span> <span class="nv">each</span> <span class="nv">msk</span> <span class="o">#</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">install_addon</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="p">(</span><span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ZIPS</span><span class="p">)</span> <span class="nv">i</span><span class="o">.</span> <span class="o">&lt;</span><span class="nd">y</span>
+<span class="nl">if.</span> <span class="nv">ndx</span> <span class="o">=</span> <span class="o">#</span><span class="nv">ZIPS</span> <span class="nl">do.</span> <span class="nv">EMPTY</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">log</span> <span class="s">&#39;Downloading &#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;...&#39;</span>
+<span class="nv">f</span><span class="o">=.</span> <span class="mi">3</span> <span class="nv">pick</span> <span class="nv">ndx</span> <span class="o">{</span> <span class="nv">ZIPS</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpget</span> <span class="nv">WWW</span><span class="o">,</span><span class="s">&#39;addons/&#39;</span><span class="o">,</span><span class="nv">f</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">log</span> <span class="s">&#39;Installing &#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;...&#39;</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="nv">unzip</span> <span class="nv">p</span><span class="o">;</span><span class="nv">jpath</span><span class="s">&#39;~addons&#39;</span>
+<span class="nv">ferase</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">&gt;:</span><span class="nv">fsize</span> <span class="nv">jpath</span><span class="s">&#39;~addons/&#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;/manifest.ijs&#39;</span> <span class="nl">do.</span>
+  <span class="nv">log</span> <span class="s">&#39;Extraction failed: &#39;</span><span class="o">,</span><span class="nv">msg</span>
+  <span class="nv">info</span> <span class="s">&#39;Extraction failed:&#39;</span><span class="o">,</span><span class="nv">LF2</span><span class="o">,</span><span class="nv">msg</span>
+  <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">install_addins</span> <span class="nd">y</span>
+<span class="nv">install_config</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">install_addins</span><span class="o">=:</span> <span class="nf">3 :0</span>
+<span class="nv">fl</span><span class="o">=.</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;addins.txt&#39;</span>
+<span class="nv">ins</span><span class="o">=.</span> <span class="nv">fixjal2</span> <span class="nv">freads</span> <span class="nv">fl</span>
+<span class="nv">ins</span><span class="o">=.</span> <span class="nv">ins</span> <span class="o">#~</span> <span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="o">~:</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ins</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="p">(</span><span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ADDONS</span><span class="p">)</span> <span class="nv">i</span><span class="o">.</span> <span class="o">&lt;</span><span class="nd">y</span>
+<span class="nv">ins</span><span class="o">=.</span> <span class="nv">sort</span> <span class="nv">ins</span><span class="o">,</span> <span class="mi">2</span> <span class="o">{.</span> <span class="nv">ndx</span> <span class="o">{</span> <span class="nv">ADDONS</span>
+<span class="p">(</span><span class="nv">fmtjal2</span> <span class="nv">ins</span><span class="p">)</span> <span class="nv">fwrites</span> <span class="nv">fl</span>
+<span class="nl">)</span>
+<span class="nv">install_config</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ADDLABS</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+<span class="mi">0</span><span class="o">!:</span><span class="mi">0</span> <span class="o">::</span> <span class="o">]</span> <span class="o">&lt;</span> <span class="nv">ADDCFGIJS</span>
+<span class="nv">install_labs</span> <span class="nd">y</span>
+<span class="nv">write_config</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">install_labs</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">labs</span><span class="o">=.</span> <span class="nv">dirtree</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;/*.ijt&#39;</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">labs</span> <span class="nl">do.</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">pfx</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span>
+<span class="nv">labs</span><span class="o">=.</span> <span class="p">(</span><span class="o">#</span><span class="nv">pfx</span><span class="p">)</span> <span class="o">}.</span><span class="nv">each</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">labs</span>
+<span class="nv">LABCATEGORY</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+<span class="mi">0</span><span class="o">!:</span><span class="mi">0</span> <span class="o">::]</span> <span class="o">&lt;</span><span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;/manifest.ijs&#39;</span>
+<span class="nv">cat</span><span class="o">=.</span> <span class="nv">LABCATEGORY</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">#</span><span class="nv">cat</span> <span class="nl">do.</span>
+  <span class="nv">cat</span><span class="o">=.</span> <span class="nv">toupper1</span> <span class="p">(</span><span class="nd">y</span> <span class="nv">i</span><span class="o">.</span> <span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="o">{.</span> <span class="nd">y</span>
+<span class="nl">end.</span>
+<span class="nv">new</span><span class="o">=.</span> <span class="nv">labs</span> <span class="o">,</span><span class="nv">each</span> <span class="o">&lt;</span><span class="s">&#39; &#39;</span><span class="o">,</span><span class="nv">cat</span>
+<span class="nv">txt</span><span class="o">=.</span> <span class="nv">sort</span> <span class="o">~.</span> <span class="nv">new</span><span class="o">,&lt;;.</span><span class="mi">_2</span> <span class="nv">ADDLABS</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">i</span><span class="o">.~</span> <span class="s">&#39;.ijt&#39;</span><span class="o">&amp;</span><span class="nv">E</span><span class="o">.</span><span class="p">)</span> <span class="o">&amp;&gt;</span> <span class="nv">txt</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="nv">fexist</span> <span class="o">&amp;&gt;</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">pfx</span><span class="p">)</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">ndx</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">txt</span>
+<span class="nv">txt</span><span class="o">=.</span> <span class="nv">msk</span> <span class="o">#</span> <span class="nv">txt</span>
+<span class="nv">ADDLABS</span><span class="o">=:</span> <span class="o">;</span> <span class="nv">txt</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">LF</span>
+<span class="nl">)</span>
+<span class="nv">install_library</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">log</span> <span class="s">&#39;Downloading base library...&#39;</span>
+<span class="nv">f</span><span class="o">=.</span> <span class="mi">1</span> <span class="nv">pick</span> <span class="nv">LIB</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpget</span> <span class="nv">WWW</span><span class="o">,</span><span class="s">&#39;library/&#39;</span><span class="o">,</span><span class="nv">f</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">log</span> <span class="s">&#39;Installing base library...&#39;</span>
+<span class="nv">unzip</span> <span class="nv">p</span><span class="o">;</span><span class="nv">jpath</span><span class="s">&#39;~system&#39;</span>
+<span class="nv">ferase</span> <span class="nv">p</span>
+<span class="nv">readlin</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">write_config</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">txt</span><span class="o">=.</span> <span class="s">&#39;NB. Addon configuration&#39;</span><span class="o">,</span><span class="nv">LF2</span>
+<span class="nv">txt</span><span class="o">=.</span> <span class="nv">txt</span><span class="o">,</span><span class="s">&#39;ADDLABS=: 0 : 0&#39;</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="nv">ADDLABS</span><span class="o">,</span><span class="s">&#39;)&#39;</span><span class="o">,</span><span class="nv">LF</span>
+<span class="nv">txt</span> <span class="nv">fwrites</span> <span class="nv">ADDCFGIJS</span>
+<span class="nl">)</span>
+<span class="nv">show_console</span><span class="o">=:</span> <span class="nf">4 : 0</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;read&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nl">select.</span> <span class="nd">x</span>
+  <span class="nl">case.</span> <span class="s">&#39;search&#39;</span> <span class="nl">do.</span>
+    <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="nv">pkgsearch</span> <span class="nv">pkgs</span><span class="p">)</span> <span class="o">#</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">curtailcaption</span> <span class="nv">res</span>
+  <span class="nl">case.</span> <span class="s">&#39;show&#39;</span> <span class="nl">do.</span>
+    <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+    <span class="nl">if.</span> <span class="nv">pkgs</span> <span class="o">-:</span> <span class="o">,&lt;</span><span class="s">&#39;all&#39;</span> <span class="nl">do.</span> <span class="nv">pkgs</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span> <span class="nl">end.</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="nv">msk</span><span class="o">=.</span> <span class="nv">pkgshow</span> <span class="nv">pkgs</span><span class="p">)</span> <span class="o">#</span> <span class="mi">5</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+    <span class="nl">if.</span> <span class="o">#</span><span class="nv">res</span> <span class="nl">do.</span>
+      <span class="nv">res</span><span class="o">=.</span> <span class="o">,</span><span class="p">((</span><span class="o">&lt;</span><span class="s">&#39;== &#39;</span><span class="p">)</span><span class="o">,</span> <span class="o">&amp;.&gt;</span> <span class="nv">msk</span> <span class="o">#</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span><span class="p">)</span> <span class="o">,.</span> <span class="nv">res</span>
+      <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="mi">2</span><span class="o">#</span><span class="nv">LF</span><span class="p">)</span> <span class="nv">joinstring</span> <span class="p">(</span><span class="mi">70</span><span class="o">&amp;</span><span class="nv">foldtext</span><span class="p">)</span><span class="o">&amp;.&gt;</span> <span class="nv">res</span>
+    <span class="nl">end.</span>
+  <span class="nl">case.</span> <span class="s">&#39;showinstalled&#39;</span> <span class="nl">do.</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="nv">isjpkgout</span> <span class="nd">y</span><span class="p">)</span> <span class="o">{::</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span><span class="p">)</span><span class="o">;&lt;</span><span class="nd">y</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="o">-.@</span><span class="nv">pkgnew</span> <span class="o">#</span> <span class="o">]</span><span class="p">)</span><span class="nv">dat</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">curtailcaption</span> <span class="nv">res</span>
+  <span class="nl">case.</span> <span class="s">&#39;shownotinstalled&#39;</span> <span class="nl">do.</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="nv">isjpkgout</span> <span class="nd">y</span><span class="p">)</span> <span class="o">{::</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span><span class="p">)</span><span class="o">;&lt;</span><span class="nd">y</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="nv">pkgnew</span> <span class="o">#</span> <span class="mi">0</span> <span class="mi">2</span> <span class="mi">3</span><span class="o">&amp;{&quot;</span><span class="mi">1</span><span class="o">@]</span><span class="p">)</span><span class="nv">dat</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">curtailcaption</span> <span class="nv">res</span>
+  <span class="nl">case.</span> <span class="s">&#39;showupgrade&#39;</span> <span class="nl">do.</span>
+    <span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="nv">isjpkgout</span> <span class="nd">y</span><span class="p">)</span> <span class="o">{::</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span><span class="p">)</span><span class="o">;&lt;</span><span class="nd">y</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="nv">pkgups</span> <span class="o">#</span> <span class="o">]</span><span class="p">)</span><span class="nv">dat</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">curtailcaption</span> <span class="nv">res</span>
+  <span class="nl">case.</span> <span class="s">&#39;status&#39;</span> <span class="nl">do.</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">checklastupdate</span><span class="s">&#39;&#39;</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="nv">res</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="nv">checkstatus</span><span class="s">&#39;&#39;</span>
+  <span class="nl">end.</span>
+  <span class="nv">res</span>
+<span class="nl">)</span>
+<span class="nv">showfiles_console</span><span class="o">=:</span> <span class="nf">4 : 0</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;read&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="p">(</span><span class="nv">e</span><span class="o">.</span> <span class="o">#</span> <span class="o">[</span><span class="p">)</span> <span class="p">(</span><span class="o">-.@</span><span class="nv">pkgnew</span> <span class="o">#</span> <span class="mi">1</span><span class="o">&amp;{&quot;</span><span class="mi">1</span><span class="o">@]</span><span class="p">)</span> <span class="nv">PKGDATA</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="o">-.</span> <span class="o">&lt;</span><span class="nv">BASELIB</span>
+  <span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">pkgs</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">fn</span><span class="o">=.</span> <span class="p">(</span><span class="o">&lt;</span><span class="s">&#39;~addons/&#39;</span><span class="p">)</span> <span class="o">,&amp;.&gt;</span> <span class="p">(</span><span class="nv">pkgs</span><span class="p">)</span> <span class="o">,&amp;.&gt;</span> <span class="o">&lt;</span><span class="s">&#39;/&#39;</span><span class="o">,</span><span class="nd">x</span><span class="o">,</span><span class="p">(</span><span class="nd">x</span><span class="o">-:</span><span class="s">&#39;history&#39;</span><span class="p">)</span><span class="o">{::</span><span class="s">&#39;.ijs&#39;</span><span class="o">;</span><span class="s">&#39;.txt&#39;</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="nv">res</span> <span class="o">#~</span> <span class="nv">msk</span><span class="o">=.</span> <span class="p">(</span><span class="o">&lt;</span><span class="mi">_1</span><span class="p">)</span> <span class="o">~:</span> <span class="nv">res</span><span class="o">=.</span> <span class="nv">fread</span><span class="o">@</span><span class="nv">jpath</span> <span class="o">&amp;.&gt;</span> <span class="nv">fn</span>
+  <span class="nl">if.</span> <span class="o">#</span><span class="nv">res</span> <span class="nl">do.</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="o">,</span><span class="p">((</span><span class="o">&lt;</span><span class="s">&#39;== &#39;</span><span class="p">)</span><span class="o">,</span> <span class="o">&amp;.&gt;</span> <span class="nv">msk</span><span class="o">#</span><span class="nv">pkgs</span><span class="p">)</span> <span class="o">,.</span> <span class="nv">res</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="p">(</span><span class="mi">2</span><span class="o">#</span><span class="nv">LF</span><span class="p">)</span> <span class="nv">joinstring</span> <span class="nv">res</span>
+  <span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">remove_console</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;edit&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">getnames</span> <span class="nd">y</span>
+  <span class="nl">if.</span> <span class="nv">pkgs</span> <span class="o">-:</span> <span class="o">,&lt;</span><span class="s">&#39;all&#39;</span> <span class="nl">do.</span> <span class="nv">pkgs</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span> <span class="nl">end.</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="p">(</span><span class="nv">e</span><span class="o">.</span> <span class="o">#</span> <span class="o">[</span><span class="p">)</span> <span class="p">(</span><span class="o">-.@</span><span class="nv">pkgnew</span> <span class="o">#</span> <span class="mi">1</span><span class="o">&amp;{&quot;</span><span class="mi">1</span><span class="o">@]</span><span class="p">)</span> <span class="nv">PKGDATA</span>
+  <span class="nv">pkgs</span><span class="o">=.</span> <span class="nv">pkgs</span> <span class="o">-.</span> <span class="o">&lt;</span><span class="nv">BASELIB</span>
+  <span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">num</span><span class="o">=.</span> <span class="o">#</span><span class="nv">pkgs</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">many</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nv">num</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Removing &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">num</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; package&#39;</span><span class="o">,</span><span class="nv">many</span><span class="o">#</span><span class="s">&#39;s&#39;</span>
+  <span class="nv">log</span> <span class="nv">msg</span>
+  <span class="nv">remove_addon</span> <span class="nv">each</span> <span class="nv">pkgs</span>
+  <span class="nv">log</span> <span class="s">&#39;Done.&#39;</span>
+  <span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+  <span class="nv">pacman_init</span> <span class="s">&#39;&#39;</span>
+  <span class="nv">checkstatus</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+
+<span class="nv">remove_addon</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nv">log</span> <span class="s">&#39;Removing &#39;</span><span class="o">,</span><span class="nd">y</span><span class="o">,</span><span class="s">&#39;...&#39;</span>
+  <span class="nv">treepath</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span><span class="o">,</span><span class="nd">y</span>
+  <span class="nl">if.</span> <span class="p">((</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="o">#@</span><span class="nv">dirtree</span><span class="p">)</span> <span class="o">*.</span> <span class="o">-.@</span><span class="nv">deltree</span><span class="p">)</span> <span class="nv">treepath</span> <span class="nl">do.</span>
+    <span class="nv">nf</span><span class="o">=.</span> <span class="o">#</span><span class="nv">dirtree</span> <span class="nv">treepath</span>
+    <span class="nv">nd</span><span class="o">=.</span> <span class="o">&lt;:</span> <span class="o">#</span> <span class="nv">dirpath</span> <span class="nv">treepath</span>
+    <span class="nv">nd</span><span class="o">=.</span> <span class="nv">nd</span> <span class="o">+</span> <span class="p">(</span><span class="nv">tolower</span> <span class="nv">treepath</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="nv">dirpath</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span><span class="o">,</span> <span class="s">&#39;/&#39;</span> <span class="nv">taketo</span> <span class="nd">y</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="p">(</span><span class="o">&quot;:</span><span class="nv">nd</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; directories and &#39;</span><span class="o">,</span><span class="p">(</span><span class="o">&quot;:</span><span class="nv">nf</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; files not removed.&#39;</span>
+    <span class="nv">log</span> <span class="s">&#39;Remove failed: &#39;</span><span class="o">,</span><span class="nv">msg</span>
+    <span class="nv">info</span> <span class="s">&#39;Remove failed:&#39;</span><span class="o">,</span><span class="nv">LF2</span><span class="o">,</span><span class="nv">msg</span>
+    <span class="nl">return.</span>
+  <span class="nl">end.</span>
+  <span class="nv">remove_addins</span> <span class="nd">y</span>
+  <span class="nv">remove_config</span> <span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">remove_addins</span><span class="o">=:</span> <span class="nf">3 :0</span>
+  <span class="nv">fl</span><span class="o">=.</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;addins.txt&#39;</span>
+  <span class="nv">ins</span><span class="o">=.</span> <span class="nv">fixjal2</span> <span class="nv">freads</span> <span class="nv">fl</span>
+  <span class="nv">ins</span><span class="o">=.</span> <span class="nv">ins</span> <span class="o">#~</span> <span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="o">~:</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ins</span>
+  <span class="p">(</span><span class="nv">fmtjal2</span> <span class="nv">ins</span><span class="p">)</span> <span class="nv">fwrites</span> <span class="nv">fl</span>
+<span class="nl">)</span>
+<span class="nv">remove_config</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nv">ADDLABS</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+  <span class="mi">0</span><span class="o">!:</span><span class="mi">0</span> <span class="o">::</span> <span class="o">]</span> <span class="o">&lt;</span> <span class="nv">ADDCFGIJS</span>
+  <span class="nv">remove_labs</span> <span class="nd">y</span>
+  <span class="nv">write_config</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">remove_labs</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nv">txt</span><span class="o">=.</span> <span class="o">&lt;;.</span><span class="mi">_2</span> <span class="nv">ADDLABS</span>
+  <span class="nv">txt</span><span class="o">=.</span> <span class="nv">txt</span> <span class="o">#~</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">jpathsep</span> <span class="nd">y</span><span class="p">)</span> <span class="o">~:</span> <span class="p">(</span><span class="o">#</span><span class="nd">y</span><span class="p">)</span><span class="o">&amp;{.</span> <span class="nv">each</span> <span class="nv">txt</span>
+  <span class="nv">ADDLABS</span><span class="o">=:</span> <span class="o">;</span> <span class="nv">txt</span> <span class="o">,</span><span class="nv">each</span> <span class="nv">LF</span>
+<span class="nl">)</span>
+<span class="nv">LOG</span><span class="o">=:</span> <span class="mi">1</span>
+<span class="nv">log</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="nv">LOG</span> <span class="nl">do.</span> <span class="nv">smoutput</span> <span class="nd">y</span> <span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">logstatus</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="nv">ONLINE</span> <span class="nl">do.</span>
+  <span class="nv">log</span> <span class="nv">checkstatus</span><span class="s">&#39;&#39;</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">readlin</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">LIN</span><span class="o">=:</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">1</span> <span class="o">&gt;.</span> <span class="nv">fixver</span> <span class="nv">freads</span> <span class="nv">LIBVER</span>
+<span class="nl">)</span>
+<span class="nv">readlocal</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">readlin</span><span class="s">&#39;&#39;</span>
+<span class="nv">ADDONS</span><span class="o">=:</span> <span class="nv">fixjal</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;addons.txt&#39;</span>
+<span class="nv">ADDINS</span><span class="o">=:</span> <span class="nv">fixjal2</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;addins.txt&#39;</span>
+<span class="nv">REV</span><span class="o">=:</span> <span class="nv">fixrev</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;revision.txt&#39;</span>
+<span class="nv">LASTUPD</span><span class="o">=:</span> <span class="nv">fixupd</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;lastupdate.txt&#39;</span>
+<span class="nv">LIBS</span><span class="o">=:</span> <span class="nv">fixlibs</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;library.txt&#39;</span>
+<span class="nv">LIB</span><span class="o">=:</span> <span class="nv">fixlib</span> <span class="nv">LIBS</span>
+<span class="nv">ZIPS</span><span class="o">=:</span> <span class="nv">fixzips</span> <span class="nv">freads</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;zips.txt&#39;</span>
+<span class="nv">EMPTY</span>
+<span class="nl">)</span>
+<span class="nv">readtree</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">f</span><span class="o">=.</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;tree.txt&#39;</span>
+<span class="nv">tree</span><span class="o">=.</span> <span class="nv">LF</span> <span class="o">-.~</span> <span class="nv">freads</span> <span class="nv">f</span>
+<span class="nl">if.</span> <span class="o">-.</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">tree</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="s">&#39;current&#39;</span><span class="o">;</span><span class="s">&#39;stable&#39;</span> <span class="nl">do.</span>
+  <span class="nv">tree</span><span class="o">=.</span> <span class="s">&#39;current&#39;</span>
+  <span class="nv">writetree</span> <span class="nv">tree</span>
+<span class="nl">end.</span>
+<span class="nv">tree</span>
+<span class="nl">)</span>
+<span class="nv">writetree</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nd">y</span> <span class="nv">fwritenew</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;tree.txt&#39;</span>
+<span class="nl">)</span>
+<span class="nv">refreshweb</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">refreshjal</span><span class="s">&#39;&#39;</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+<span class="mi">1</span>
+<span class="nl">)</span>
+<span class="nv">refreshaddins</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ADDLABS</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+<span class="nv">f</span><span class="o">=.</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;addins.txt&#39;</span>
+<span class="nv">p</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~addons/&#39;</span>
+<span class="nv">sd</span><span class="o">=.</span> <span class="o">;</span><span class="nv">subdir</span> <span class="nv">each</span> <span class="nv">subdir</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">sd</span> <span class="nl">do.</span>
+  <span class="s">&#39;&#39;</span> <span class="nv">fwrite</span> <span class="nv">f</span>
+  <span class="nv">write_config</span><span class="s">&#39;&#39;</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">r</span><span class="o">=.</span> <span class="nv">s</span><span class="o">=.</span> <span class="s">&#39;&#39;</span>
+<span class="nv">for_d</span><span class="o">.</span> <span class="nv">sd</span> <span class="nl">do.</span>
+  <span class="nv">mft</span><span class="o">=.</span> <span class="nv">freads</span> <span class="p">(</span><span class="o">&gt;</span><span class="nv">d</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;manifest.ijs&#39;</span>
+  <span class="nl">if.</span> <span class="nv">mft</span> <span class="o">-:</span> <span class="mi">_1</span> <span class="nl">do.</span> <span class="nl">continue.</span> <span class="nl">end.</span>
+  <span class="nv">VERSION</span><span class="o">=:</span> <span class="s">&#39;&#39;</span>
+  <span class="mi">0</span><span class="o">!:</span><span class="mi">100</span> <span class="nv">mft</span>
+  <span class="nv">ver</span><span class="o">=.</span> <span class="nv">fmtver</span> <span class="nv">fixver</span> <span class="nv">VERSION</span>
+  <span class="nd">n</span><span class="o">=.</span> <span class="o">}:</span> <span class="p">(</span><span class="o">#</span><span class="nv">p</span><span class="p">)</span> <span class="o">}.</span> <span class="o">&gt;</span><span class="nv">d</span>
+  <span class="nd">n</span><span class="o">=.</span> <span class="s">&#39;/&#39;</span> <span class="p">(</span><span class="nv">I</span><span class="o">.</span><span class="nd">n</span><span class="o">=</span><span class="s">&#39;\&#39;</span><span class="p">)</span> <span class="o">}</span> <span class="nd">n</span>
+  <span class="nv">r</span><span class="o">=.</span> <span class="nv">r</span><span class="o">,</span><span class="nd">n</span><span class="o">,</span><span class="s">&#39; &#39;</span><span class="o">,</span><span class="nv">ver</span><span class="o">,</span><span class="nv">LF</span>
+  <span class="nv">s</span><span class="o">=.</span> <span class="nv">s</span><span class="o">,</span><span class="nv">d</span>
+<span class="nl">end.</span>
+<span class="nv">r</span> <span class="nv">fwritenew</span> <span class="nv">f</span>
+<span class="nv">s</span><span class="o">=.</span> <span class="p">(</span><span class="o">#</span><span class="nv">p</span><span class="p">)</span> <span class="o">}.</span><span class="nv">each</span> <span class="o">}:</span> <span class="nv">each</span> <span class="nv">s</span>
+<span class="nv">install_labs</span> <span class="nv">each</span> <span class="nv">s</span>
+<span class="nv">write_config</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">refreshjal</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpget</span> <span class="nv">WWW</span><span class="o">,</span><span class="nv">zipext</span> <span class="s">&#39;jal&#39;</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">unzip</span> <span class="nv">p</span><span class="o">;</span><span class="nv">ADDCFG</span>
+<span class="nv">ferase</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="o">*./</span> <span class="nv">CFGFILES</span> <span class="nv">e</span><span class="o">.</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="o">[</span> <span class="mi">1</span><span class="o">!:</span><span class="mi">0</span> <span class="nv">ADDCFG</span><span class="o">,</span><span class="s">&#39;*&#39;</span> <span class="nl">do.</span> <span class="mi">1</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Could not install the local repository catalog.&#39;</span>
+<span class="nv">log</span> <span class="nv">msg</span>
+<span class="nv">info</span> <span class="nv">msg</span>
+<span class="mi">0</span>
+<span class="nl">)</span>
+<span class="nv">updatejal</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nv">log</span> <span class="s">&#39;Updating server catalog...&#39;</span>
+  <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">init_console</span> <span class="s">&#39;server&#39;</span> <span class="nl">do.</span> <span class="s">&#39;&#39;</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nv">refreshaddins</span><span class="s">&#39;&#39;</span>
+  <span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+  <span class="nv">pacman_init</span><span class="s">&#39;&#39;</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="nv">checklastupdate</span><span class="s">&#39;&#39;</span>
+  <span class="nv">res</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="nv">checkstatus</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">RELIBMSG</span><span class="o">=:</span> <span class="ni">0 : 0</span><span class="s"></span>
+<span class="s">You are now using the XX base library, and can switch to the YY base library.</span>
+
+<span class="s">This will download the YY version of the base library and overwrite existing files. Addons are not affected.</span>
+
+<span class="s">OK to switch to the YY library?</span>
+<span class="nl">)</span>
+<span class="nv">prelib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">old</span><span class="o">=.</span> <span class="nv">LIBTREE</span>
+<span class="nv">new</span><span class="o">=.</span> <span class="p">((</span><span class="s">&#39;stable&#39;</span><span class="o">;</span><span class="s">&#39;current&#39;</span><span class="p">)</span> <span class="nv">i</span><span class="o">.</span> <span class="o">&lt;</span><span class="nv">old</span><span class="p">)</span> <span class="nv">pick</span> <span class="s">&#39;current&#39;</span><span class="o">;</span><span class="s">&#39;beta&#39;</span>
+<span class="nv">msg</span><span class="o">=.</span> <span class="nv">RELIBMSG</span> <span class="nv">rplc</span> <span class="p">(</span><span class="s">&#39;XX&#39;</span><span class="o">;</span><span class="s">&#39;YY&#39;</span><span class="p">)</span><span class="o">,.</span><span class="nv">old</span><span class="o">;</span><span class="nv">new</span>
+<span class="nl">if.</span> <span class="mi">0</span> <span class="o">=</span> <span class="nv">query</span> <span class="nv">SYSNAME</span><span class="o">;</span><span class="nv">msg</span> <span class="nl">do.</span>
+  <span class="nv">info</span> <span class="s">&#39;Not done.&#39;</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">switchlibrary</span> <span class="mi">1</span> <span class="nv">pick</span> <span class="nv">new</span>
+<span class="nl">)</span>
+<span class="nv">switchlibrary</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="s">&#39;&#39;</span> <span class="nv">fwrite</span> <span class="nv">LIBVER</span>
+<span class="nv">writetree</span> <span class="nv">LIBTREE</span><span class="o">=:</span> <span class="nd">y</span>
+<span class="nv">refreshjal</span><span class="s">&#39;&#39;</span>
+<span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+<span class="nv">pmview_setpn</span><span class="s">&#39;&#39;</span>
+<span class="nl">)</span>
+<span class="nv">masklib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nd">y</span><span class="p">)</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nv">BASELIB</span>
+<span class="nl">)</span>
+<span class="nv">pkglater</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="nv">s</span><span class="o">=.</span><span class="nv">isjpkgout</span> <span class="nd">y</span><span class="p">)</span><span class="o">{::</span> <span class="nv">PKGDATA</span><span class="o">;&lt;</span><span class="nd">y</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">dat</span> <span class="nl">do.</span> <span class="o">$</span><span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="nv">loc</span><span class="o">=.</span> <span class="nv">fixvers</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="nv">s</span><span class="p">)</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+<span class="nv">srv</span><span class="o">=.</span> <span class="nv">fixvers</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="nv">s</span><span class="p">)</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+<span class="o">{.&quot;</span><span class="mi">1</span> <span class="o">/:&quot;</span><span class="mi">2</span> <span class="nv">srv</span> <span class="o">,:&quot;</span><span class="mi">1</span> <span class="nv">loc</span>
+<span class="nl">)</span>
+<span class="nv">pkgnew</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="nv">s</span><span class="o">=.</span><span class="nv">isjpkgout</span> <span class="nd">y</span><span class="p">)</span><span class="o">{::</span> <span class="nv">PKGDATA</span><span class="o">;&lt;</span><span class="nd">y</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">dat</span> <span class="nl">do.</span> <span class="o">$</span><span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="mi">0</span> <span class="o">=</span> <span class="o">#</span> <span class="o">&amp;&gt;</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="nv">s</span><span class="p">)</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+<span class="nl">)</span>
+<span class="nv">pkgups</span><span class="o">=:</span> <span class="nv">pkgnew</span> <span class="o">&lt;</span> <span class="nv">pkglater</span>
+<span class="nv">pkgsearch</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="o">+./&quot;</span><span class="mi">1</span> <span class="o">+./</span> <span class="nd">y</span> <span class="nv">E</span><span class="o">.&quot;</span><span class="mi">1</span><span class="o">&amp;&gt;&quot;</span><span class="p">(</span><span class="mi">0</span> <span class="m">_</span><span class="p">)</span> <span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+<span class="nl">)</span>
+<span class="nv">pkgshow</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nd">y</span> <span class="nv">e</span><span class="o">.~</span> <span class="mi">1</span><span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+<span class="nl">)</span>
+<span class="nv">setshowall</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">PKGDATA</span><span class="o">=:</span> <span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="p">(</span><span class="o">&lt;</span><span class="p">(</span><span class="nv">I</span><span class="o">.</span><span class="nv">DATAMASK</span><span class="p">)</span><span class="o">;</span><span class="mi">0</span><span class="p">)</span> <span class="o">}</span> <span class="nv">PKGDATA</span>
+<span class="nl">)</span>
+<span class="nv">setshownew</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="nv">I</span><span class="o">.</span> <span class="nv">DATAMASK</span> <span class="o">*.</span> <span class="nv">pkgnew</span><span class="s">&#39;&#39;</span>
+<span class="nv">PKGDATA</span><span class="o">=:</span> <span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">ndx</span><span class="o">;</span><span class="mi">0</span><span class="p">)</span> <span class="o">}</span> <span class="nv">PKGDATA</span>
+<span class="nl">)</span>
+<span class="nv">setshowups</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">ndx</span><span class="o">=.</span> <span class="nv">I</span><span class="o">.</span> <span class="nv">DATAMASK</span> <span class="o">*.</span> <span class="nv">pkgups</span><span class="s">&#39;&#39;</span>
+<span class="nv">PKGDATA</span><span class="o">=:</span> <span class="p">(</span><span class="o">&lt;</span><span class="nd">y</span><span class="p">)</span> <span class="p">(</span><span class="o">&lt;</span><span class="nv">ndx</span><span class="o">;</span><span class="mi">0</span><span class="p">)</span> <span class="o">}</span> <span class="nv">PKGDATA</span>
+<span class="nl">)</span>
+<span class="nv">splitlib</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nd">y</span> <span class="nl">do.</span>
+  <span class="mi">2</span> <span class="o">$</span> <span class="o">&lt;</span><span class="nd">y</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">msk</span><span class="o">=.</span> <span class="nv">masklib</span> <span class="nd">y</span>
+<span class="p">(</span><span class="nv">msk</span><span class="o">#</span><span class="nd">y</span><span class="p">)</span> <span class="o">;</span> <span class="o">&lt;</span><span class="p">(</span><span class="o">-.</span><span class="nv">msk</span><span class="p">)</span><span class="o">#</span><span class="nd">y</span>
+<span class="nl">)</span>
+<span class="nv">pacman_init</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="nv">ADDONS</span> <span class="o">#~</span> <span class="p">(</span><span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ADDONS</span><span class="p">)</span> <span class="nv">e</span><span class="o">.</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ZIPS</span>
+<span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nv">dat</span> <span class="nl">do.</span>
+  <span class="nv">dat</span><span class="o">=.</span> <span class="nv">i</span><span class="o">.</span><span class="mi">0</span> <span class="mi">6</span>
+<span class="nl">else.</span>
+  <span class="nv">ndx</span><span class="o">=.</span> <span class="p">(</span><span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">ADDINS</span><span class="p">)</span> <span class="nv">i</span><span class="o">.</span> <span class="o">{.&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+  <span class="nv">ins</span><span class="o">=.</span> <span class="nv">ndx</span> <span class="o">{</span> <span class="p">(</span><span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">ADDINS</span><span class="p">)</span><span class="o">,&lt;</span><span class="s">&#39;&#39;</span>
+  <span class="nv">dat</span><span class="o">=.</span> <span class="nv">dat</span><span class="o">,.&lt;</span><span class="s">&#39;&#39;</span>
+  <span class="nv">dat</span><span class="o">=.</span> <span class="mi">0</span> <span class="mi">5</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">2</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">dat</span>
+  <span class="nv">dat</span><span class="o">=.</span> <span class="nv">ins</span> <span class="mi">1</span> <span class="o">}&quot;</span><span class="mi">0</span> <span class="mi">1</span> <span class="nv">dat</span>
+<span class="nl">end.</span>
+<span class="nv">lib</span><span class="o">=.</span> <span class="s">&#39;base library&#39;</span><span class="o">;</span><span class="p">(</span><span class="nv">fmtver</span> <span class="nv">LIN</span><span class="p">)</span><span class="o">;</span><span class="p">(</span><span class="nv">fmtver</span> <span class="mi">0</span> <span class="nv">pick</span> <span class="nv">LIB</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;base library scripts&#39;</span><span class="o">;</span><span class="nv">LIBDESC</span><span class="o">;</span><span class="s">&#39;&#39;</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="nv">dat</span><span class="o">,</span><span class="nv">lib</span>
+<span class="nv">dat</span><span class="o">=.</span> <span class="p">(</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">,.</span><span class="nv">dat</span>
+<span class="nv">PKGDATA</span><span class="o">=:</span> <span class="nv">sort</span> <span class="nv">dat</span>
+<span class="nv">nms</span><span class="o">=.</span> <span class="mi">1</span> <span class="o">{&quot;</span><span class="mi">1</span> <span class="nv">PKGDATA</span>
+<span class="nv">nms</span><span class="o">=.</span> <span class="o">~.</span> <span class="p">(</span><span class="nv">nms</span> <span class="nv">i</span><span class="o">.&amp;&gt;</span> <span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="o">{.</span><span class="nv">each</span> <span class="nv">nms</span>
+<span class="nv">SECTION</span><span class="o">=:</span> <span class="s">&#39;All&#39;</span><span class="o">;</span><span class="nv">nms</span>
+<span class="nv">DATAMASK</span><span class="o">=:</span> <span class="p">(</span><span class="o">#</span><span class="nv">PKGDATA</span><span class="p">)</span> <span class="o">$</span> <span class="mi">1</span>
+<span class="nv">EMPTY</span>
+<span class="nl">)</span>
+<span class="nv">init_console</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="nl">if.</span> <span class="mi">0</span><span class="o">=#</span><span class="nd">y</span> <span class="nl">do.</span> <span class="nd">y</span><span class="o">=.</span> <span class="s">&#39;read&#39;</span> <span class="nl">end.</span>
+  <span class="nl">select.</span> <span class="nd">y</span>
+  <span class="nl">fcase.</span> <span class="s">&#39;edit&#39;</span><span class="o">;</span><span class="s">&#39;server&#39;</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">checkaccess</span><span class="s">&#39;&#39;</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+  <span class="nl">case.</span> <span class="s">&#39;read&#39;</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="o">-.</span> <span class="nv">checkaddonsdir</span><span class="s">&#39;&#39;</span> <span class="nl">do.</span> <span class="mi">0</span> <span class="nl">return.</span> <span class="nl">end.</span>
+    <span class="nv">setfiles</span><span class="s">&#39;&#39;</span>
+    <span class="nv">readlocal</span><span class="s">&#39;&#39;</span>
+    <span class="nv">pacman_init</span> <span class="s">&#39;&#39;</span>
+    <span class="nv">res</span><span class="o">=.</span> <span class="mi">1</span>
+  <span class="nl">case.</span> <span class="nl">do.</span> <span class="nv">res</span><span class="o">=.</span> <span class="mi">0</span>
+  <span class="nl">end.</span>
+  <span class="nl">if.</span> <span class="nd">y</span> <span class="o">-:</span> <span class="s">&#39;server&#39;</span> <span class="nl">do.</span> <span class="nv">res</span><span class="o">=.</span> <span class="nv">getserver</span><span class="s">&#39;&#39;</span>  <span class="nl">end.</span>
+  <span class="nv">res</span>
+<span class="nl">)</span>
+<span class="nv">jpkg</span><span class="o">=:</span> <span class="nf">4 : 0</span>
+  <span class="nl">select.</span> <span class="nd">x</span>
+  <span class="nl">case.</span> <span class="s">&#39;history&#39;</span><span class="o">;</span><span class="s">&#39;manifest&#39;</span> <span class="nl">do.</span>
+    <span class="nd">x</span> <span class="nv">showfiles_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="s">&#39;install&#39;</span> <span class="nl">do.</span>
+    <span class="nv">install_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="s">&#39;reinstall&#39;</span> <span class="nl">do.</span>
+    <span class="nv">remove_console</span> <span class="nd">y</span>
+    <span class="nv">install_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="s">&#39;remove&#39;</span> <span class="nl">do.</span>
+    <span class="nv">remove_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="o">;:</span><span class="s">&#39;show search showinstalled shownotinstalled showupgrade status&#39;</span> <span class="nl">do.</span>
+    <span class="nd">x</span> <span class="nv">show_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="s">&#39;update&#39;</span>  <span class="nl">do.</span>
+    <span class="nv">updatejal</span> <span class="s">&#39;&#39;</span>
+  <span class="nl">case.</span> <span class="s">&#39;upgrade&#39;</span> <span class="nl">do.</span>
+    <span class="nv">upgrade_console</span> <span class="nd">y</span>
+  <span class="nl">case.</span> <span class="nl">do.</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="s">&#39;Valid options are:&#39;</span><span class="o">,</span><span class="nv">LF</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="nv">msg</span><span class="o">,</span><span class="s">&#39;  history, install, manifest, remove, reinstall, show, search,&#39;</span><span class="o">,</span><span class="nv">LF</span>
+    <span class="nv">msg</span><span class="o">=.</span> <span class="nv">msg</span><span class="o">,</span><span class="s">&#39;  showinstalled, shownotinstalled, showupgrade, status,&#39;</span><span class="o">,</span><span class="nv">LF</span>
+    <span class="nv">msg</span><span class="o">,</span><span class="s">&#39;  update, upgrade&#39;</span>
+  <span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">do_install</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nl">if.</span> <span class="o">-.</span> <span class="nv">checkaccess_jpacman_</span> <span class="s">&#39;&#39;</span> <span class="nl">do.</span> <span class="nl">return.</span> <span class="nl">end.</span>
+<span class="s">&#39;update&#39;</span> <span class="nv">jpkg</span> <span class="s">&#39;&#39;</span>
+<span class="nl">select.</span> <span class="nd">y</span>
+<span class="nl">case.</span> <span class="s">&#39;qtide&#39;</span><span class="o">;</span><span class="s">&#39;angle&#39;</span> <span class="nl">do.</span>
+  <span class="s">&#39;install&#39;</span> <span class="nv">jpkg</span> <span class="s">&#39;base library ide/qt&#39;</span>
+  <span class="nv">getqtbin</span> <span class="p">(</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;angle&#39;</span><span class="p">)</span><span class="o">{::</span><span class="mi">0</span><span class="o">;</span><span class="s">&#39;angle&#39;</span>
+  <span class="nv">msg</span><span class="o">=.</span> <span class="p">(</span><span class="o">+/</span> <span class="mi">2</span> <span class="mi">1</span> <span class="o">*</span> <span class="nv">IFWIN</span><span class="o">,</span><span class="s">&#39;Darwin&#39;</span><span class="o">-:</span><span class="nv">UNAME</span><span class="p">)</span> <span class="nv">pick</span> <span class="s">&#39;jqt.sh&#39;</span><span class="o">;</span><span class="s">&#39;the jqt icon&#39;</span><span class="o">;</span><span class="s">&#39;jqt.cmd&#39;</span>
+  <span class="nv">smoutput</span> <span class="s">&#39;exit and restart J using &#39;</span><span class="o">,</span><span class="nv">msg</span>
+<span class="nl">case.</span> <span class="s">&#39;all&#39;</span> <span class="nl">do.</span>
+  <span class="s">&#39;install&#39;</span> <span class="nv">jpkg</span> <span class="s">&#39;all&#39;</span>
+  <span class="nv">getqtbin</span> <span class="mi">0</span>
+<span class="nl">end.</span>
+<span class="nl">)</span>
+<span class="nv">do_getqtbin</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+<span class="nv">smoutput</span> <span class="s">&#39;Installing JQt binaries...&#39;</span>
+<span class="nl">if.</span> <span class="s">&#39;Linux&#39;</span><span class="o">-:</span><span class="nv">UNAME</span> <span class="nl">do.</span>
+  <span class="nl">if.</span> <span class="nv">IFRASPI</span> <span class="nl">do.</span>
+    <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;jqt-raspi-32.tar.gz&#39;</span>
+  <span class="nl">else.</span>
+    <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;jqt-&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;slim&#39;</span><span class="p">)</span> <span class="nv">pick</span> <span class="s">&#39;linux&#39;</span><span class="o">;</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;-&#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;x86&#39;</span><span class="o">;</span><span class="s">&#39;x64&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;.tar.gz&#39;</span>
+  <span class="nl">end.</span>
+  <span class="nv">z1</span><span class="o">=.</span> <span class="s">&#39;libjqt.so&#39;</span>
+<span class="nl">elseif.</span> <span class="nv">IFWIN</span> <span class="nl">do.</span>
+  <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;jqt-win&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;-&#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;x86&#39;</span><span class="o">;</span><span class="s">&#39;x64&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;.zip&#39;</span>
+  <span class="nv">z1</span><span class="o">=.</span> <span class="s">&#39;jqt.dll&#39;</span>
+<span class="nl">elseif.</span> <span class="nl">do.</span>
+  <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;jqt-mac&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;-&#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;x86&#39;</span><span class="o">;</span><span class="s">&#39;x64&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;.zip&#39;</span>
+  <span class="nv">z1</span><span class="o">=.</span> <span class="s">&#39;libjqt.dylib&#39;</span>
+<span class="nl">end.</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpget_jpacman_</span> <span class="s">&#39;http://www.jsoftware.com/download/j802/qtide/&#39;</span><span class="o">,</span><span class="nv">z</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span>
+  <span class="nv">smoutput</span> <span class="s">&#39;unable to download: &#39;</span><span class="o">,</span><span class="nv">z</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="s">&#39;~bin&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFWIN</span> <span class="nl">do.</span>
+  <span class="nv">unzip_jpacman_</span> <span class="nv">p</span><span class="o">;</span><span class="nv">d</span>
+<span class="nl">else.</span>
+  <span class="nl">if.</span> <span class="s">&#39;Linux&#39;</span><span class="o">-:</span><span class="nv">UNAME</span> <span class="nl">do.</span>
+    <span class="nl">if.</span> <span class="p">(</span><span class="mi">0</span><span class="o">~:</span><span class="nv">FHS</span><span class="p">)</span> <span class="nl">do.</span>
+      <span class="nl">if.</span> <span class="nv">IFRASPI</span> <span class="nl">do.</span>
+        <span class="nv">d1</span><span class="o">=.</span> <span class="s">&#39;/usr/lib/arm-linux-gnueabihf/.&#39;</span>
+      <span class="nl">elseif.</span> <span class="nv">IF64</span> <span class="nl">do.</span>
+        <span class="nv">d1</span><span class="o">=.</span> <span class="s">&#39;/usr/lib/x86_64-linux-gnu/.&#39;</span>
+      <span class="nl">elseif.</span> <span class="nl">do.</span>
+        <span class="nv">d1</span><span class="o">=.</span> <span class="s">&#39;/usr/lib/i386-linux-gnu/.&#39;</span>
+      <span class="nl">end.</span>
+      <span class="nv">hostcmd_jpacman_</span> <span class="s">&#39;cd /usr/bin &amp;&amp; tar --no-same-owner --no-same-permissions -xzf &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">p</span><span class="p">)</span><span class="o">,</span> <span class="s">&#39; &amp;&amp; chmod 755 jqt &amp;&amp; chmod 644 libjqt.so &amp;&amp; mv libjqt.so &#39;</span><span class="o">,</span><span class="nv">d1</span>
+    <span class="nl">else.</span>
+      <span class="nv">hostcmd_jpacman_</span> <span class="s">&#39;cd &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">d</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; &amp;&amp; tar xzf &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">p</span><span class="p">)</span>
+    <span class="nl">end.</span>
+  <span class="nl">else.</span>
+    <span class="nv">hostcmd_jpacman_</span> <span class="s">&#39;unzip -o &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">p</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; -d &#39;</span><span class="o">,</span><span class="nv">dquote</span> <span class="nv">d</span>
+  <span class="nl">end.</span>
+<span class="nl">end.</span>
+<span class="nv">ferase</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="o">#</span><span class="mi">1</span><span class="o">!:</span><span class="mi">0</span> <span class="p">((</span><span class="mi">0</span><span class="o">~:</span><span class="nv">FHS</span><span class="p">)</span><span class="o">*.</span><span class="s">&#39;Linux&#39;</span><span class="o">-:</span><span class="nv">UNAME</span><span class="p">)</span><span class="o">{::</span><span class="p">(</span><span class="nv">jpath</span> <span class="s">&#39;~bin/&#39;</span><span class="o">,</span><span class="nv">z1</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;/usr/bin/jqt&#39;</span> <span class="nl">do.</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="s">&#39;Finished install of JQt binaries.&#39;</span>
+<span class="nl">else.</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="s">&#39;Unable to install JQt binaries.&#39;</span><span class="o">,</span><span class="nv">LF</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="nd">m</span><span class="o">,</span><span class="s">&#39;check that you have write permission for: &#39;</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="p">((</span><span class="mi">0</span><span class="o">~:</span><span class="nv">FHS</span><span class="p">)</span><span class="o">*.</span><span class="s">&#39;Linux&#39;</span><span class="o">-:</span><span class="nv">UNAME</span><span class="p">)</span><span class="o">{::</span><span class="p">(</span><span class="nv">jpath</span> <span class="s">&#39;~bin&#39;</span><span class="p">)</span><span class="o">;</span><span class="s">&#39;/usr/bin&#39;</span>
+<span class="nl">end.</span>
+<span class="nv">smoutput</span> <span class="nd">m</span>
+<span class="nl">if.</span> <span class="s">&#39;Linux&#39;</span><span class="o">-:</span><span class="nv">UNAME</span> <span class="nl">do.</span> <span class="nl">return.</span> <span class="nl">end.</span>
+
+<span class="nv">tgt</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="nv">IFWIN</span><span class="o">{::</span><span class="s">&#39;~install/Qt&#39;</span><span class="o">;</span><span class="s">&#39;~bin/Qt5Core.dll&#39;</span>
+<span class="nd">y</span><span class="o">=.</span> <span class="p">(</span><span class="o">*#</span><span class="nd">y</span><span class="p">)</span><span class="o">{::</span><span class="mi">0</span><span class="o">;</span><span class="nd">y</span>
+<span class="nv">smoutput</span> <span class="s">&#39;Installing Qt library...&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFWIN</span> <span class="nl">do.</span>
+  <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;qt53-&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;angle&#39;</span><span class="p">)</span> <span class="nv">pick</span> <span class="s">&#39;win&#39;</span><span class="o">;</span><span class="s">&#39;angle&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;-&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;slim-&#39;</span><span class="p">)</span><span class="o">,</span><span class="p">(</span><span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;x86&#39;</span><span class="o">;</span><span class="s">&#39;x64&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;.zip&#39;</span>
+<span class="nl">else.</span>
+  <span class="nv">z</span><span class="o">=.</span> <span class="s">&#39;qt53-mac-&#39;</span><span class="o">,</span><span class="p">((</span><span class="nd">y</span><span class="o">-:</span><span class="s">&#39;slim&#39;</span><span class="p">)</span><span class="o">#</span><span class="s">&#39;slim-&#39;</span><span class="p">)</span><span class="o">,</span><span class="p">(</span><span class="nv">IF64</span> <span class="nv">pick</span> <span class="s">&#39;x86&#39;</span><span class="o">;</span><span class="s">&#39;x64&#39;</span><span class="p">)</span><span class="o">,</span><span class="s">&#39;.zip&#39;</span>
+<span class="nl">end.</span>
+<span class="s">&#39;rc p&#39;</span><span class="o">=.</span> <span class="nv">httpget_jpacman_</span> <span class="s">&#39;http://www.jsoftware.com/download/j802/qtlib/&#39;</span><span class="o">,</span><span class="nv">z</span>
+<span class="nl">if.</span> <span class="nv">rc</span> <span class="nl">do.</span>
+  <span class="nv">smoutput</span> <span class="s">&#39;unable to download: &#39;</span><span class="o">,</span><span class="nv">z</span> <span class="nl">return.</span>
+<span class="nl">end.</span>
+<span class="nv">d</span><span class="o">=.</span> <span class="nv">jpath</span> <span class="nv">IFWIN</span><span class="o">{::</span><span class="s">&#39;~install&#39;</span><span class="o">;</span><span class="s">&#39;~bin&#39;</span>
+<span class="nl">if.</span> <span class="nv">IFWIN</span> <span class="nl">do.</span>
+  <span class="nv">unzip_jpacman_</span> <span class="nv">p</span><span class="o">;</span><span class="nv">d</span>
+<span class="nl">else.</span>
+  <span class="nv">hostcmd_jpacman_</span> <span class="s">&#39;unzip -o &#39;</span><span class="o">,</span><span class="p">(</span><span class="nv">dquote</span> <span class="nv">p</span><span class="p">)</span><span class="o">,</span><span class="s">&#39; -d &#39;</span><span class="o">,</span><span class="nv">dquote</span> <span class="nv">d</span>
+<span class="nl">end.</span>
+<span class="nv">ferase</span> <span class="nv">p</span>
+<span class="nl">if.</span> <span class="o">#</span><span class="mi">1</span><span class="o">!:</span><span class="mi">0</span> <span class="nv">tgt</span> <span class="nl">do.</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="s">&#39;Finished install of Qt binaries.&#39;</span>
+<span class="nl">else.</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="s">&#39;Unable to install Qt binaries.&#39;</span><span class="o">,</span><span class="nv">LF</span>
+  <span class="nd">m</span><span class="o">=.</span> <span class="nd">m</span><span class="o">,</span><span class="s">&#39;check that you have write permission for: &#39;</span><span class="o">,</span><span class="nv">LF</span><span class="o">,</span><span class="nv">IFWIN</span><span class="o">{::</span><span class="nv">tgt</span><span class="o">;</span><span class="nv">jpath</span><span class="s">&#39;~bin&#39;</span>
+<span class="nl">end.</span>
+<span class="nv">smoutput</span> <span class="nd">m</span>
+
+<span class="nl">)</span>
+<span class="nv">jpkg_z_</span><span class="o">=:</span> <span class="nf">3 : 0</span>
+  <span class="s">&#39;help&#39;</span> <span class="nv">jpkg</span> <span class="nd">y</span>
+  <span class="o">:</span>
+  <span class="nv">a</span><span class="o">=.</span> <span class="nv">conew</span> <span class="s">&#39;jpacman&#39;</span>
+  <span class="nv">res</span><span class="o">=.</span> <span class="nd">x</span> <span class="nv">jpkg__a</span> <span class="nd">y</span>
+  <span class="nv">destroy__a</span><span class="s">&#39;&#39;</span>
+  <span class="nv">res</span>
+<span class="nl">)</span>
+<span class="nv">jpkgv_z_</span><span class="o">=:</span> <span class="p">(</span><span class="o">&lt;@:&gt;&quot;</span><span class="mi">1</span><span class="o">@|:^:</span><span class="p">(</span><span class="mi">0</span> <span class="o">~:</span> <span class="o">#</span><span class="p">))</span><span class="o">@</span><span class="nv">jpkg</span>
 </pre></div>
 </body>
 </html>

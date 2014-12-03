@@ -1,13 +1,15 @@
+# -*- coding: utf-8 -*-
 """
-pygments.lexers.j
-~~~~~~~~~~~~~~~~~
+    pygments.lexers.j
+    ~~~~~~~~~~~~~~~~~
 
-Lexer for the J programming language.
+    Lexer for the J programming language.
 
 """
 
 import re
-from pygments.lexer import bygroups, RegexLexer, words, include
+
+from pygments.lexer import RegexLexer, words, include
 from pygments.token import Comment, Error, Keyword, Name, Number, Operator, Punctuation, String, Text
 
 __all__ = ['JLexer']
@@ -15,12 +17,12 @@ __all__ = ['JLexer']
 class JLexer(RegexLexer):
     """
     For `J <http://jsoftware.com/>`_ source code.
-
     """
 
     name = 'J'
     aliases = ['j']
     filenames = ['*.ijs']
+    mimetypes = ['text/x-j']
 
     validName = r'\b[a-zA-Z]\w*'
 
@@ -45,7 +47,7 @@ class JLexer(RegexLexer):
             (r'\b(([1-4]|13)\s+:\s*0)|((adverb|conjunction|dyad|monad|verb)\s+define)\b', Name.Function, 'explicitDefinition'),
 
             # Flow Control
-            (words(( 'for_', 'goto_', 'label_'), suffix=validName+'\.'), Name.Label),
+            (words(('for_', 'goto_', 'label_'), suffix=validName+'\.'), Name.Label),
             (words((
                 'assert', 'break', 'case', 'catch', 'catchd',
                 'catcht', 'continue', 'do', 'else', 'elseif',
@@ -81,7 +83,7 @@ class JLexer(RegexLexer):
                 'timex', 'tmoutput', 'toCRLF', 'toHOST', 'toJ',
                 'tolower', 'toupper', 'type', 'ucp', 'ucpcount',
                 'usleep', 'utf8', 'uucp',
-                )), Name.Builtin),
+                )), Name.Function),
 
             # Copula
             (r'=[.:]', Operator),
@@ -99,8 +101,6 @@ class JLexer(RegexLexer):
 
             # Numbers
             include('numbers'),
-
-            # (r'(?s).', Text), # uncomment when this lexer is complete
         ],
 
         'comment': [
@@ -120,7 +120,7 @@ class JLexer(RegexLexer):
         'numbers': [
             (r'_{3,}', Error),
             (r'\b_{1,2}\b', Number),
-            (r'_?\d+(\s*[ejr]\s*)?_?\d+', Number),
+            (r'_?\d+(\.\d+)?(\s*[ejr]\s*)_?\d+(\.?=\d+)?', Number),
             (r'_?\d+\.(?=\d+)', Number.Float),
             (r'_?\d+x', Number.Integer.Long),
             (r'_?\d+', Number.Integer),
@@ -134,7 +134,7 @@ class JLexer(RegexLexer):
 
         'parentheses': [
             (r'\)', Punctuation, '#pop'),
-            include('nounDefinition'),
+            #include('nounDefinition'),
             include('explicitDefinition'),
             include('root'),
         ],
