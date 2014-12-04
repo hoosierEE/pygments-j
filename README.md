@@ -3,7 +3,7 @@ PYGMENTS-J
 
 A [J](http://jsoftware.com) lexer for [pygments](http://pygments.org)
 
-> Work in progress
+> **Update!** Submitted pull request at the [Bitbucket repo](https://bitbucket.org/birkenfeld/pygments-main/pull-request/424/add-j-lexer/diff)
 
 Inspired by the lack of syntax highlighting for J on GitHub, as well as the opportunity to contribute to an open-source project and brush up on my Python a bit, this project hopes to make the world a better place.
 
